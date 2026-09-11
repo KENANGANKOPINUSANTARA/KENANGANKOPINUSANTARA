@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#30251e"/><stop offset=".55" stop-color="#171512"/><stop offset="1" stop-color="#5b432b"/></linearGradient></defs>
+<rect width="900" height="1100" rx="36" fill="url(#g)"/>
+<circle cx="700" cy="210" r="230" fill="#b08a4a" opacity=".14"/><circle cx="170" cy="890" r="280" fill="#b08a4a" opacity=".08"/>
+<path d="M90 820 C240 690 310 720 430 600 C520 510 600 400 820 360" fill="none" stroke="#b08a4a" stroke-width="3" opacity=".7"/>
+<path d="M120 875 C280 760 350 780 480 660 C580 565 650 480 820 450" fill="none" stroke="#f5f0e7" stroke-width="2" opacity=".3"/>
+<g transform="translate(270 170) rotate(-3 180 370)">
+<rect x="0" y="0" width="360" height="690" rx="20" fill="#efe7d8"/>
+<rect x="24" y="24" width="312" height="642" rx="12" fill="#f8f3e9" stroke="#b08a4a" stroke-width="2"/>
+<text x="180" y="105" text-anchor="middle" font-family="Georgia" font-size="26" fill="#171512" letter-spacing="6">KENANGAN</text>
+<text x="180" y="140" text-anchor="middle" font-family="Arial" font-size="12" fill="#4a3325" letter-spacing="4">KOPI NUSANTARA</text>
+<circle cx="180" cy="345" r="92" fill="#24342b"/>
+<path d="M180 275 C135 330 140 390 180 415 C220 390 225 330 180 275Z" fill="#b08a4a"/>
+<path d="M180 292 C162 335 170 372 180 395 C190 372 198 335 180 292Z" fill="#f5f0e7" opacity=".75"/>
+<text x="180" y="535" text-anchor="middle" font-family="Georgia" font-size="24" fill="#171512">ACEH GAYO</text>
+<text x="180" y="568" text-anchor="middle" font-family="Arial" font-size="11" fill="#4a3325" letter-spacing="3">BOURBON · WASHED</text>
+<text x="180" y="625" text-anchor="middle" font-family="Georgia" font-size="13" fill="#4a3325">DARK CHOCOLATE · BROWN SUGAR · CITRUS</text>
+</g>
+</svg>

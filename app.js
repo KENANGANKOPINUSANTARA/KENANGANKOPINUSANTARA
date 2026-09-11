@@ -7,6 +7,39 @@ const REGION_TEXT={
 let cart=JSON.parse(localStorage.getItem("kenangan_cart")||"[]");
 let activeRegion="All";
 
+const SEEDED_STORIES=[
+ {name:"RAKA",city:"JAKARTA",coffee:"Pangalengan",method:"V60",rating:5,text:"The fruit character from West Java completely changed how I think about Indonesian coffee."},
+ {name:"NADIA",city:"BANDUNG",coffee:"Kerinci Mossto",method:"Pour Over",rating:5,text:"Seasonal coffee gave me a reason to come back to the café and try something new."},
+ {name:"ARYA",city:"BALI",coffee:"Bajawa",method:"French Press",rating:5,text:"Different beans. Different landscapes. Different memories. Bajawa felt warm, floral and deeply comforting."}
+];
+let communityStories=JSON.parse(localStorage.getItem("kenangan_stories")||"[]");
+function renderStories(){
+ const all=[...communityStories,...SEEDED_STORIES];
+ const grid=document.getElementById("storyGrid"); if(!grid)return;
+ document.getElementById("storyCount").textContent=String(all.length).padStart(2,"0")+" STORIES";
+ grid.innerHTML=all.map((s,i)=>`<article class="story-card ${i<3?'featured':''}">
+   <div class="story-top"><span>${String(i+1).padStart(2,"0")}</span><span class="story-stars" aria-label="${s.rating} out of 5">${"★".repeat(Number(s.rating))}${"☆".repeat(5-Number(s.rating))}</span></div>
+   <p>“${esc(s.text)}”</p>
+   <div class="story-meta"><b>— ${esc(s.name).toUpperCase()} · ${esc(s.city).toUpperCase()}</b><small>${esc(s.coffee)} · ${esc(s.method)}</small></div>
+ </article>`).join("");
+}
+function openStoryForm(){
+ const select=document.getElementById("storyCoffee");
+ select.innerHTML=PRODUCTS.map(p=>`<option value="${esc(p.name)}">${esc(p.name)} — ${esc(p.region)}</option>`).join("");
+ document.getElementById("storyModal").classList.add("open");
+}
+function closeStoryForm(){document.getElementById("storyModal").classList.remove("open");}
+function submitStory(e){
+ e.preventDefault();
+ const story={name:document.getElementById("storyName").value.trim(),city:document.getElementById("storyCity").value.trim(),coffee:document.getElementById("storyCoffee").value,method:document.getElementById("storyMethod").value,rating:Number(document.getElementById("storyRating").value),text:document.getElementById("storyText").value.trim()};
+ if(!story.name||!story.city||!story.text)return;
+ communityStories.unshift(story);
+ localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
+ document.getElementById("storyForm").reset();
+ closeStoryForm(); renderStories();
+ document.getElementById("stories").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
 const rp=n=>"Rp"+n.toLocaleString("id-ID");
 const esc=s=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 
@@ -134,9 +167,9 @@ function searchProducts(q){
 }
 function openAccount(){document.getElementById("accountModal").classList.add("open")}
 function closeAccount(){document.getElementById("accountModal").classList.remove("open")}
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeSearch();closeAccount()}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeSearch();closeAccount();closeStoryForm();closeProduct()}});
 renderRegions();
-renderSeasonal();renderProducts();renderCart();
+renderSeasonal();renderProducts();renderCart();renderStories();
 
 function openProduct(name){
  const p=PRODUCTS.find(x=>x.name===name); if(!p)return;

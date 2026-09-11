@@ -9,3 +9,6 @@ Important concept: customers do NOT choose an artificial flavor. Tasting notes a
 Files: index.html, styles.css, app.js, assets/
 Deploy: upload the contents of this folder to the ROOT of the existing GitHub repository. Vercel will deploy the new commit automatically.
 Checkout remains demo-only until production backend/payment is connected.
+
+V9 — COFFEE STORIES
+Adds community story cards, ratings, coffee/brew metadata, a Share Your Story form, and localStorage persistence for submitted stories.

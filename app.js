@@ -11,11 +11,22 @@ const rp=n=>"Rp"+n.toLocaleString("id-ID");
 const esc=s=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 
 function renderRegions(){
- document.getElementById("regions").innerHTML=Object.keys(REGION_ART).map(r=>`
- <article class="region-card" onclick="filterRegion('${r}');location.hash='shop'">
- <img src="${REGION_ART[r]}" alt="${r} coffee region">
- <div class="region-copy"><span>ORIGIN 0${Object.keys(REGION_ART).indexOf(r)+1}</span><h3>${r}</h3><p>${REGION_TEXT[r]}</p></div></article>`).join("");
- document.getElementById("finderRegions").innerHTML=Object.keys(REGION_ART).map(r=>`<button onclick="chooseFinderRegion('${r}',this)">${r.toUpperCase()}</button>`).join("");
+ const regions=Object.keys(REGION_ART);
+ document.getElementById("regions").innerHTML=regions.map((r,i)=>`
+ <article class="region-card" onclick="selectRegion('${r}')">
+  <img src="${REGION_ART[r]}" alt="${r} coffee region">
+  <div class="region-number">0${i+1}</div>
+  <div class="region-copy"><span>ORIGIN 0${i+1}</span><h3>${r}</h3><p>${REGION_TEXT[r]}</p><b>EXPLORE ORIGIN →</b></div>
+ </article>`).join("");
+ document.getElementById("finderRegions").innerHTML=regions.map(r=>`<button onclick="chooseFinderRegion('${r}',this)">${r.toUpperCase()}</button>`).join("");
+}
+function selectRegion(region){
+ const products=PRODUCTS.filter(p=>p.region===region);
+ const sample=products.slice(0,4);
+ const detail=document.getElementById("regionDetail");
+ detail.innerHTML=`<div class="region-detail-copy"><span class="eyebrow">ORIGIN ${String(Object.keys(REGION_ART).indexOf(region)+1).padStart(2,"0")}</span><h3>${region}</h3><p>${REGION_TEXT[region]}</p><div class="region-count">${products.length} COFFEES IN THE COLLECTION</div><button class="btn" onclick="filterRegion('${region}');location.hash='shop'">SHOP ${region.toUpperCase()} →</button></div><div class="region-picks"><span class="eyebrow">SELECTED ORIGINS</span>${sample.map(p=>`<button onclick="openProduct(${JSON.stringify(p.name)})"><b>${esc(p.name)}</b><small>${esc(p.notes)}</small></button>`).join("")}</div>`;
+ detail.classList.add("show");
+ detail.scrollIntoView({behavior:"smooth",block:"center"});
 }
 function productArt(p){
  const palettes={"Sumatera":["#24342b","#b08a4a"],"Jawa Barat":["#4a3325","#c89a58"],"Jawa Tengah":["#171512","#b08a4a"],"Jawa Timur":["#5a3b28","#d0a66a"],"Indonesia Timur":["#24342b","#d1aa70"]};

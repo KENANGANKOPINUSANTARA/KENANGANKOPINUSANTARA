@@ -17,11 +17,23 @@ function renderStories(){
  const all=[...communityStories,...SEEDED_STORIES];
  const grid=document.getElementById("storyGrid"); if(!grid)return;
  document.getElementById("storyCount").textContent=String(all.length).padStart(2,"0")+" STORIES";
- grid.innerHTML=all.map((s,i)=>`<article class="story-card ${i<3?'featured':''}">
+ grid.innerHTML=all.map((s,i)=>{
+  const own=Boolean(s.id);
+  return `<article class="story-card ${i<3?'featured':''}">
    <div class="story-top"><span>${String(i+1).padStart(2,"0")}</span><span class="story-stars" aria-label="${s.rating} out of 5">${"★".repeat(Number(s.rating))}${"☆".repeat(5-Number(s.rating))}</span></div>
    <p>“${esc(s.text)}”</p>
    <div class="story-meta"><b>— ${esc(s.name).toUpperCase()} · ${esc(s.city).toUpperCase()}</b><small>${esc(s.coffee)} · ${esc(s.method)}</small></div>
- </article>`).join("");
+   ${own?`<div class="story-controls"><span>YOUR STORY</span><button type="button" onclick="unsendStory('${s.id}')" aria-label="Unsend your story">UNSEND STORY ×</button></div>`:''}
+  </article>`;
+ }).join("");
+}
+function unsendStory(id){
+ const story=communityStories.find(s=>s.id===id); if(!story)return;
+ const ok=confirm("Unsend this story? It will be removed from this browser and will no longer appear in Coffee Stories.");
+ if(!ok)return;
+ communityStories=communityStories.filter(s=>s.id!==id);
+ localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
+ renderStories();
 }
 function openStoryForm(){
  const select=document.getElementById("storyCoffee");
@@ -31,7 +43,7 @@ function openStoryForm(){
 function closeStoryForm(){document.getElementById("storyModal").classList.remove("open");}
 function submitStory(e){
  e.preventDefault();
- const story={name:document.getElementById("storyName").value.trim(),city:document.getElementById("storyCity").value.trim(),coffee:document.getElementById("storyCoffee").value,method:document.getElementById("storyMethod").value,rating:Number(document.getElementById("storyRating").value),text:document.getElementById("storyText").value.trim()};
+ const story={id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2)),name:document.getElementById("storyName").value.trim(),city:document.getElementById("storyCity").value.trim(),coffee:document.getElementById("storyCoffee").value,method:document.getElementById("storyMethod").value,rating:Number(document.getElementById("storyRating").value),text:document.getElementById("storyText").value.trim()};
  if(!story.name||!story.city||!story.text)return;
  communityStories.unshift(story);
  localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));

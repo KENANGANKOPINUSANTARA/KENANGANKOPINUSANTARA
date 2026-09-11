@@ -12,3 +12,7 @@ Checkout remains demo-only until production backend/payment is connected.
 
 V9 — COFFEE STORIES
 Adds community story cards, ratings, coffee/brew metadata, a Share Your Story form, and localStorage persistence for submitted stories.
+
+
+V9.1 — COFFEE STORIES UNSEND
+User-created stories receive a private local ID and show an UNSEND STORY control. Unsend asks for confirmation, removes the story from this browser's localStorage, and refreshes the community count. Seeded demo stories cannot be unsent.

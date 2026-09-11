@@ -1,4 +1,11 @@
-KENANGAN KOPI NUSANTARA — V7 SEASONAL
-Customer website refinement focused on Seasonal Café Exclusive.
-Five seasonal coffees are presented as limited café-only drops and are not offered through online cart.
-Upload contents to the ROOT of the existing GitHub repository. Vercel deploys the new commit automatically.
+KENANGAN KOPI NUSANTARA — V8 CREATE YOUR COFFEE
+Premium customer-facing website refinement.
+
+V8 adds a guided Create Your Coffee journey:
+01 choose region → 02 choose bean → 03 discover natural tasting character → optional café brewing experience → café CTA.
+
+Important concept: customers do NOT choose an artificial flavor. Tasting notes are derived from the selected coffee bean.
+
+Files: index.html, styles.css, app.js, assets/
+Deploy: upload the contents of this folder to the ROOT of the existing GitHub repository. Vercel will deploy the new commit automatically.
+Checkout remains demo-only until production backend/payment is connected.

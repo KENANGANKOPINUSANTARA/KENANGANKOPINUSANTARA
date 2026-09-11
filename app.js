@@ -67,14 +67,49 @@ document.querySelectorAll(".filter").forEach(b=>b.addEventListener("click",()=>f
 document.getElementById("processFilter").addEventListener("change",renderProducts);
 
 function chooseFinderRegion(r,el){
- document.querySelectorAll(".finder-regions button").forEach(b=>b.classList.remove("active"));el.classList.add("active");
+ document.querySelectorAll(".finder-regions button").forEach(b=>b.classList.remove("active"));
+ el.classList.add("active");
  const beans=PRODUCTS.filter(p=>p.region===r&&p.type==="Regular");
- document.getElementById("finderBeans").innerHTML=beans.map(p=>`<button class="bean-btn" onclick='showFinder(${JSON.stringify(p.name)})'><b>${esc(p.name)}</b><small>${esc(p.process)} · ${esc(p.notes)}</small></button>`).join("");
- document.getElementById("finderResult").textContent="Choose a bean to discover its natural character.";
+ document.getElementById("finderProgress").textContent="STEP 02 · CHOOSE YOUR BEAN";
+ document.getElementById("finderBeans").innerHTML=beans.map(p=>`<button class="bean-btn" onclick='showFinder(${JSON.stringify(p.name)},this)'><b>${esc(p.name)}</b><small>${esc(p.process)} · ${esc(p.notes)}</small></button>`).join("");
+ document.getElementById("finderCharacter").classList.remove("show");
+ document.getElementById("finderExperience").classList.remove("show");
+ document.getElementById("finderResult").innerHTML='<div class="result-copy"><strong>Choose a bean to discover its natural character.</strong><small>The tasting notes come from the coffee itself — not from a flavor selector.</small></div>';
+ document.getElementById("finderBeans").scrollIntoView({behavior:"smooth",block:"center"});
 }
-function showFinder(name){
- const p=PRODUCTS.find(x=>x.name===name);
- document.getElementById("finderResult").innerHTML=`<b>${esc(p.name)}</b> · ${esc(p.region)}<br><span style="color:#b08a4a">${esc(p.notes)}</span><br><small>${esc(p.process)} process · ${rp(p.price)} / 100g</small>`;
+function showFinder(name,el){
+ const p=PRODUCTS.find(x=>x.name===name); if(!p)return;
+ document.querySelectorAll(".bean-btn").forEach(b=>b.classList.remove("active"));
+ if(el)el.classList.add("active");
+ document.getElementById("finderProgress").textContent="STEP 03 · DISCOVER ITS CHARACTER";
+ document.getElementById("finderCharacter").innerHTML=`<div class="character-grid">
+   <div class="character-art"><img src="${productArt(p)}" alt="${esc(p.name)}"></div>
+   <div class="character-copy"><span class="eyebrow">YOUR SELECTED BEAN</span><h3>${esc(p.name)}</h3><div class="character-notes">${esc(p.notes)}</div><div class="character-meta"><span>ORIGIN · ${esc(p.region).toUpperCase()}</span><span>VARIETY · ${esc(p.variety).toUpperCase()}</span><span>PROCESS · ${esc(p.process).toUpperCase()}</span></div></div>
+ </div>`;
+ document.getElementById("finderCharacter").classList.add("show");
+ document.getElementById("finderExperience").innerHTML=`<div class="experience-title">OPTIONAL · CHOOSE YOUR CAFÉ EXPERIENCE</div><div class="experience-options">
+   <button onclick="chooseExperience('POUR OVER',this)">POUR OVER</button>
+   <button onclick="chooseExperience('V60',this)">V60</button>
+   <button onclick="chooseExperience('ESPRESSO',this)">ESPRESSO</button>
+   <button onclick="chooseExperience('FRENCH PRESS',this)">FRENCH PRESS</button>
+ </div>`;
+ document.getElementById("finderExperience").classList.add("show");
+ window.finderSelection={bean:p.name,experience:""};
+ updateFinderResult();
+ document.getElementById("finderCharacter").scrollIntoView({behavior:"smooth",block:"center"});
+}
+function chooseExperience(method,el){
+ document.querySelectorAll(".experience-options button").forEach(b=>b.classList.remove("active"));
+ el.classList.add("active");
+ if(!window.finderSelection)window.finderSelection={bean:"",experience:""};
+ window.finderSelection.experience=method;
+ updateFinderResult();
+}
+function updateFinderResult(){
+ const p=PRODUCTS.find(x=>x.name===window.finderSelection?.bean); if(!p)return;
+ const exp=window.finderSelection.experience;
+ document.getElementById("finderProgress").textContent=exp?"STEP 04 · YOUR COFFEE JOURNEY":"STEP 03 · DISCOVER ITS CHARACTER";
+ document.getElementById("finderResult").innerHTML=`<div class="result-copy"><span class="eyebrow">YOUR COFFEE JOURNEY</span><strong>${esc(p.name)} · ${esc(p.region)}</strong><small>${esc(p.process)} · ${esc(p.notes)}${exp?` · EXPERIENCE: ${esc(exp)}`:""}</small></div><a class="result-cta" href="#cafe">DISCOVER AT THE CAFÉ →</a>`;
 }
 function addToCart(name){
  const p=PRODUCTS.find(x=>x.name===name); if(!p||p.type==="Seasonal")return;

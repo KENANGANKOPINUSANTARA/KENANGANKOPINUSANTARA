@@ -13,6 +13,17 @@ const SEEDED_STORIES=[
  {id:"seed-3",name:"ARYA",city:"BALI",coffee:"Bajawa",method:"French Press",rating:5,text:"Different beans. Different landscapes. Different memories. Bajawa felt warm, floral and deeply comforting."}
 ];
 let communityStories=JSON.parse(localStorage.getItem("kenangan_stories")||"[]");
+// Normalize stories created by older versions so every story always has a stable ID.
+// This fixes legacy stories (including “TERLALU GACOR”) whose ID may be missing.
+let storiesWereNormalized=false;
+communityStories=communityStories.map((s,i)=>{
+  if(!s.id){
+    storiesWereNormalized=true;
+    return {...s,id:`legacy-${Date.now()}-${i}-${Math.random().toString(36).slice(2,8)}`};
+  }
+  return s;
+});
+if(storiesWereNormalized) localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
 let deletedStories=JSON.parse(localStorage.getItem("kenangan_deleted_stories")||"[]");
 let editedSeedStories=JSON.parse(localStorage.getItem("kenangan_edited_stories")||"{}");
 
@@ -34,7 +45,10 @@ function renderStories(){
    <div class="story-controls"><span>${communityStories.some(x=>x.id===s.id)?"YOUR STORY":"COMMUNITY STORY"}</span><div class="story-actions"><button type="button" onclick="editStory('${s.id}')">EDIT</button><button type="button" onclick="unsendStory('${s.id}')">UNSEND ×</button></div></div>
   </article>`).join("");
 }
-function findStory(id){return getAllStories().find(s=>s.id===id);}
+function findStory(id){
+ const normalizedId=String(id);
+ return getAllStories().find(s=>String(s.id)===normalizedId);
+}
 function unsendStory(id){
  const story=findStory(id); if(!story)return;
  const ok=confirm(`Unsend “${story.text.slice(0,55)}${story.text.length>55?'…':''}”? This story will be removed from Coffee Stories.`);

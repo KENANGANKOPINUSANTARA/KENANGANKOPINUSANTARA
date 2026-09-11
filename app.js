@@ -13,26 +13,33 @@ const SEEDED_STORIES=[
  {id:"seed-3",name:"ARYA",city:"BALI",coffee:"Bajawa",method:"French Press",rating:5,text:"Different beans. Different landscapes. Different memories. Bajawa felt warm, floral and deeply comforting."}
 ];
 let communityStories=JSON.parse(localStorage.getItem("kenangan_stories")||"[]");
-// Normalize stories created by older versions so every story always has a stable ID.
-// This fixes legacy stories (including “TERLALU GACOR”) whose ID may be missing.
-let storiesWereNormalized=false;
-communityStories=communityStories.map((s,i)=>{
-  if(!s.id){
-    storiesWereNormalized=true;
-    return {...s,id:`legacy-${Date.now()}-${i}-${Math.random().toString(36).slice(2,8)}`};
-  }
-  return s;
-});
-if(storiesWereNormalized) localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
 let deletedStories=JSON.parse(localStorage.getItem("kenangan_deleted_stories")||"[]");
 let editedSeedStories=JSON.parse(localStorage.getItem("kenangan_edited_stories")||"{}");
 
+// V11 Stories data layer: use the real local Node API when available,
+// while keeping localStorage as a graceful fallback for the Vercel/static demo.
+const STORIES_API="/api/stories";
+let apiStories=null;
+let storyApiAvailable=false;
+
+function normalizeLocalStories(){
+ let changed=false;
+ communityStories=communityStories.map((s,i)=>{
+   if(!s.id){changed=true;return {...s,id:`legacy-${Date.now()}-${i}-${Math.random().toString(36).slice(2,8)}`};}
+   return s;
+ });
+ if(changed)localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
+}
+normalizeLocalStories();
+
 function getAllStories(){
+ if(Array.isArray(apiStories)) return apiStories.filter(s=>s.status!=="unsent");
  const seeded=SEEDED_STORIES
   .filter(s=>!deletedStories.includes(s.id))
   .map(s=>editedSeedStories[s.id]?{...s,...editedSeedStories[s.id],id:s.id}:s);
  return [...communityStories,...seeded];
 }
+function storyIsLocal(id){return communityStories.some(s=>String(s.id)===String(id));}
 function renderStories(){
  const all=getAllStories();
  const grid=document.getElementById("storyGrid"); if(!grid)return;
@@ -42,25 +49,52 @@ function renderStories(){
    <div class="story-top"><span>${String(i+1).padStart(2,"0")}</span><span class="story-stars" aria-label="${Number(s.rating)} out of 5">${"★".repeat(Number(s.rating))}${"☆".repeat(5-Number(s.rating))}</span></div>
    <p>“${esc(s.text)}”</p>
    <div class="story-meta"><b>— ${esc(s.name).toUpperCase()} · ${esc(s.city).toUpperCase()}</b><small>${esc(s.coffee)} · ${esc(s.method)}</small></div>
-   <div class="story-controls"><span>${communityStories.some(x=>x.id===s.id)?"YOUR STORY":"COMMUNITY STORY"}</span><div class="story-actions"><button type="button" onclick="editStory('${s.id}')">EDIT</button><button type="button" onclick="unsendStory('${s.id}')">UNSEND ×</button></div></div>
+   <div class="story-controls"><span>${storyIsLocal(s.id)?"YOUR STORY":"COMMUNITY STORY"}</span><div class="story-actions"><button type="button" onclick="editStory('${esc(String(s.id))}')">EDIT</button><button type="button" onclick="unsendStory('${esc(String(s.id))}')">UNSEND ×</button></div></div>
   </article>`).join("");
 }
-function findStory(id){
- const normalizedId=String(id);
- return getAllStories().find(s=>String(s.id)===normalizedId);
+function findStory(id){return getAllStories().find(s=>String(s.id)===String(id));}
+async function storyFetch(url,options={}){
+ const res=await fetch(url,{...options,headers:{"Content-Type":"application/json",...(options.headers||{})}});
+ if(!res.ok)throw new Error(`Story API ${res.status}`);
+ return res.json();
 }
-function unsendStory(id){
+async function loadStories(){
+ try{
+   const remote=await storyFetch(STORIES_API);
+   storyApiAvailable=true;
+   apiStories=Array.isArray(remote)?remote:[];
+   // One-time migration: move older local user stories into the backend.
+   const remoteIds=new Set(apiStories.map(s=>String(s.id)));
+   for(const localStory of communityStories){
+     if(!remoteIds.has(String(localStory.id))){
+       try{
+         const created=await storyFetch(STORIES_API,{method:"POST",body:JSON.stringify(localStory)});
+         apiStories.unshift(created); remoteIds.add(String(created.id));
+       }catch{}
+     }
+   }
+   renderStories();
+ }catch{
+   storyApiAvailable=false; apiStories=null; renderStories();
+ }
+}
+async function unsendStory(id){
  const story=findStory(id); if(!story)return;
  const ok=confirm(`Unsend “${story.text.slice(0,55)}${story.text.length>55?'…':''}”? This story will be removed from Coffee Stories.`);
  if(!ok)return;
- if(communityStories.some(s=>s.id===id)){
-  communityStories=communityStories.filter(s=>s.id!==id);
-  localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
- }else if(id.startsWith("seed-")){
-  if(!deletedStories.includes(id))deletedStories.push(id);
-  localStorage.setItem("kenangan_deleted_stories",JSON.stringify(deletedStories));
- }
- renderStories();
+ try{
+   if(storyApiAvailable){
+     await storyFetch(`${STORIES_API}/${encodeURIComponent(id)}`,{method:"DELETE"});
+     apiStories=apiStories.filter(s=>String(s.id)!==String(id));
+   }else if(storyIsLocal(id)){
+     communityStories=communityStories.filter(s=>String(s.id)!==String(id));
+     localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
+   }else if(String(id).startsWith("seed-")){
+     if(!deletedStories.includes(id))deletedStories.push(id);
+     localStorage.setItem("kenangan_deleted_stories",JSON.stringify(deletedStories));
+   }
+   renderStories();
+ }catch(e){alert("Story could not be unsent. Please try again.");}
 }
 function editStory(id){
  const story=findStory(id); if(!story)return;
@@ -76,15 +110,22 @@ function editStory(id){
  document.getElementById("editStoryModal").classList.add("open");
 }
 function closeEditStory(){document.getElementById("editStoryModal").classList.remove("open");}
-function saveEditedStory(e){
+async function saveEditedStory(e){
  e.preventDefault();
  const id=document.getElementById("editStoryId").value;
  const updated={name:document.getElementById("editStoryName").value.trim(),city:document.getElementById("editStoryCity").value.trim(),coffee:document.getElementById("editStoryCoffee").value,method:document.getElementById("editStoryMethod").value,rating:Number(document.getElementById("editStoryRating").value),text:document.getElementById("editStoryText").value.trim()};
  if(!updated.name||!updated.city||!updated.text)return;
- const idx=communityStories.findIndex(s=>s.id===id);
- if(idx>-1){communityStories[idx]={...communityStories[idx],...updated};localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));}
- else if(id.startsWith("seed-")){editedSeedStories[id]=updated;localStorage.setItem("kenangan_edited_stories",JSON.stringify(editedSeedStories));}
- closeEditStory();renderStories();
+ try{
+   if(storyApiAvailable){
+     const saved=await storyFetch(`${STORIES_API}/${encodeURIComponent(id)}`,{method:"PUT",body:JSON.stringify(updated)});
+     apiStories=apiStories.map(s=>String(s.id)===String(id)?saved:s);
+   }else{
+     const idx=communityStories.findIndex(s=>String(s.id)===String(id));
+     if(idx>-1){communityStories[idx]={...communityStories[idx],...updated};localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));}
+     else if(String(id).startsWith("seed-")){editedSeedStories[id]=updated;localStorage.setItem("kenangan_edited_stories",JSON.stringify(editedSeedStories));}
+   }
+   closeEditStory();renderStories();
+ }catch(e){alert("Story could not be updated. Please try again.");}
 }
 function openStoryForm(){
  const select=document.getElementById("storyCoffee");
@@ -92,15 +133,22 @@ function openStoryForm(){
  document.getElementById("storyModal").classList.add("open");
 }
 function closeStoryForm(){document.getElementById("storyModal").classList.remove("open");}
-function submitStory(e){
+async function submitStory(e){
  e.preventDefault();
  const story={id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2)),name:document.getElementById("storyName").value.trim(),city:document.getElementById("storyCity").value.trim(),coffee:document.getElementById("storyCoffee").value,method:document.getElementById("storyMethod").value,rating:Number(document.getElementById("storyRating").value),text:document.getElementById("storyText").value.trim()};
  if(!story.name||!story.city||!story.text)return;
- communityStories.unshift(story);
- localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
- document.getElementById("storyForm").reset();
- closeStoryForm(); renderStories();
- document.getElementById("stories").scrollIntoView({behavior:"smooth",block:"start"});
+ try{
+   if(storyApiAvailable){
+     const created=await storyFetch(STORIES_API,{method:"POST",body:JSON.stringify(story)});
+     apiStories=[created,...apiStories];
+   }else{
+     communityStories.unshift(story);
+     localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
+   }
+   document.getElementById("storyForm").reset();
+   closeStoryForm(); renderStories();
+   document.getElementById("stories").scrollIntoView({behavior:"smooth",block:"start"});
+ }catch(e){alert("Story could not be published. Please try again.");}
 }
 
 const rp=n=>"Rp"+n.toLocaleString("id-ID");
@@ -233,6 +281,7 @@ function closeAccount(){document.getElementById("accountModal").classList.remove
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeSearch();closeAccount();closeStoryForm();closeProduct()}});
 renderRegions();
 renderSeasonal();renderProducts();renderCart();renderStories();
+loadStories().then(()=>{const m=document.getElementById("storyMode");if(m)m.textContent=storyApiAvailable?"DATABASE CONNECTED":"LOCAL FALLBACK";});
 
 function openProduct(name){
  const p=PRODUCTS.find(x=>x.name===name); if(!p)return;

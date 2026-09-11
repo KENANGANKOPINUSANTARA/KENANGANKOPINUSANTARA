@@ -1,0 +1,40 @@
+{
+  "stories": [
+    {
+      "id": "seed-1",
+      "name": "RAKA",
+      "city": "JAKARTA",
+      "coffee": "Pangalengan",
+      "method": "V60",
+      "rating": 5,
+      "text": "The fruit character from West Java completely changed how I think about Indonesian coffee.",
+      "status": "published",
+      "createdAt": "2026-09-11T00:00:00.000Z",
+      "updatedAt": "2026-09-11T00:00:00.000Z"
+    },
+    {
+      "id": "seed-2",
+      "name": "NADIA",
+      "city": "BANDUNG",
+      "coffee": "Kerinci Mossto",
+      "method": "Pour Over",
+      "rating": 5,
+      "text": "Seasonal coffee gave me a reason to come back to the café and try something new.",
+      "status": "published",
+      "createdAt": "2026-09-11T00:00:00.000Z",
+      "updatedAt": "2026-09-11T00:00:00.000Z"
+    },
+    {
+      "id": "seed-3",
+      "name": "ARYA",
+      "city": "BALI",
+      "coffee": "Bajawa",
+      "method": "French Press",
+      "rating": 5,
+      "text": "Different beans. Different landscapes. Different memories. Bajawa felt warm, floral and deeply comforting.",
+      "status": "published",
+      "createdAt": "2026-09-11T00:00:00.000Z",
+      "updatedAt": "2026-09-11T00:00:00.000Z"
+    }
+  ]
+}

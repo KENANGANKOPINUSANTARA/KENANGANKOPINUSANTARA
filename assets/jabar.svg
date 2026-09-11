@@ -1,1 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 850"><rect width="700" height="850" fill="#171512"/><circle cx="130" cy="190" r="150" fill="#b08a4a" opacity=".15"/><path d="M50 620 Q180 350 300 520 T650 260" fill="none" stroke="#b08a4a" stroke-width="7"/><text x="60" y="115" fill="#f5f0e7" font-family="Georgia" font-size="44">JAWA BARAT</text><text x="60" y="155" fill="#b08a4a" font-family="Arial" font-size="15" letter-spacing="3">FRUITY · GRAPE · WINEY</text><g transform="translate(190 240)"><rect width="320" height="480" rx="18" fill="#f5f0e7"/><text x="160" y="75" text-anchor="middle" font-family="Georgia" font-size="20">KENANGAN</text><text x="160" y="110" text-anchor="middle" font-family="Arial" font-size="11" letter-spacing="3">WEST JAVA</text><circle cx="160" cy="255" r="82" fill="#4a3325"/><circle cx="125" cy="245" r="16" fill="#b08a4a"/><circle cx="165" cy="220" r="18" fill="#b08a4a"/><circle cx="195" cy="260" r="14" fill="#b08a4a"/><text x="160" y="395" text-anchor="middle" font-family="Georgia" font-size="18">ORIGIN SERIES</text><text x="160" y="425" text-anchor="middle" font-family="Arial" font-size="10" letter-spacing="2">BANDUNG HIGHLANDS</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+
+<defs><linearGradient id="o" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4a3325"/><stop offset="1" stop-color="#171512"/></linearGradient></defs>
+<rect width="1000" height="1000" fill="url(#o)"/>
+<circle cx="760" cy="170" r="250" fill="#f5f0e7" opacity=".08"/>
+<path d="M0 760 C180 610 280 760 420 590 S720 480 1000 270" fill="none" stroke="#f5f0e7" stroke-width="4" opacity=".45"/>
+<text x="75" y="125" fill="#f5f0e7" font-family="Georgia" font-size="54">JAWA BARAT</text>
+<text x="78" y="165" fill="#f5f0e7" opacity=".75" font-family="Arial" font-size="15" letter-spacing="4">FRUITY · GRAPE · WINEY</text>
+<g transform="translate(300 260)">
+<ellipse cx="210" cy="650" rx="190" ry="35" fill="#000" opacity=".35"/>
+<rect x="10" y="0" width="400" height="640" rx="25" fill="#efe7d8"/>
+<rect x="32" y="22" width="356" height="596" rx="18" fill="#faf5eb" stroke="#f5f0e7" stroke-width="2"/>
+<text x="210" y="100" text-anchor="middle" font-family="Georgia" font-size="26" fill="#171512">KENANGAN</text>
+<text x="210" y="132" text-anchor="middle" font-family="Arial" font-size="11" letter-spacing="4" fill="#4a3325">KOPI NUSANTARA</text>
+<circle cx="210" cy="300" r="95" fill="#24342b"/>
+<path d="M210 210 C155 280 165 345 210 390 C255 345 265 280 210 210Z" fill="#f5f0e7"/>
+<text x="210" y="470" text-anchor="middle" font-family="Georgia" font-size="24" fill="#171512">Pangalengan</text>
+<text x="210" y="510" text-anchor="middle" font-family="Arial" font-size="11" letter-spacing="3" fill="#4a3325">ORIGIN SERIES</text>
+<line x1="120" y1="545" x2="300" y2="545" stroke="#f5f0e7"/>
+<text x="210" y="575" text-anchor="middle" font-family="Georgia" font-size="12" fill="#4a3325">FROM INDONESIA</text>
+</g>
+</svg>

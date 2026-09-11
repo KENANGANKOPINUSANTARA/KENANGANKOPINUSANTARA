@@ -1,1 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 850"><rect width="700" height="850" fill="#24342b"/><circle cx="530" cy="180" r="180" fill="#b08a4a" opacity=".18"/><path d="M70 700 C180 510 270 620 370 430 S540 350 650 130" fill="none" stroke="#f5f0e7" stroke-width="5" opacity=".5"/><text x="70" y="120" fill="#f5f0e7" font-family="Georgia" font-size="48">SUMATERA</text><text x="70" y="165" fill="#b08a4a" font-family="Arial" font-size="16" letter-spacing="4">BOLD · EARTHY · CHOCOLATE</text><g transform="translate(190 245)"><rect width="320" height="470" rx="18" fill="#f5f0e7"/><text x="160" y="75" text-anchor="middle" font-family="Georgia" font-size="20">KENANGAN</text><text x="160" y="110" text-anchor="middle" font-family="Arial" font-size="11" letter-spacing="3">ACEH GAYO</text><circle cx="160" cy="250" r="80" fill="#b08a4a" opacity=".8"/><path d="M160 185 C120 235 130 285 160 315 C190 285 200 235 160 185Z" fill="#24342b"/><text x="160" y="390" text-anchor="middle" font-family="Georgia" font-size="18">ORIGIN SERIES</text><text x="160" y="420" text-anchor="middle" font-family="Arial" font-size="10" letter-spacing="2">INDONESIA</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+
+<defs><linearGradient id="o" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#24342b"/><stop offset="1" stop-color="#171512"/></linearGradient></defs>
+<rect width="1000" height="1000" fill="url(#o)"/>
+<circle cx="760" cy="170" r="250" fill="#b08a4a" opacity=".08"/>
+<path d="M0 760 C180 610 280 760 420 590 S720 480 1000 270" fill="none" stroke="#b08a4a" stroke-width="4" opacity=".45"/>
+<text x="75" y="125" fill="#b08a4a" font-family="Georgia" font-size="54">SUMATERA</text>
+<text x="78" y="165" fill="#b08a4a" opacity=".75" font-family="Arial" font-size="15" letter-spacing="4">BOLD · EARTHY · CHOCOLATE</text>
+<g transform="translate(300 260)">
+<ellipse cx="210" cy="650" rx="190" ry="35" fill="#000" opacity=".35"/>
+<rect x="10" y="0" width="400" height="640" rx="25" fill="#efe7d8"/>
+<rect x="32" y="22" width="356" height="596" rx="18" fill="#faf5eb" stroke="#b08a4a" stroke-width="2"/>
+<text x="210" y="100" text-anchor="middle" font-family="Georgia" font-size="26" fill="#171512">KENANGAN</text>
+<text x="210" y="132" text-anchor="middle" font-family="Arial" font-size="11" letter-spacing="4" fill="#4a3325">KOPI NUSANTARA</text>
+<circle cx="210" cy="300" r="95" fill="#24342b"/>
+<path d="M210 210 C155 280 165 345 210 390 C255 345 265 280 210 210Z" fill="#b08a4a"/>
+<text x="210" y="470" text-anchor="middle" font-family="Georgia" font-size="24" fill="#171512">Aceh Gayo</text>
+<text x="210" y="510" text-anchor="middle" font-family="Arial" font-size="11" letter-spacing="3" fill="#4a3325">ORIGIN SERIES</text>
+<line x1="120" y1="545" x2="300" y2="545" stroke="#b08a4a"/>
+<text x="210" y="575" text-anchor="middle" font-family="Georgia" font-size="12" fill="#4a3325">FROM INDONESIA</text>
+</g>
+</svg>

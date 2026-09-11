@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+
+<defs><radialGradient id="r"><stop stop-color="#b08a4a" stop-opacity=".22"/><stop offset="1" stop-color="#b08a4a" stop-opacity="0"/></radialGradient></defs>
+<rect width="800" height="1000" fill="#e8dfd1"/>
+<circle cx="360" cy="160" r="230" fill="url(#r)"/>
+<ellipse cx="400" cy="830" rx="260" ry="55" fill="#3b2a20" opacity=".18"/>
+<rect x="210" y="170" width="380" height="620" rx="24" fill="#171512" opacity=".18"/>
+<rect x="190" y="145" width="380" height="620" rx="24" fill="#f7f0e3"/>
+<rect x="215" y="170" width="330" height="570" rx="18" fill="#fbf6ed" stroke="#b08a4a" stroke-width="2"/>
+<text x="380" y="250" text-anchor="middle" font-family="Georgia" font-size="25" letter-spacing="5" fill="#171512">KENANGAN</text>
+<text x="380" y="280" text-anchor="middle" font-family="Arial" font-size="10" letter-spacing="4" fill="#4a3325">COFFEE ORIGIN</text>
+<circle cx="380" cy="455" r="92" fill="#4a3325"/>
+<path d="M380 375 C335 430 345 490 380 525 C415 490 425 430 380 375Z" fill="#b08a4a"/>
+<text x="380" y="620" text-anchor="middle" font-family="Georgia" font-size="18" fill="#171512">100 G</text>
+<line x1="300" y1="650" x2="460" y2="650" stroke="#b08a4a"/>
+<text x="380" y="682" text-anchor="middle" font-family="Arial" font-size="9" letter-spacing="2" fill="#4a3325">ROASTED IN INDONESIA</text>
+</svg>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#191511"/><stop offset=".55" stop-color="#33261d"/><stop offset="1" stop-color="#5a4027"/></linearGradient>
+<radialGradient id="light"><stop stop-color="#d6ad6b" stop-opacity=".28"/><stop offset="1" stop-color="#d6ad6b" stop-opacity="0"/></radialGradient>
+<filter id="shadow"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="1000" height="1000" fill="url(#bg)"/>
+<circle cx="760" cy="190" r="330" fill="url(#light)"/>
+<ellipse cx="530" cy="855" rx="330" ry="70" fill="#000" opacity=".35" filter="url(#shadow)"/>
+<g transform="translate(290 105) rotate(-4 210 385)">
+<rect x="0" y="0" width="420" height="770" rx="25" fill="#000" opacity=".28"/>
+<rect x="18" y="8" width="384" height="752" rx="22" fill="#eee6d8"/>
+<rect x="40" y="30" width="340" height="708" rx="16" fill="#f8f2e7" stroke="#b08a4a" stroke-width="2"/>
+<text x="210" y="110" text-anchor="middle" font-family="Georgia" font-size="31" letter-spacing="7" fill="#171512">KENANGAN</text>
+<text x="210" y="145" text-anchor="middle" font-family="Arial" font-size="12" letter-spacing="5" fill="#4a3325">KOPI NUSANTARA</text>
+<circle cx="210" cy="370" r="115" fill="#24342b"/>
+<path d="M210 250 C150 330 165 415 210 458 C255 415 270 330 210 250Z" fill="#b08a4a"/>
+<path d="M210 270 C185 330 194 395 210 430 C226 395 235 330 210 270Z" fill="#f5f0e7" opacity=".75"/>
+<text x="210" y="575" text-anchor="middle" font-family="Georgia" font-size="27" fill="#171512">ACEH GAYO</text>
+<text x="210" y="610" text-anchor="middle" font-family="Arial" font-size="11" letter-spacing="4" fill="#4a3325">BOURBON · WASHED</text>
+<line x1="105" y1="650" x2="315" y2="650" stroke="#b08a4a"/>
+<text x="210" y="680" text-anchor="middle" font-family="Georgia" font-size="13" fill="#4a3325">DARK CHOCOLATE · BROWN SUGAR</text>
+<text x="210" y="705" text-anchor="middle" font-family="Georgia" font-size="13" fill="#4a3325">CITRUS</text>
+</g>
+</svg>

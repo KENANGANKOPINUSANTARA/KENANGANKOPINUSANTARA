@@ -18,8 +18,8 @@ function renderRegions(){
  document.getElementById("finderRegions").innerHTML=Object.keys(REGION_ART).map(r=>`<button onclick="chooseFinderRegion('${r}',this)">${r.toUpperCase()}</button>`).join("");
 }
 function productArt(p){
- const map={"Sumatera":"sumatera.svg","Jawa Barat":"jabar.svg","Jawa Tengah":"jateng.svg","Jawa Timur":"jatim.svg","Indonesia Timur":"timur.svg"};
- return `assets/${map[p.region]}`;
+ const n=PRODUCTS.findIndex(x=>x.name===p.name);
+ return `assets/still${(n%4)+1}.svg`;
 }
 function renderProducts(){
  const proc=document.getElementById("processFilter").value;
@@ -74,3 +74,16 @@ function openAccount(){document.getElementById("accountModal").classList.add("op
 function closeAccount(){document.getElementById("accountModal").classList.remove("open")}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeSearch();closeAccount()}});
 renderRegions();renderProducts();renderCart();
+
+function openProduct(name){
+ const p=PRODUCTS.find(x=>x.name===name); if(!p)return;
+ document.getElementById("productDetail").innerHTML=`<div class="detail-grid">
+ <div class="detail-art"><img src="${productArt(p)}" alt="${esc(p.name)}"></div>
+ <div><span class="eyebrow">${esc(p.region).toUpperCase()} · ${esc(p.process).toUpperCase()}</span>
+ <h2>${esc(p.name)}</h2><p class="detail-notes">${esc(p.notes)}</p>
+ <p class="detail-copy">A curated Indonesian origin selected for the Kenangan collection. The cup expresses the character of its origin and processing method.</p>
+ <strong class="detail-price">${rp(p.price)} / 100g</strong><br><br>
+ ${p.type==="Seasonal"?'<p><b>CAFÉ EXCLUSIVE.</b> Available to discover in person at the Kenangan café.</p>':'<button class="btn" onclick="addToCart('+JSON.stringify(p.name)+');closeProduct()">ADD TO CART →</button>'}</div></div>`;
+ document.getElementById("productModal").classList.add("open");
+}
+function closeProduct(){document.getElementById("productModal").classList.remove("open")}

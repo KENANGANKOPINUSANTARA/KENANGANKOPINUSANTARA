@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KENANGAN KOPI NUSANTARA</title><link rel="stylesheet" href="styles.css"></head>
+<body><header><a class="logo" href="#home"><span>K</span><b>KENANGAN<small>KOPI NUSANTARA</small></b></a>
+<nav><a href="#shop">SHOP</a><a href="#explore">EXPLORE</a><a href="#seasonal">SEASONAL</a><a href="#create">CREATE YOUR COFFEE</a><a href="#stories">STORIES</a><a href="#journal">JOURNAL</a><a href="#cafe">CAFÉ</a></nav>
+<div class="actions"><button onclick="search()">⌕</button><button onclick="account()">♙</button><button onclick="cartOpen()">🛒 <i id="count">0</i></button></div></header>
+<section id="home" class="hero"><div><label>FROM NUSANTARA, WITH MEANING</label><h1>Brewing Indonesia’s<br><em>Finest Coffee.</em></h1><p>Explore the origins, stories, and distinctive character of Indonesian coffee — from the highlands to your cup.</p><a class="btn" href="#shop">SHOP COFFEE →</a><a class="btn ghost" href="#explore">EXPLORE ORIGINS</a></div><div class="hero-pack"><div class="pack"><strong>K</strong><b>KENANGAN</b><small>ACEH GAYO<br>BOURBON</small></div></div></section>
+<section id="explore" class="section"><label>A JOURNEY THROUGH INDONESIA</label><h2>Every Origin Has<br>a Story.</h2><p>Five regions. Five expressions of Indonesian coffee.</p><div id="regions" class="regions"></div></section>
+<section id="shop" class="section cream"><label>OUR MOST LOVED</label><h2>Best Seller Coffee</h2><div id="products" class="grid"></div></section>
+<section id="create" class="section create"><div><label>CREATE YOUR COFFEE</label><h2>Discover Your Coffee</h2><p>Choose a region and a bean. Its tasting notes come from the coffee itself — not from a flavor setting.</p><a class="btn" href="#finder">START DISCOVERING →</a></div><div class="create-art">YOUR BEANS.<br>THEIR CHARACTER.<br>YOUR EXPERIENCE.</div></section>
+<section id="finder" class="section cream"><label>THE COFFEE JOURNEY</label><h2>Find a Bean That Fits You</h2><div id="regionBtns"></div><div id="beanBtns" class="grid mini"></div><div id="result"></div></section>
+<section id="seasonal" class="section dark"><label>RARE COFFEES · LIMITED MOMENTS</label><h2>Seasonal Drop</h2><p>Advertised online, available exclusively at our café.</p><div id="seasonals" class="grid mini"></div></section>
+<section id="stories" class="section"><label>REAL PEOPLE · REAL EXPERIENCES</label><h2>Coffee Stories</h2><div class="cards"><article>“More than coffee, it’s a journey through Indonesian culture.”<b>★★★★★</b></article><article>“West Java’s fruit character surprised me.”<b>★★★★★</b></article><article>“Different beans. Different memories.”<b>★★★★★</b></article></div></section>
+<section id="journal" class="section cream"><label>LEARN · EXPLORE · BE INSPIRED</label><h2>From the Journal</h2><div class="articles"><article>COFFEE 101<h3>Natural vs Washed: What’s the Difference?</h3></article><article>ORIGIN STORIES<h3>Five Indonesian Coffee Origins You Should Try</h3></article><article>BREWING GUIDE<h3>Finding the Right Brew for Your Bean</h3></article></div></section>
+<section id="cafe" class="section cafe"><label>COME EXPERIENCE KENANGAN</label><h2>More Than a Café.<br>A Coffee Journey.</h2><p>Explore a 100+ Indonesian coffee collection, discover seasonal selections, and create your coffee experience at our café.</p><a class="btn" href="#cafe">VISIT OUR CAFÉ →</a></section>
+<footer><div><span class="footerK">K</span><b>KENANGAN KOPI NUSANTARA</b><p>Brewing Indonesia’s Finest Coffee.</p></div><div>SHOP<br>All Coffee<br>Best Sellers<br>Seasonal</div><div>EXPLORE<br>Origins<br>Create Your Coffee</div><div>CAFÉ<br>Experience<br>Location</div></footer>
+<div id="drawer" class="drawer"><button onclick="cartClose()">×</button><h2>Your Cart</h2><div id="cart"></div><strong id="total">Rp0</strong></div>
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()"><div id="modalBody"></div></div>
+<script src="app.js"></script>
+</body></html>

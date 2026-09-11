@@ -8,32 +8,69 @@ let cart=JSON.parse(localStorage.getItem("kenangan_cart")||"[]");
 let activeRegion="All";
 
 const SEEDED_STORIES=[
- {name:"RAKA",city:"JAKARTA",coffee:"Pangalengan",method:"V60",rating:5,text:"The fruit character from West Java completely changed how I think about Indonesian coffee."},
- {name:"NADIA",city:"BANDUNG",coffee:"Kerinci Mossto",method:"Pour Over",rating:5,text:"Seasonal coffee gave me a reason to come back to the café and try something new."},
- {name:"ARYA",city:"BALI",coffee:"Bajawa",method:"French Press",rating:5,text:"Different beans. Different landscapes. Different memories. Bajawa felt warm, floral and deeply comforting."}
+ {id:"seed-1",name:"RAKA",city:"JAKARTA",coffee:"Pangalengan",method:"V60",rating:5,text:"The fruit character from West Java completely changed how I think about Indonesian coffee."},
+ {id:"seed-2",name:"NADIA",city:"BANDUNG",coffee:"Kerinci Mossto",method:"Pour Over",rating:5,text:"Seasonal coffee gave me a reason to come back to the café and try something new."},
+ {id:"seed-3",name:"ARYA",city:"BALI",coffee:"Bajawa",method:"French Press",rating:5,text:"Different beans. Different landscapes. Different memories. Bajawa felt warm, floral and deeply comforting."}
 ];
 let communityStories=JSON.parse(localStorage.getItem("kenangan_stories")||"[]");
+let deletedStories=JSON.parse(localStorage.getItem("kenangan_deleted_stories")||"[]");
+let editedSeedStories=JSON.parse(localStorage.getItem("kenangan_edited_stories")||"{}");
+
+function getAllStories(){
+ const seeded=SEEDED_STORIES
+  .filter(s=>!deletedStories.includes(s.id))
+  .map(s=>editedSeedStories[s.id]?{...s,...editedSeedStories[s.id],id:s.id}:s);
+ return [...communityStories,...seeded];
+}
 function renderStories(){
- const all=[...communityStories,...SEEDED_STORIES];
+ const all=getAllStories();
  const grid=document.getElementById("storyGrid"); if(!grid)return;
  document.getElementById("storyCount").textContent=String(all.length).padStart(2,"0")+" STORIES";
- grid.innerHTML=all.map((s,i)=>{
-  const own=Boolean(s.id);
-  return `<article class="story-card ${i<3?'featured':''}">
-   <div class="story-top"><span>${String(i+1).padStart(2,"0")}</span><span class="story-stars" aria-label="${s.rating} out of 5">${"★".repeat(Number(s.rating))}${"☆".repeat(5-Number(s.rating))}</span></div>
+ grid.innerHTML=all.map((s,i)=>`
+  <article class="story-card ${i<3?'featured':''}">
+   <div class="story-top"><span>${String(i+1).padStart(2,"0")}</span><span class="story-stars" aria-label="${Number(s.rating)} out of 5">${"★".repeat(Number(s.rating))}${"☆".repeat(5-Number(s.rating))}</span></div>
    <p>“${esc(s.text)}”</p>
    <div class="story-meta"><b>— ${esc(s.name).toUpperCase()} · ${esc(s.city).toUpperCase()}</b><small>${esc(s.coffee)} · ${esc(s.method)}</small></div>
-   ${own?`<div class="story-controls"><span>YOUR STORY</span><button type="button" onclick="unsendStory('${s.id}')" aria-label="Unsend your story">UNSEND STORY ×</button></div>`:''}
-  </article>`;
- }).join("");
+   <div class="story-controls"><span>${communityStories.some(x=>x.id===s.id)?"YOUR STORY":"COMMUNITY STORY"}</span><div class="story-actions"><button type="button" onclick="editStory('${s.id}')">EDIT</button><button type="button" onclick="unsendStory('${s.id}')">UNSEND ×</button></div></div>
+  </article>`).join("");
 }
+function findStory(id){return getAllStories().find(s=>s.id===id);}
 function unsendStory(id){
- const story=communityStories.find(s=>s.id===id); if(!story)return;
- const ok=confirm("Unsend this story? It will be removed from this browser and will no longer appear in Coffee Stories.");
+ const story=findStory(id); if(!story)return;
+ const ok=confirm(`Unsend “${story.text.slice(0,55)}${story.text.length>55?'…':''}”? This story will be removed from Coffee Stories.`);
  if(!ok)return;
- communityStories=communityStories.filter(s=>s.id!==id);
- localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
+ if(communityStories.some(s=>s.id===id)){
+  communityStories=communityStories.filter(s=>s.id!==id);
+  localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
+ }else if(id.startsWith("seed-")){
+  if(!deletedStories.includes(id))deletedStories.push(id);
+  localStorage.setItem("kenangan_deleted_stories",JSON.stringify(deletedStories));
+ }
  renderStories();
+}
+function editStory(id){
+ const story=findStory(id); if(!story)return;
+ const select=document.getElementById("editStoryCoffee");
+ select.innerHTML=PRODUCTS.map(p=>`<option value="${esc(p.name)}">${esc(p.name)} — ${esc(p.region)}</option>`).join("");
+ document.getElementById("editStoryId").value=id;
+ document.getElementById("editStoryName").value=story.name;
+ document.getElementById("editStoryCity").value=story.city;
+ document.getElementById("editStoryCoffee").value=story.coffee;
+ document.getElementById("editStoryMethod").value=story.method;
+ document.getElementById("editStoryRating").value=String(story.rating);
+ document.getElementById("editStoryText").value=story.text;
+ document.getElementById("editStoryModal").classList.add("open");
+}
+function closeEditStory(){document.getElementById("editStoryModal").classList.remove("open");}
+function saveEditedStory(e){
+ e.preventDefault();
+ const id=document.getElementById("editStoryId").value;
+ const updated={name:document.getElementById("editStoryName").value.trim(),city:document.getElementById("editStoryCity").value.trim(),coffee:document.getElementById("editStoryCoffee").value,method:document.getElementById("editStoryMethod").value,rating:Number(document.getElementById("editStoryRating").value),text:document.getElementById("editStoryText").value.trim()};
+ if(!updated.name||!updated.city||!updated.text)return;
+ const idx=communityStories.findIndex(s=>s.id===id);
+ if(idx>-1){communityStories[idx]={...communityStories[idx],...updated};localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));}
+ else if(id.startsWith("seed-")){editedSeedStories[id]=updated;localStorage.setItem("kenangan_edited_stories",JSON.stringify(editedSeedStories));}
+ closeEditStory();renderStories();
 }
 function openStoryForm(){
  const select=document.getElementById("storyCoffee");

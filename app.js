@@ -28,6 +28,16 @@ function selectRegion(region){
  detail.classList.add("show");
  detail.scrollIntoView({behavior:"smooth",block:"center"});
 }
+
+function renderSeasonal(){
+ const list=PRODUCTS.filter(p=>p.type==="Seasonal");
+ const el=document.getElementById("seasonalGrid");
+ if(!el)return;
+ el.innerHTML=list.map((p,i)=>`<article class="seasonal-item">
+   <div class="seasonal-item-art"><img src="${productArt(p)}" alt="${esc(p.name)}"><span>DROP 0${i+1}</span></div>
+   <div class="seasonal-item-copy"><span class="eyebrow">${esc(p.region).toUpperCase()} · ${esc(p.process).toUpperCase()}</span><h3>${esc(p.name)}</h3><p>${esc(p.notes)}</p><div class="exclusive-line"><b>CAFÉ EXCLUSIVE</b><small>NOT AVAILABLE ONLINE</small></div><button onclick="openProduct(${JSON.stringify(p.name)})">DISCOVER THIS COFFEE →</button></div>
+ </article>`).join("");
+}
 function productArt(p){
  const palettes={"Sumatera":["#24342b","#b08a4a"],"Jawa Barat":["#4a3325","#c89a58"],"Jawa Tengah":["#171512","#b08a4a"],"Jawa Timur":["#5a3b28","#d0a66a"],"Indonesia Timur":["#24342b","#d1aa70"]};
  const [ink,gold]=palettes[p.region]||["#171512","#b08a4a"];
@@ -90,7 +100,8 @@ function searchProducts(q){
 function openAccount(){document.getElementById("accountModal").classList.add("open")}
 function closeAccount(){document.getElementById("accountModal").classList.remove("open")}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeSearch();closeAccount()}});
-renderRegions();renderProducts();renderCart();
+renderRegions();
+renderSeasonal();renderProducts();renderCart();
 
 function openProduct(name){
  const p=PRODUCTS.find(x=>x.name===name); if(!p)return;

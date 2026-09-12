@@ -21,6 +21,10 @@ let editedSeedStories=JSON.parse(localStorage.getItem("kenangan_edited_stories")
 const STORIES_API="/api/stories";
 let apiStories=null;
 let storyApiAvailable=false;
+let currentUser=JSON.parse(localStorage.getItem("kenangan_user")||"null");
+let authToken=localStorage.getItem("kenangan_auth_token")||"";
+const AUTH_API="/api/auth";
+
 
 function normalizeLocalStories(){
  let changed=false;
@@ -40,6 +44,7 @@ function getAllStories(){
  return [...communityStories,...seeded];
 }
 function storyIsLocal(id){return communityStories.some(s=>String(s.id)===String(id));}
+function canManageStory(s){return !!currentUser && !!s.authorId && String(s.authorId)===String(currentUser.id);}
 function renderStories(){
  const all=getAllStories();
  const grid=document.getElementById("storyGrid"); if(!grid)return;
@@ -49,12 +54,28 @@ function renderStories(){
    <div class="story-top"><span>${String(i+1).padStart(2,"0")}</span><span class="story-stars" aria-label="${Number(s.rating)} out of 5">${"★".repeat(Number(s.rating))}${"☆".repeat(5-Number(s.rating))}</span></div>
    <p>“${esc(s.text)}”</p>
    <div class="story-meta"><b>— ${esc(s.name).toUpperCase()} · ${esc(s.city).toUpperCase()}</b><small>${esc(s.coffee)} · ${esc(s.method)}</small></div>
-   <div class="story-controls"><span>${storyIsLocal(s.id)?"YOUR STORY":"COMMUNITY STORY"}</span><div class="story-actions"><button type="button" onclick="editStory('${esc(String(s.id))}')">EDIT</button><button type="button" onclick="unsendStory('${esc(String(s.id))}')">UNSEND ×</button></div></div>
+   <div class="story-controls"><span>${canManageStory(s)?"YOUR STORY":"COMMUNITY STORY"}</span>${canManageStory(s)?`<div class="story-actions"><button type="button" onclick="editStory('${esc(String(s.id))}')">EDIT</button><button type="button" onclick="unsendStory('${esc(String(s.id))}')">UNSEND ×</button></div>`:""}</div>
   </article>`).join("");
 }
 function findStory(id){return getAllStories().find(s=>String(s.id)===String(id));}
+async function authFetch(url,options={}){
+ const headers={"Content-Type":"application/json",...(options.headers||{})};
+ if(authToken)headers.Authorization=`Bearer ${authToken}`;
+ const res=await fetch(url,{...options,headers});
+ if(!res.ok)throw new Error(`Auth API ${res.status}`);
+ return res.json();
+}
+function setSession(data){currentUser=data?.user||null;authToken=data?.token||"";if(currentUser)localStorage.setItem("kenangan_user",JSON.stringify(currentUser));else localStorage.removeItem("kenangan_user");if(authToken)localStorage.setItem("kenangan_auth_token",authToken);else localStorage.removeItem("kenangan_auth_token");updateAccountUI();renderStories();}
+async function restoreSession(){if(!authToken){updateAccountUI();return;}try{const data=await authFetch(`${AUTH_API}/me`);currentUser=data.user;localStorage.setItem("kenangan_user",JSON.stringify(currentUser));}catch{setSession(null);}updateAccountUI();renderStories();}
+function updateAccountUI(){const button=document.querySelector('.actions button[onclick="openAccount()"]');if(button)button.innerHTML=currentUser?'◉':'◯';}
+function openAccount(){document.getElementById("accountModal").classList.add("open");renderAccount();}
+function closeAccount(){document.getElementById("accountModal").classList.remove("open");}
+function renderAccount(){const el=document.getElementById("accountContent");if(!el)return;if(currentUser){el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Welcome back, ${esc(currentUser.name)}.</h2><p class="form-intro">Your account connects your stories to your Kenangan identity.</p><div class="account-panel"><div><span>NAME</span><b>${esc(currentUser.name)}</b></div><div><span>EMAIL</span><b>${esc(currentUser.email)}</b></div><div><span>STATUS</span><b>ACCOUNT ACTIVE</b></div></div><div class="account-actions"><button class="btn" onclick="location.hash='stories';closeAccount()">MY STORIES →</button><button class="text-link" onclick="logoutAccount()">LOG OUT</button></div>`;}else{el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Join the coffee journey.</h2><p class="form-intro">Create an account to publish, edit, and unsend your own Coffee Stories.</p><div class="auth-switch"><button class="active" id="loginTab" onclick="showAuthForm('login')">LOGIN</button><button id="registerTab" onclick="showAuthForm('register')">CREATE ACCOUNT</button></div><form id="authForm" class="auth-form" onsubmit="submitAuth(event)"></form><div id="authMessage" class="auth-message"></div>`;showAuthForm('login');}}
+function showAuthForm(mode){const form=document.getElementById("authForm");if(!form)return;document.getElementById("loginTab")?.classList.toggle("active",mode==='login');document.getElementById("registerTab")?.classList.toggle("active",mode==='register');form.dataset.mode=mode;form.innerHTML=mode==='login'?`<label>EMAIL<input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></label><label>PASSWORD<input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="••••••••"></label><button class="btn full" type="submit">LOGIN →</button>`:`<label>NAME<input id="authName" required maxlength="40" autocomplete="name" placeholder="Your name"></label><label>EMAIL<input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></label><label>PASSWORD<input id="authPassword" type="password" required minlength="6" autocomplete="new-password" placeholder="Minimum 6 characters"></label><button class="btn full" type="submit">CREATE ACCOUNT →</button>`;}
+async function submitAuth(e){e.preventDefault();const mode=e.currentTarget.dataset.mode;const payload={email:document.getElementById("authEmail").value.trim(),password:document.getElementById("authPassword").value};if(mode==='register')payload.name=document.getElementById("authName").value.trim();const msg=document.getElementById("authMessage");try{const data=await authFetch(`${AUTH_API}/${mode}`,{method:"POST",body:JSON.stringify(payload)});setSession(data);closeAccount();alert(mode==='register'?"Account created. Welcome to Kenangan!":"Welcome back to Kenangan!");}catch(err){msg.textContent=err.message.includes('409')?'Email is already registered.':err.message.includes('401')?'Email or password is incorrect.':'For the local account system, start the V12 backend and try again.';}}
+async function logoutAccount(){try{if(authToken)await authFetch(`${AUTH_API}/logout`,{method:"POST"});}catch{}setSession(null);renderAccount();}
 async function storyFetch(url,options={}){
- const res=await fetch(url,{...options,headers:{"Content-Type":"application/json",...(options.headers||{})}});
+ const headers={"Content-Type":"application/json",...(options.headers||{})};if(authToken)headers.Authorization=`Bearer ${authToken}`;const res=await fetch(url,{...options,headers});
  if(!res.ok)throw new Error(`Story API ${res.status}`);
  return res.json();
 }
@@ -79,7 +100,7 @@ async function loadStories(){
  }
 }
 async function unsendStory(id){
- const story=findStory(id); if(!story)return;
+ const story=findStory(id);if(!story||!canManageStory(story)){alert("You can only unsend your own story.");return;} if(!story)return;
  const ok=confirm(`Unsend “${story.text.slice(0,55)}${story.text.length>55?'…':''}”? This story will be removed from Coffee Stories.`);
  if(!ok)return;
  try{
@@ -97,7 +118,7 @@ async function unsendStory(id){
  }catch(e){alert("Story could not be unsent. Please try again.");}
 }
 function editStory(id){
- const story=findStory(id); if(!story)return;
+ const story=findStory(id);if(!story||!canManageStory(story)){alert("You can only edit your own story.");return;} if(!story)return;
  const select=document.getElementById("editStoryCoffee");
  select.innerHTML=PRODUCTS.map(p=>`<option value="${esc(p.name)}">${esc(p.name)} — ${esc(p.region)}</option>`).join("");
  document.getElementById("editStoryId").value=id;
@@ -113,7 +134,7 @@ function closeEditStory(){document.getElementById("editStoryModal").classList.re
 async function saveEditedStory(e){
  e.preventDefault();
  const id=document.getElementById("editStoryId").value;
- const updated={name:document.getElementById("editStoryName").value.trim(),city:document.getElementById("editStoryCity").value.trim(),coffee:document.getElementById("editStoryCoffee").value,method:document.getElementById("editStoryMethod").value,rating:Number(document.getElementById("editStoryRating").value),text:document.getElementById("editStoryText").value.trim()};
+ const updated={name:document.getElementById("editStoryName").value.trim(),city:document.getElementById("editStoryCity").value.trim(),coffee:document.getElementById("editStoryCoffee").value,method:document.getElementById("editStoryMethod").value,rating:Number(document.getElementById("editStoryRating").value),text:document.getElementById("editStoryText").value.trim(),authorId:currentUser?.id};
  if(!updated.name||!updated.city||!updated.text)return;
  try{
    if(storyApiAvailable){
@@ -128,20 +149,23 @@ async function saveEditedStory(e){
  }catch(e){alert("Story could not be updated. Please try again.");}
 }
 function openStoryForm(){
+ if(!currentUser){openAccount();return;}
  const select=document.getElementById("storyCoffee");
  select.innerHTML=PRODUCTS.map(p=>`<option value="${esc(p.name)}">${esc(p.name)} — ${esc(p.region)}</option>`).join("");
+ document.getElementById("storyName").value=currentUser.name;
  document.getElementById("storyModal").classList.add("open");
 }
 function closeStoryForm(){document.getElementById("storyModal").classList.remove("open");}
 async function submitStory(e){
  e.preventDefault();
- const story={id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2)),name:document.getElementById("storyName").value.trim(),city:document.getElementById("storyCity").value.trim(),coffee:document.getElementById("storyCoffee").value,method:document.getElementById("storyMethod").value,rating:Number(document.getElementById("storyRating").value),text:document.getElementById("storyText").value.trim()};
+ const story={id:(crypto.randomUUID?crypto.randomUUID():String(Date.now())+Math.random().toString(16).slice(2)),name:document.getElementById("storyName").value.trim(),city:document.getElementById("storyCity").value.trim(),coffee:document.getElementById("storyCoffee").value,method:document.getElementById("storyMethod").value,rating:Number(document.getElementById("storyRating").value),text:document.getElementById("storyText").value.trim(),authorId:currentUser?.id};
  if(!story.name||!story.city||!story.text)return;
  try{
    if(storyApiAvailable){
      const created=await storyFetch(STORIES_API,{method:"POST",body:JSON.stringify(story)});
      apiStories=[created,...apiStories];
    }else{
+     story.authorId=currentUser?.id;
      communityStories.unshift(story);
      localStorage.setItem("kenangan_stories",JSON.stringify(communityStories));
    }
@@ -281,7 +305,7 @@ function closeAccount(){document.getElementById("accountModal").classList.remove
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeSearch();closeAccount();closeStoryForm();closeProduct()}});
 renderRegions();
 renderSeasonal();renderProducts();renderCart();renderStories();
-loadStories().then(()=>{const m=document.getElementById("storyMode");if(m)m.textContent=storyApiAvailable?"DATABASE CONNECTED":"LOCAL FALLBACK";});
+restoreSession().then(()=>loadStories()).then(()=>{const m=document.getElementById("storyMode");if(m)m.textContent=storyApiAvailable?"DATABASE CONNECTED":"LOCAL FALLBACK";});
 
 function openProduct(name){
  const p=PRODUCTS.find(x=>x.name===name); if(!p)return;

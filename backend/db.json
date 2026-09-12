@@ -19,7 +19,7 @@
       "coffee": "Kerinci Mossto",
       "method": "Pour Over",
       "rating": 5,
-      "text": "Seasonal coffee gave me a reason to come back to the café and try something new.",
+      "text": "Seasonal coffee gave me a reason to come back to the caf\u00e9 and try something new.",
       "status": "published",
       "createdAt": "2026-09-11T00:00:00.000Z",
       "updatedAt": "2026-09-11T00:00:00.000Z"
@@ -36,5 +36,6 @@
       "createdAt": "2026-09-11T00:00:00.000Z",
       "updatedAt": "2026-09-11T00:00:00.000Z"
     }
-  ]
+  ],
+  "users": []
 }

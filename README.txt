@@ -1,18 +1,16 @@
-KENANGAN KOPI NUSANTARA — V8 CREATE YOUR COFFEE
-Premium customer-facing website refinement.
+KENANGAN KOPI NUSANTARA — V12 ACCOUNT SYSTEM
 
-V8 adds a guided Create Your Coffee journey:
-01 choose region → 02 choose bean → 03 discover natural tasting character → optional café brewing experience → café CTA.
+V12 adds a local development account system.
+- Register / Login / Logout
+- Passwords stored as scrypt hashes in backend/db.json
+- Story ownership via authorId
+- Users can edit/unsend only their own stories
+- Share Story requires login
+- Session token is stored in browser localStorage for this development build
 
-Important concept: customers do NOT choose an artificial flavor. Tasting notes are derived from the selected coffee bean.
+RUN
+1. Double-click START-V12.bat
+2. Open http://localhost:3000
 
-Files: index.html, styles.css, app.js, assets/
-Deploy: upload the contents of this folder to the ROOT of the existing GitHub repository. Vercel will deploy the new commit automatically.
-Checkout remains demo-only until production backend/payment is connected.
-
-V9 — COFFEE STORIES
-Adds community story cards, ratings, coffee/brew metadata, a Share Your Story form, and localStorage persistence for submitted stories.
-
-
-V9.1 — COFFEE STORIES UNSEND
-User-created stories receive a private local ID and show an UNSEND STORY control. Unsend asks for confirmation, removes the story from this browser's localStorage, and refreshes the community count. Seeded demo stories cannot be unsent.
+IMPORTANT
+This is still a local development backend. Before production, move authentication to Supabase/PostgreSQL or another managed auth service, add secure cookies/session handling, email verification, password reset, rate limiting, CSRF protection, and production secrets.

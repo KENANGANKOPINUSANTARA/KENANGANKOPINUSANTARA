@@ -28,4 +28,4 @@ V15 — PRODUCT CARD ACTIONS
 - Responsive layout remains supported on smaller screens.
 
 
-V15: Product card action layout fixed so price never overlaps VIEW or ADD TO CART. Desktop keeps all three in one row; mobile stacks price above two actions.
+V17: Product card action layout fixed globally. Price is always on its own row, with VIEW and ADD TO CART on a separate two-button row, preventing overlap at all desktop card widths.

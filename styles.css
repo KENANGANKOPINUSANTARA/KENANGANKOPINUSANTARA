@@ -53,22 +53,23 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
 /* V13 — Orders & Checkout */
 .remove-item{border:0!important;background:none!important;margin-left:8px;color:var(--muted);cursor:pointer;font-size:18px}.secondary-btn{background:transparent!important;color:var(--ink)!important;border:1px solid var(--line)!important}.checkout-box{width:min(820px,100%);max-height:92vh;overflow:auto}.checkout-box h2{font:clamp(40px,5vw,58px) var(--serif);line-height:1;margin:12px 0 18px}.checkout-box label{display:block;font:9px Arial;letter-spacing:1.8px;margin-top:18px}.checkout-box input,.checkout-box textarea{box-sizing:border-box;width:100%;margin-top:8px;border:1px solid var(--line);background:#f9f4eb;padding:13px 14px;font:14px Arial;color:var(--ink);outline:none}.checkout-box textarea{resize:vertical;line-height:1.6}.checkout-box input:focus,.checkout-box textarea:focus{border-color:var(--gold)}.checkout-summary{margin-top:28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0}.checkout-summary>span{display:block;margin-bottom:12px}.checkout-summary>div>div{display:flex;justify-content:space-between;gap:20px;padding:8px 0;font:13px Arial}.checkout-grand{margin-top:8px;padding-top:14px!important;border-top:1px solid var(--line);font-weight:700!important}.checkout-message{min-height:18px;margin-top:12px;font:10px Arial;color:#8a3d2f}.order-success-box h2{font:clamp(40px,5vw,58px) var(--serif);line-height:1;margin:12px 0 18px}.order-number{margin:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;display:flex;flex-direction:column;gap:8px}.order-number span{font:8px Arial;letter-spacing:1.8px;color:var(--gold)}.order-number strong{font:18px Arial;letter-spacing:1px}.order-summary-line{display:flex;justify-content:space-between;margin-bottom:25px}.muted-copy{color:var(--muted);font-size:13px}.order-card{border-top:1px solid var(--line);padding:17px 0}.order-card>div{display:flex;justify-content:space-between;gap:15px}.order-card>div span{font:9px Arial;letter-spacing:1px}.order-card>div b{font:8px Arial;letter-spacing:1.5px;color:var(--gold)}.order-card small{display:block;color:var(--muted);margin-top:6px}.order-card p{font:12px Arial;line-height:1.6;margin:10px 0}.order-card>strong{font:14px Arial}
 
-/* V15 — Product Card Actions: stable, non-overlapping layout */
+/* V17 — Product Card Actions: price row + separate action buttons */
 .product-info{
   display:flex;
   flex-direction:column;
-  min-height:132px;
+  min-height:142px;
 }
 .product-info .card-actions{
-  display:grid;
-  grid-template-columns:max-content 82px 112px;
-  align-items:center;
-  justify-content:space-between;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
   gap:10px;
   width:100%;
   margin-top:auto;
 }
 .product-info .card-actions .price{
+  display:block;
+  width:100%;
   min-width:0;
   white-space:nowrap;
   line-height:1.2;
@@ -83,27 +84,29 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
   align-items:center;
   justify-content:center;
 }
-@media(max-width:1100px){
-  .product-info .card-actions{
-    grid-template-columns:max-content 78px 104px;
-    gap:8px;
-  }
+/* The two buttons share one clean row below the price. */
+.product-info .card-actions button:first-of-type{
+  margin-right:0;
+}
+.product-info .card-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:auto auto;
+  gap:10px;
+}
+.product-info .card-actions .price{
+  grid-column:1 / -1;
+  grid-row:1;
+}
+.product-info .card-actions button{
+  grid-row:2;
 }
 @media(max-width:760px){
-  .product-info{min-height:128px}
-  .product-info .card-actions{
-    grid-template-columns:max-content 76px 98px;
-    gap:7px;
-  }
+  .product-info{min-height:136px}
+  .product-info .card-actions{gap:8px}
   .product-info .card-actions button{font-size:8px}
 }
 @media(max-width:520px){
-  .product-info{min-height:126px}
-  .product-info .card-actions{
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-  }
-  .product-info .card-actions .price{
-    grid-column:1 / -1;
-  }
+  .product-info{min-height:136px}
+  .product-info .card-actions{grid-template-columns:1fr 1fr;gap:8px}
 }

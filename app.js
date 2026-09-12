@@ -70,9 +70,10 @@ async function restoreSession(){if(!authToken){updateAccountUI();return;}try{con
 function updateAccountUI(){const button=document.querySelector('.actions button[onclick="openAccount()"]');if(button)button.innerHTML=currentUser?'◉':'◯';}
 function openAccount(){document.getElementById("accountModal").classList.add("open");renderAccount();}
 function closeAccount(){document.getElementById("accountModal").classList.remove("open");}
-function renderAccount(){const el=document.getElementById("accountContent");if(!el)return;if(currentUser){el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Welcome back, ${esc(currentUser.name)}.</h2><p class="form-intro">Your account connects your stories to your Kenangan identity.</p><div class="account-panel"><div><span>NAME</span><b>${esc(currentUser.name)}</b></div><div><span>EMAIL</span><b>${esc(currentUser.email)}</b></div><div><span>STATUS</span><b>ACCOUNT ACTIVE</b></div></div><div class="account-actions"><button class="btn" onclick="location.hash='stories';closeAccount()">MY STORIES →</button><button class="text-link" onclick="logoutAccount()">LOG OUT</button></div>`;}else{el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Join the coffee journey.</h2><p class="form-intro">Create an account to publish, edit, and unsend your own Coffee Stories.</p><div class="auth-switch"><button class="active" id="loginTab" onclick="showAuthForm('login')">LOGIN</button><button id="registerTab" onclick="showAuthForm('register')">CREATE ACCOUNT</button></div><form id="authForm" class="auth-form" onsubmit="submitAuth(event)"></form><div id="authMessage" class="auth-message"></div>`;showAuthForm('login');}}
+function renderAccount(){const el=document.getElementById("accountContent");if(!el)return;if(currentUser){el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Welcome back, ${esc(currentUser.name)}.</h2><p class="form-intro">Your account connects your stories to your Kenangan identity.</p><div class="account-panel"><div><span>NAME</span><b>${esc(currentUser.name)}</b></div><div><span>EMAIL</span><b>${esc(currentUser.email)}</b></div><div><span>STATUS</span><b>ACCOUNT ACTIVE</b></div></div><div class="account-actions"><button class="btn" onclick="location.hash='stories';closeAccount()">MY STORIES →</button><button class="btn secondary-btn" onclick="showMyOrders()">MY ORDERS →</button><button class="text-link" onclick="logoutAccount()">LOG OUT</button></div>`;}else{el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Join the coffee journey.</h2><p class="form-intro">Create an account to publish, edit, and unsend your own Coffee Stories.</p><div class="auth-switch"><button class="active" id="loginTab" onclick="showAuthForm('login')">LOGIN</button><button id="registerTab" onclick="showAuthForm('register')">CREATE ACCOUNT</button></div><form id="authForm" class="auth-form" onsubmit="submitAuth(event)"></form><div id="authMessage" class="auth-message"></div>`;showAuthForm('login');}}
 function showAuthForm(mode){const form=document.getElementById("authForm");if(!form)return;document.getElementById("loginTab")?.classList.toggle("active",mode==='login');document.getElementById("registerTab")?.classList.toggle("active",mode==='register');form.dataset.mode=mode;form.innerHTML=mode==='login'?`<label>EMAIL<input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></label><label>PASSWORD<input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="••••••••"></label><button class="btn full" type="submit">LOGIN →</button>`:`<label>NAME<input id="authName" required maxlength="40" autocomplete="name" placeholder="Your name"></label><label>EMAIL<input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></label><label>PASSWORD<input id="authPassword" type="password" required minlength="6" autocomplete="new-password" placeholder="Minimum 6 characters"></label><button class="btn full" type="submit">CREATE ACCOUNT →</button>`;}
 async function submitAuth(e){e.preventDefault();const mode=e.currentTarget.dataset.mode;const payload={email:document.getElementById("authEmail").value.trim(),password:document.getElementById("authPassword").value};if(mode==='register')payload.name=document.getElementById("authName").value.trim();const msg=document.getElementById("authMessage");try{const data=await authFetch(`${AUTH_API}/${mode}`,{method:"POST",body:JSON.stringify(payload)});setSession(data);closeAccount();alert(mode==='register'?"Account created. Welcome to Kenangan!":"Welcome back to Kenangan!");}catch(err){msg.textContent=err.message.includes('409')?'Email is already registered.':err.message.includes('401')?'Email or password is incorrect.':'For the local account system, start the V12 backend and try again.';}}
+function showMyOrders(){document.getElementById("accountContent").innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>My Orders.</h2><p class="form-intro">Track the coffee journeys connected to your account.</p><div id="myOrdersContent"></div><div class="form-actions"><button class="text-link" onclick="renderAccount()">← BACK</button></div>`;loadMyOrders()}
 async function logoutAccount(){try{if(authToken)await authFetch(`${AUTH_API}/logout`,{method:"POST"});}catch{}setSession(null);renderAccount();}
 async function storyFetch(url,options={}){
  const headers={"Content-Type":"application/json",...(options.headers||{})};if(authToken)headers.Authorization=`Bearer ${authToken}`;const res=await fetch(url,{...options,headers});
@@ -279,29 +280,49 @@ function updateFinderResult(){
  document.getElementById("finderProgress").textContent=exp?"STEP 04 · YOUR COFFEE JOURNEY":"STEP 03 · DISCOVER ITS CHARACTER";
  document.getElementById("finderResult").innerHTML=`<div class="result-copy"><span class="eyebrow">YOUR COFFEE JOURNEY</span><strong>${esc(p.name)} · ${esc(p.region)}</strong><small>${esc(p.process)} · ${esc(p.notes)}${exp?` · EXPERIENCE: ${esc(exp)}`:""}</small></div><a class="result-cta" href="#cafe">DISCOVER AT THE CAFÉ →</a>`;
 }
+function productId(p){return p.id||p.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
 function addToCart(name){
  const p=PRODUCTS.find(x=>x.name===name); if(!p||p.type==="Seasonal")return;
- const item=cart.find(x=>x.name===name); item?item.qty++:cart.push({name,qty:1,price:p.price});
+ const id=productId(p); const item=cart.find(x=>x.id===id||x.name===name); item?item.qty++:cart.push({id,name:p.name,qty:1,price:p.price,region:p.region});
  saveCart();openCart();
 }
 function saveCart(){localStorage.setItem("kenangan_cart",JSON.stringify(cart));renderCart()}
+function cartSubtotal(){return cart.reduce((a,x)=>a+Number(x.price||0)*Number(x.qty||0),0)}
 function renderCart(){
  document.getElementById("count").textContent=cart.reduce((a,x)=>a+x.qty,0);
- document.getElementById("cartItems").innerHTML=cart.length?cart.map((x,i)=>`<div class="cart-row"><div><h4>${esc(x.name)}</h4><small>${rp(x.price)} / 100g</small></div><div class="qty"><button onclick="changeQty(${i},-1)">−</button> ${x.qty} <button onclick="changeQty(${i},1)">+</button></div></div>`).join(""):"<p>Your cart is empty.</p>";
- document.getElementById("cartTotal").textContent=rp(cart.reduce((a,x)=>a+x.price*x.qty,0));
+ document.getElementById("cartItems").innerHTML=cart.length?cart.map((x,i)=>`<div class="cart-row"><div><h4>${esc(x.name)}</h4><small>${rp(x.price)} / 100g</small></div><div class="qty"><button onclick="changeQty(${i},-1)">−</button> ${x.qty} <button onclick="changeQty(${i},1)">+</button><button class="remove-item" onclick="removeFromCart(${i})" aria-label="Remove ${esc(x.name)}">×</button></div></div>`).join(""):"<p>Your cart is empty.</p>";
+ document.getElementById("cartTotal").textContent=rp(cartSubtotal());
 }
-function changeQty(i,d){cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);saveCart()}
+function changeQty(i,d){if(!cart[i])return;cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);saveCart()}
+function removeFromCart(i){if(!cart[i])return;cart.splice(i,1);saveCart()}
 function openCart(){document.getElementById("cartDrawer").classList.add("open");renderCart()}
 function closeCart(){document.getElementById("cartDrawer").classList.remove("open")}
-function checkout(){if(!cart.length)return alert("Your cart is empty.");alert("Demo checkout siap. Tahap payment gateway akan kita sambungkan saat production.")}
+function checkout(){
+ if(!cart.length)return alert("Your cart is empty.");
+ if(!currentUser){closeCart();openAccount();return alert("Please login to continue to checkout.");}
+ closeCart();
+ document.getElementById("checkoutName").value=currentUser.name||"";
+ document.getElementById("checkoutEmail").value=currentUser.email||"";
+ document.getElementById("checkoutSummary").innerHTML=cart.map(x=>`<div><span>${esc(x.name)} × ${x.qty}</span><strong>${rp(x.price*x.qty)}</strong></div>`).join("")+`<div><span>Shipping</span><strong>${rp(20000)}</strong></div><div class="checkout-grand"><span>TOTAL</span><strong>${rp(cartSubtotal()+20000)}</strong></div>`;
+ document.getElementById("checkoutMessage").textContent=""; document.getElementById("checkoutModal").classList.add("open");
+}
+function closeCheckout(){document.getElementById("checkoutModal")?.classList.remove("open")}
+async function submitCheckout(e){
+ e.preventDefault(); if(!currentUser)return;
+ const msg=document.getElementById("checkoutMessage"); msg.textContent="Placing your order…";
+ const payload={customer:{name:document.getElementById("checkoutName").value.trim(),email:document.getElementById("checkoutEmail").value.trim(),phone:document.getElementById("checkoutPhone").value.trim(),address:document.getElementById("checkoutAddress").value.trim(),city:document.getElementById("checkoutCity").value.trim(),province:document.getElementById("checkoutProvince").value.trim(),postalCode:document.getElementById("checkoutPostal").value.trim()},items:cart.map(x=>({productId:x.id||productId(PRODUCTS.find(p=>p.name===x)||x),qty:x.qty})),shippingFee:20000};
+ try{const order=await orderFetch("/api/orders",{method:"POST",body:JSON.stringify(payload)});cart=[];saveCart();closeCheckout();showOrderSuccess(order)}catch(err){msg.textContent=err.message||"Unable to place order."}
+}
+async function orderFetch(url,options={}){const headers={"Content-Type":"application/json",...(options.headers||{})};if(authToken)headers.Authorization=`Bearer ${authToken}`;const res=await fetch(url,{...options,headers});let data={};try{data=await res.json()}catch{}if(!res.ok)throw new Error(data.error||`Order API ${res.status}`);return data}
+function showOrderSuccess(order){document.getElementById("orderSuccessContent").innerHTML=`<span class="eyebrow">ORDER CONFIRMED</span><h2>Your coffee is on its way.</h2><p class="form-intro">Thank you, ${esc(order.customer.name)}. Your order has been recorded.</p><div class="order-number"><span>ORDER NUMBER</span><strong>${esc(order.id)}</strong></div><div class="order-summary-line"><span>TOTAL</span><strong>${rp(order.total)}</strong></div><button class="btn full" onclick="closeOrderSuccess();openAccount();">VIEW MY ORDERS →</button>`;document.getElementById("orderSuccessModal").classList.add("open")}
+function closeOrderSuccess(){document.getElementById("orderSuccessModal")?.classList.remove("open")}
+async function loadMyOrders(){const host=document.getElementById("myOrdersContent");if(!host)return;host.innerHTML='<p class="muted-copy">Loading orders…</p>';try{const orders=await orderFetch("/api/orders");host.innerHTML=orders.length?orders.map(o=>`<div class="order-card"><div><span>${esc(o.id)}</span><b>${esc(o.status)}</b></div><small>${new Date(o.createdAt).toLocaleString("en-ID")}</small><p>${o.items.map(i=>`${esc(i.name)} × ${i.qty}`).join(" · ")}</p><strong>${rp(o.total)}</strong></div>`).join(""):"<p class=\"muted-copy\">No orders yet. Your first coffee journey starts in the Shop.</p>"}catch{host.innerHTML='<p class="muted-copy">Orders are available when the V13 backend is running.</p>'}}
 function openSearch(){document.getElementById("searchModal").classList.add("open");document.getElementById("searchInput").focus()}
 function closeSearch(){document.getElementById("searchModal").classList.remove("open")}
 function searchProducts(q){
  const l=q.toLowerCase();const res=PRODUCTS.filter(p=>`${p.name} ${p.region} ${p.process} ${p.notes}`.toLowerCase().includes(l)).slice(0,8);
  document.getElementById("searchResults").innerHTML=res.map(p=>`<div class="search-item" onclick="closeSearch();location.hash='shop';filterRegion('${p.region}')"><b>${esc(p.name)}</b><small>${esc(p.region)} · ${esc(p.process)} · ${esc(p.notes)}</small></div>`).join("");
 }
-function openAccount(){document.getElementById("accountModal").classList.add("open")}
-function closeAccount(){document.getElementById("accountModal").classList.remove("open")}
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeSearch();closeAccount();closeStoryForm();closeProduct()}});
 renderRegions();
 renderSeasonal();renderProducts();renderCart();renderStories();

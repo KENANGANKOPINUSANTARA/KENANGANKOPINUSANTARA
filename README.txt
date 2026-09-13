@@ -1,29 +1,18 @@
-KENANGAN KOPI NUSANTARA — V30
-MY ORDERS PRODUCT MAPPING FIX
+KENANGAN KOPI NUSANTARA — V35 CLEAN VISUAL ASSETS
 
-V30 is based on V28 and fixes an order-history mapping bug.
+Based on V34. This version replaces the website photography layer with clean, text-free scenic visuals generated for this project.
 
-FIX:
-- My Orders now resolves coffee details by the actual coffee name first.
-- Missing product IDs no longer cause every item to match the first product in the catalog.
-- Existing local orders are supported without needing to place the order again.
-- Correct region, processing method and product artwork are shown for each coffee.
+Origin visuals:
+- Sumatera: volcanic mountain/lake + coffee landscape
+- Jawa Barat: terraced coffee highlands
+- Jawa Tengah: volcanic highlands and coffee landscape
+- Jawa Timur: Ijen/Raung-inspired volcanic crater landscape
+- Indonesia Timur: tropical island/coastal landscape
 
-Example:
-Puntang / Ciwidey / Garut / Pangalengan will correctly show JAWA BARAT instead of SUMATERA.
+Homepage hero:
+- Indonesian coffee highland landscape with coffee cherries and volcanic mountains
+- No embedded copy, logos, packaging, quotes, or watermark
 
-This remains a prototype/demo architecture with localStorage fallback for static/Vercel deployment.
+Other section/journal visuals are also clean photography with all website text rendered separately by HTML/CSS.
 
-
-V32 FIX: Order Receipt modal now uses a higher stacking layer than My Orders, so View Receipt always opens in front of the My Orders modal.
-
-V33 — EDITORIAL PHOTOGRAPHY ASSETS
-- Added local editorial photography assets under assets/photos/.
-- Homepage hero, origins, shop banner, seasonal, create, finder, stories, journal and cafe now use local visuals.
-- Existing V32 account, checkout, orders and receipt behavior is preserved.
-- Product data and order-name-first mapping are preserved.
-
-V34 VISUAL UPDATE
-- Updated the Jawa Timur origin photography with a high-resolution Ijen/Raung-inspired volcanic landscape.
-- Removed the incorrect Flores Bajawa visual from the Jawa Timur origin card.
-- The Jawa Timur card continues to represent the Ijen Raung / East Java collection.
+V34 functionality remains intact: account/login, cart, checkout, My Orders, receipt, product detail, seasonal/journal interactions, and backend files.

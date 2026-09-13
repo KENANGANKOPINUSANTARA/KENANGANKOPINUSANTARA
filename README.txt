@@ -1,4 +1,4 @@
-KENANGAN KOPI NUSANTARA — V35 CLEAN VISUAL ASSETS
+KENANGAN KOPI NUSANTARA — V36 CLEAN VISUAL ASSETS
 
 Based on V34. This version replaces the website photography layer with clean, text-free scenic visuals generated for this project.
 

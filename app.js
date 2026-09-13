@@ -540,12 +540,41 @@ async function loadMyOrders(){
     return `<article class="order-card order-card-premium">
       <div class="order-card-head"><div><span class="order-kicker">ORDER ${String(index+1).padStart(2,'0')}</span><h3>${esc(o.id)}</h3><small>${new Date(o.createdAt).toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})} · ${esc(city)}</small></div><div class="order-total-block"><span>${esc(status)}</span><strong>${rp(o.total)}</strong></div></div>
       ${orderStatusMarkup(status)}
-      <div class="order-items">${items.map(item=>`<div class="order-item"><div class="order-item-art"><img src="${productArt(item.product||{name:item.name,region:'Sumatera',process:'Roasted',notes:''})}" alt="${esc(item.name)}"></div><div class="order-item-copy"><b>${esc(item.name)}</b><small>${esc(item.product?.region||'Indonesia')} · ${esc(item.product?.process||'Roasted')} · 100g</small><span>QTY ${item.qty}</span></div><div class="order-item-price"><span>ITEM TOTAL</span><strong>${rp(item.lineTotal)}</strong></div></div>`).join('')}</div>
-      <div class="order-bottom"><div class="order-price-breakdown"><div><span>SUBTOTAL</span><b>${rp(o.subtotal??(Number(o.total||0)-Number(o.shipping||20000)))}</b></div><div><span>DELIVERY</span><b>${rp(o.shipping??20000)}</b></div><div class="grand"><span>TOTAL</span><b>${rp(o.total)}</b></div></div><div class="order-actions"><button class="text-link" onclick="closeAccount();location.hash=\'shop\'">SHOP COFFEE →</button></div></div>
+      <div class="order-items-section">
+        <div class="order-items-heading"><span>ORDER ITEMS (${items.length})</span><button type="button" class="order-receipt-link" onclick="openOrderReceipt('${esc(o.id)}')">VIEW RECEIPT →</button></div>
+        <div class="order-items">${items.map(item=>`<div class="order-item">
+          <div class="order-item-main">
+            <div class="order-item-art"><img src="${productArt(item.product||{name:item.name,region:'Indonesia',process:'Roasted',notes:''})}" alt="${esc(item.name)}"></div>
+            <div class="order-item-copy"><b>${esc(item.name)}</b><small>${esc(item.product?.region||'Indonesia')}<br>${esc(item.product?.process||'Roasted')} · 100g</small><span>QTY ${item.qty}</span></div>
+          </div>
+          <div class="order-item-price"><span>ITEM TOTAL</span><strong>${rp(item.lineTotal)}</strong></div>
+        </div>`).join('')}</div>
+      </div>
+      <div class="order-bottom"><div class="order-price-breakdown"><div><span>SUBTOTAL</span><b>${rp(o.subtotal??(Number(o.total||0)-Number(o.shipping||20000)))}</b></div><div><span>DELIVERY</span><b>${rp(o.shipping??20000)}</b></div><div class="grand"><span>TOTAL</span><b>${rp(o.total)}</b></div></div><div class="order-actions"><button class="btn order-shop-btn" type="button" onclick="closeAccount();location.hash=\'shop\'">SHOP COFFEE →</button></div></div>
     </article>`;
   }).join('')}</div>`;
  }catch(err){host.innerHTML='<div class="orders-error"><span class="eyebrow">ORDER HISTORY</span><h3>We could not load your orders.</h3><p>Please try again in a moment.</p><button class="btn" onclick="loadMyOrders()">TRY AGAIN →</button></div>';}
 }
+function openOrderReceipt(orderId){
+ const orders=localOrders();
+ const order=orders.find(o=>String(o.id)===String(orderId));
+ if(!order){
+   const cards=[...document.querySelectorAll('.order-card-premium h3')];
+   const card=cards.find(el=>el.textContent.trim()===String(orderId))?.closest('.order-card-premium');
+   if(!card)return;
+   const total=card.querySelector('.order-total-block strong')?.textContent||'';
+   const modal=document.getElementById('orderReceiptModal');
+   if(modal){document.getElementById('orderReceiptContent').innerHTML=`<span class="eyebrow">KENANGAN RECEIPT</span><h2>Order Receipt.</h2><p class="form-intro">${esc(orderId)} · ${esc(total)}</p><button class="btn" type="button" onclick="window.print()">PRINT RECEIPT →</button>`;modal.classList.add('open');}
+   return;
+ }
+ const items=(order.items||[]).map(orderItemData);
+ const modal=document.getElementById('orderReceiptModal');
+ const box=document.getElementById('orderReceiptContent');
+ if(!modal||!box)return;
+ box.innerHTML=`<span class="eyebrow">KENANGAN RECEIPT</span><h2>Order Receipt.</h2><p class="form-intro">${esc(order.id)} · ${new Date(order.createdAt).toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}</p><div class="receipt-lines">${items.map(i=>`<div><span>${esc(i.name)} × ${i.qty}</span><b>${rp(i.lineTotal)}</b></div>`).join('')}<div><span>DELIVERY</span><b>${rp(order.shipping??20000)}</b></div><div class="receipt-total"><span>TOTAL</span><b>${rp(order.total)}</b></div></div><div class="form-actions"><button class="btn" type="button" onclick="window.print()">PRINT RECEIPT →</button><button class="text-link" type="button" onclick="closeOrderReceipt()">CLOSE</button></div>`;
+ modal.classList.add('open');
+}
+function closeOrderReceipt(){document.getElementById('orderReceiptModal')?.classList.remove('open');}
 function openSearch(){const m=document.getElementById('searchModal');if(!m)return;m.classList.add('open');const input=document.getElementById('searchInput');if(input){input.value='';searchProducts('');setTimeout(()=>input.focus(),50);}}
 function closeSearch(){document.getElementById('searchModal')?.classList.remove('open');}
 const JOURNAL_CONTENT={

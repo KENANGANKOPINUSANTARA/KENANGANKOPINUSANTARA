@@ -216,3 +216,45 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
 @media(max-width:1100px){.order-items{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.orders-account-box{width:100%;padding:32px 22px}.order-items-section{padding:22px 15px 24px}.order-items-heading{align-items:flex-start}.order-items{grid-template-columns:1fr;gap:14px}.order-item-main{grid-template-columns:76px minmax(0,1fr);min-height:126px;padding:15px}.order-item-art{width:76px;height:98px}.order-item-price{padding:11px 15px}.order-shop-btn{width:100%}}
 @media print{body *{visibility:hidden!important}.order-receipt-box,.order-receipt-box *{visibility:visible!important}.order-receipt-box{position:absolute;left:0;top:0;width:100%;max-width:none;box-shadow:none}.order-receipt-box .close,.order-receipt-box .form-actions{display:none!important}.modal{background:#fff!important}}
+
+/* V33 — Editorial photography layer
+   Local generated visuals are packaged with the repository so the site does not depend on remote image hosts. */
+.hero{position:relative;isolation:isolate;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(245,240,231,.98) 0%,rgba(245,240,231,.94) 44%,rgba(245,240,231,.58) 66%,rgba(245,240,231,.16) 100%),url('assets/photos/sections/hero-mountain.jpg') center/cover no-repeat;opacity:.72}
+.hero-copy{position:relative;z-index:2}
+.hero-image{width:min(560px,100%);aspect-ratio:4/3;overflow:hidden;box-shadow:22px 22px 0 rgba(176,138,74,.16);border:1px solid rgba(23,21,18,.12)}
+.hero-image img{width:100%;height:100%;object-fit:cover;object-position:center}
+.origin-section{position:relative;overflow:hidden}
+.origin-section:after{content:"";position:absolute;right:-180px;top:120px;width:520px;height:520px;border-radius:50%;background:url('assets/photos/sections/coffee-cherries.jpg') center/cover;opacity:.12;pointer-events:none}
+.region-grid,.explore-intro,.section-head,.region-detail{position:relative;z-index:1}
+.region-card{min-height:430px;box-shadow:0 12px 28px rgba(23,21,18,.08)}
+.region-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,21,18,0) 30%,rgba(23,21,18,.86) 100%);pointer-events:none}
+.region-card .region-copy,.region-card .region-number{z-index:2}
+.shop-section{background:linear-gradient(180deg,#f5f0e7 0%,#efe7da 100%)}
+.shop-section:before{content:"";display:block;height:180px;margin:-8vw -8vw 55px;background:linear-gradient(90deg,rgba(23,21,18,.78),rgba(23,21,18,.18)),url('assets/photos/sections/best-sellers.jpg') center 52%/cover no-repeat}
+.product-art{box-shadow:0 10px 22px rgba(23,21,18,.07)}
+.seasonal-section{position:relative;background:#171512;color:var(--ivory);overflow:hidden}
+.seasonal-hero{position:relative;isolation:isolate}
+.seasonal-hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(23,21,18,.96) 0%,rgba(23,21,18,.82) 46%,rgba(23,21,18,.25) 100%),url('assets/photos/sections/seasonal.jpg') center/cover no-repeat;z-index:-1;opacity:.92}
+.seasonal-feature{background:rgba(245,240,231,.06);border:1px solid rgba(245,240,231,.14);backdrop-filter:blur(2px)}
+.seasonal-feature img{width:100%;height:100%;object-fit:cover;opacity:.9;mix-blend-mode:normal}
+.create-section{position:relative;isolation:isolate;background:#dfd6c8}
+.create-section:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(223,214,200,.98) 0%,rgba(223,214,200,.90) 43%,rgba(223,214,200,.28) 100%),url('assets/photos/sections/create-coffee.jpg') right center/cover no-repeat;z-index:-1}
+.create-copy,.create-panel{position:relative;z-index:1}
+.finder-section{background:linear-gradient(rgba(245,240,231,.93),rgba(245,240,231,.93)),url('assets/photos/sections/coffee-cherries.jpg') center/cover fixed}
+.stories-section{position:relative;isolation:isolate;background:#ece5d9}
+.stories-section:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(236,229,217,.94),rgba(236,229,217,.94)),url('assets/photos/sections/stories.jpg') center/cover;z-index:-1}
+.story-grid article{box-shadow:0 10px 24px rgba(23,21,18,.06)}
+.journal-section{position:relative;isolation:isolate;background:linear-gradient(rgba(245,240,231,.93),rgba(245,240,231,.93)),url('assets/photos/journal/journal.jpg') center/cover}
+.journal-grid article{position:relative;overflow:hidden;background-size:cover;background-position:center}
+.journal-grid article:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,21,18,.12),rgba(23,21,18,.82));z-index:0}
+.journal-grid article>*{position:relative;z-index:1}
+.journal-grid article:nth-child(1){background-image:url('assets/photos/sections/create-coffee.jpg')}
+.journal-grid article:nth-child(2){background-image:url('assets/photos/origins/jawa-barat.jpg')}
+.journal-grid article:nth-child(3){background-image:url('assets/photos/journal/journal.jpg')}
+.cafe-section{background:linear-gradient(90deg,rgba(23,21,18,.88),rgba(23,21,18,.24)),url('assets/photos/sections/cafe-interior.jpg') center/cover no-repeat}
+@media(max-width:760px){
+ .hero:before{opacity:.35;background:linear-gradient(90deg,rgba(245,240,231,.98),rgba(245,240,231,.72)),url('assets/photos/sections/hero-mountain.jpg') center/cover}
+ .shop-section:before{margin:-65px -22px 45px;height:150px}
+ .create-section:after{background:linear-gradient(rgba(223,214,200,.93),rgba(223,214,200,.86)),url('assets/photos/sections/create-coffee.jpg') center/cover}
+}

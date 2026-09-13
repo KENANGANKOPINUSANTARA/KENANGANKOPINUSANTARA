@@ -1,5 +1,5 @@
 const REGION_ART={
-"Sumatera":"assets/sumatera.svg","Jawa Barat":"assets/jabar.svg","Jawa Tengah":"assets/jateng.svg","Jawa Timur":"assets/jatim.svg","Indonesia Timur":"assets/timur.svg"
+"Sumatera":"assets/photos/origins/sumatera.jpg","Jawa Barat":"assets/photos/origins/jawa-barat.jpg","Jawa Tengah":"assets/photos/origins/jawa-tengah.jpg","Jawa Timur":"assets/photos/origins/jawa-timur.jpg","Indonesia Timur":"assets/photos/origins/indonesia-timur.jpg"
 };
 const REGION_TEXT={
 "Sumatera":"Bold, earthy, chocolate-led expressions.","Jawa Barat":"Fruity, grape, berry and winey character.","Jawa Tengah":"Sweet, smooth and comforting cups.","Jawa Timur":"Sweet, chocolate and caramel-driven profile.","Indonesia Timur":"Bold body with pronounced acidity."

@@ -104,7 +104,7 @@ async function localLogin(payload){
 function updateAccountUI(){const button=document.querySelector('.actions button[onclick="openAccount()"]');if(button)button.innerHTML=currentUser?'◉':'◯';}
 function openAccount(){document.getElementById("accountModal").classList.add("open");renderAccount();}
 function closeAccount(){document.getElementById("accountModal").classList.remove("open");}
-function renderAccount(){const el=document.getElementById("accountContent");if(!el)return;if(currentUser){el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Welcome back, ${esc(currentUser.name)}.</h2><p class="form-intro">Your account connects your stories to your Kenangan identity.</p><div class="account-panel"><div><span>NAME</span><b>${esc(currentUser.name)}</b></div><div><span>EMAIL</span><b>${esc(currentUser.email)}</b></div><div><span>STATUS</span><b>ACCOUNT ACTIVE</b></div></div><div class="account-actions"><button class="btn" onclick="location.hash='stories';closeAccount()">MY STORIES →</button><button class="btn secondary-btn" onclick="showMyOrders()">MY ORDERS →</button><button class="text-link" onclick="logoutAccount()">LOG OUT</button></div>`;}else{el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Join the coffee journey.</h2><p class="form-intro">Create an account to publish, edit, and unsend your own Coffee Stories.</p><div class="auth-switch"><button class="active" id="loginTab" onclick="showAuthForm('login')">LOGIN</button><button id="registerTab" onclick="showAuthForm('register')">CREATE ACCOUNT</button></div><form id="authForm" class="auth-form" onsubmit="submitAuth(event)"></form><div id="authMessage" class="auth-message"></div>`;showAuthForm('login');}}
+function renderAccount(){document.querySelector('#accountModal .account-box')?.classList.remove('orders-account-box');const el=document.getElementById("accountContent");if(!el)return;if(currentUser){el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Welcome back, ${esc(currentUser.name)}.</h2><p class="form-intro">Your account connects your stories to your Kenangan identity.</p><div class="account-panel"><div><span>NAME</span><b>${esc(currentUser.name)}</b></div><div><span>EMAIL</span><b>${esc(currentUser.email)}</b></div><div><span>STATUS</span><b>ACCOUNT ACTIVE</b></div></div><div class="account-actions"><button class="btn" onclick="location.hash='stories';closeAccount()">MY STORIES →</button><button class="btn secondary-btn" onclick="showMyOrders()">MY ORDERS →</button><button class="text-link" onclick="logoutAccount()">LOG OUT</button></div>`;}else{el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Join the coffee journey.</h2><p class="form-intro">Create an account to publish, edit, and unsend your own Coffee Stories.</p><div class="auth-switch"><button class="active" id="loginTab" onclick="showAuthForm('login')">LOGIN</button><button id="registerTab" onclick="showAuthForm('register')">CREATE ACCOUNT</button></div><form id="authForm" class="auth-form" onsubmit="submitAuth(event)"></form><div id="authMessage" class="auth-message"></div>`;showAuthForm('login');}}
 function showAuthForm(mode){const form=document.getElementById("authForm");if(!form)return;document.getElementById("loginTab")?.classList.toggle("active",mode==='login');document.getElementById("registerTab")?.classList.toggle("active",mode==='register');form.dataset.mode=mode;form.innerHTML=mode==='login'?`<label>EMAIL<input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></label><label>PASSWORD<input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="••••••••"></label><button class="btn full" type="submit">LOGIN →</button>`:`<label>NAME<input id="authName" required maxlength="40" autocomplete="name" placeholder="Your name"></label><label>EMAIL<input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></label><label>PASSWORD<input id="authPassword" type="password" required minlength="6" autocomplete="new-password" placeholder="Minimum 6 characters"></label><button class="btn full" type="submit">CREATE ACCOUNT →</button>`;}
 async function submitAuth(e){
  e.preventDefault();
@@ -128,7 +128,12 @@ async function submitAuth(e){
   msg.textContent=m.includes('LOCAL_409')||m.includes('409')?'Email is already registered.':m.includes('LOCAL_401')||m.includes('401')?'Email or password is incorrect.':'Unable to create the account right now. Please try again.';
  }
 }
-function showMyOrders(){document.getElementById("accountContent").innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>My Orders.</h2><p class="form-intro">Track the coffee journeys connected to your account.</p><div id="myOrdersContent"></div><div class="form-actions"><button class="text-link" onclick="renderAccount()">← BACK</button></div>`;loadMyOrders()}
+function showMyOrders(){
+ const box=document.querySelector('#accountModal .account-box');
+ box?.classList.add('orders-account-box');
+ document.getElementById("accountContent").innerHTML=`<div class="orders-head"><div><span class="eyebrow">YOUR KENANGAN</span><h2>My Orders.</h2><p class="form-intro">A complete record of the coffees you have chosen, from order placed to the next cup.</p></div><button class="orders-back" onclick="renderAccount()">← ACCOUNT</button></div><div id="myOrdersContent"></div>`;
+ loadMyOrders()
+}
 async function logoutAccount(){try{if(authToken)await authFetch(`${AUTH_API}/logout`,{method:"POST"});}catch{}setSession(null);renderAccount();}
 async function storyFetch(url,options={}){
  const headers={"Content-Type":"application/json",...(options.headers||{})};if(authToken)headers.Authorization=`Bearer ${authToken}`;const res=await fetch(url,{...options,headers});
@@ -495,16 +500,37 @@ async function submitCheckout(e){
   cart=[];saveCart();closeCheckout();showOrderSuccess(order);
  }catch(err){message.textContent=err?.message||'Unable to place the order. Please check your details and try again.';}
 }
+function orderStatusMarkup(status){
+ const steps=['ORDER PLACED','PREPARING','SHIPPED','DELIVERED'];
+ const current=Math.max(0,steps.indexOf(String(status||'ORDER PLACED').toUpperCase()));
+ return `<div class="order-status-track">${steps.map((step,i)=>`<div class="status-step ${i<current?'done':''} ${i===current?'current':''}"><span>${i<current?'✓':String(i+1).padStart(2,'0')}</span><small>${step}</small></div>`).join('')}</div>`;
+}
+function orderItemData(item){
+ const product=PRODUCTS.find(p=>String(p.id||'')===String(item.productId||'')||p.name===item.name);
+ return {product,name:item.name||product?.name||'Indonesian Coffee',price:Number(item.price??product?.price??0),qty:Number(item.qty||1),lineTotal:Number(item.lineTotal??((item.price??product?.price??0)*(item.qty||1)))};
+}
 async function loadMyOrders(){
  const host=document.getElementById('myOrdersContent'); if(!host)return;
- host.innerHTML='<p class="form-intro">Loading your orders…</p>';
+ host.innerHTML='<div class="orders-loading"><span class="eyebrow">YOUR COFFEE JOURNEY</span><p>Loading your orders…</p></div>';
  try{
   let orders;
   try{orders=await authFetch('/api/orders');}
   catch{orders=localOrders().filter(o=>o.userId===currentUser?.id);}
-  if(!orders.length){host.innerHTML='<div class="empty-cart"><span class="eyebrow">NO ORDERS YET</span><h3>Your coffee journey starts here.</h3><p>Once you place an order, it will appear in this account.</p></div>';return;}
-  host.innerHTML=orders.map(o=>`<div class="order-card"><div><span class="eyebrow">${esc(o.status||'ORDER PLACED')}</span><h3>${esc(o.id)}</h3><small>${new Date(o.createdAt).toLocaleString('id-ID')}</small></div><strong>${rp(o.total)}</strong></div>`).join('');
- }catch(err){host.innerHTML='<p class="auth-message">Unable to load orders right now.</p>';}
+  if(!orders.length){host.innerHTML='<div class="orders-empty"><div class="empty-mark">K</div><span class="eyebrow">NO ORDERS YET</span><h3>Your next Kenangan starts here.</h3><p>Explore Indonesian origins, choose a regular coffee, and make your first order. Your coffee journey will be saved here.</p><button class="btn" onclick="closeAccount();location.hash=\'shop\'">EXPLORE COFFEE →</button></div>';return;}
+  const totalSpent=orders.reduce((sum,o)=>sum+Number(o.total||0),0);
+  const totalCoffees=orders.reduce((sum,o)=>sum+(o.items||[]).reduce((n,i)=>n+Number(i.qty||0),0),0);
+  host.innerHTML=`<div class="orders-overview"><div><span>ORDERS</span><strong>${String(orders.length).padStart(2,'0')}</strong></div><div><span>COFFEES</span><strong>${String(totalCoffees).padStart(2,'0')}</strong></div><div><span>TOTAL SPENT</span><strong>${rp(totalSpent)}</strong></div></div><div class="orders-note"><span>KENANGAN DELIVERY</span><p>Every regular coffee order is prepared for delivery. Seasonal coffees remain café-exclusive.</p></div><div class="orders-list">${orders.map((o,index)=>{
+    const status=String(o.status||'ORDER PLACED').toUpperCase();
+    const items=(o.items||[]).map(orderItemData);
+    const city=o.customer?.city||o.customer?.province||'Delivery address';
+    return `<article class="order-card order-card-premium">
+      <div class="order-card-head"><div><span class="order-kicker">ORDER ${String(index+1).padStart(2,'0')}</span><h3>${esc(o.id)}</h3><small>${new Date(o.createdAt).toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})} · ${esc(city)}</small></div><div class="order-total-block"><span>${esc(status)}</span><strong>${rp(o.total)}</strong></div></div>
+      ${orderStatusMarkup(status)}
+      <div class="order-items">${items.map(item=>`<div class="order-item"><div class="order-item-art"><img src="${productArt(item.product||{name:item.name,region:'Sumatera',process:'Roasted',notes:''})}" alt="${esc(item.name)}"></div><div class="order-item-copy"><b>${esc(item.name)}</b><small>${esc(item.product?.region||'Indonesia')} · ${esc(item.product?.process||'Roasted')} · 100g</small><span>QTY ${item.qty}</span></div><strong>${rp(item.lineTotal)}</strong></div>`).join('')}</div>
+      <div class="order-bottom"><div class="order-price-breakdown"><div><span>SUBTOTAL</span><b>${rp(o.subtotal??(Number(o.total||0)-Number(o.shipping||20000)))}</b></div><div><span>DELIVERY</span><b>${rp(o.shipping??20000)}</b></div><div class="grand"><span>TOTAL</span><b>${rp(o.total)}</b></div></div><div class="order-actions"><button class="text-link" onclick="closeAccount();location.hash=\'shop\'">SHOP COFFEE →</button></div></div>
+    </article>`;
+  }).join('')}</div>`;
+ }catch(err){host.innerHTML='<div class="orders-error"><span class="eyebrow">ORDER HISTORY</span><h3>We could not load your orders.</h3><p>Please try again in a moment.</p><button class="btn" onclick="loadMyOrders()">TRY AGAIN →</button></div>';}
 }
 function openSearch(){const m=document.getElementById('searchModal');if(!m)return;m.classList.add('open');const input=document.getElementById('searchInput');if(input){input.value='';searchProducts('');setTimeout(()=>input.focus(),50);}}
 function closeSearch(){document.getElementById('searchModal')?.classList.remove('open');}

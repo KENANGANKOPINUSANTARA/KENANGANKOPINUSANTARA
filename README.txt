@@ -1,23 +1,19 @@
-KENANGAN KOPI NUSANTARA — V27
-Account + Checkout resilience for local Node and Vercel/static deployment.
+KENANGAN KOPI NUSANTARA — V28
+Premium My Orders UI
 
-LOCAL MODE
-1. Double-click START-V27.bat
-2. Open http://localhost:3000
+V28 keeps the V27 account + checkout functionality and upgrades the My Orders experience.
 
-VERCEL / STATIC MODE
-- Account creation/login falls back to a browser-local demo account when /api/auth is unavailable.
-- Checkout falls back to browser-local demo orders when /api/orders is unavailable.
-- Local Node backend remains the preferred persistent mode.
+MY ORDERS improvements:
+- Premium wider account/orders modal
+- Order history overview: number of orders, coffees ordered, total spent
+- Delivery information note
+- Detailed order cards with order number, date, destination city and total
+- 4-step order journey: Order Placed → Preparing → Shipped → Delivered
+- Ordered coffee items with product artwork, origin/process, quantity and line total
+- Subtotal, delivery fee and grand total breakdown
+- Empty state and retry state
+- Responsive mobile layout
 
-V27 fixes:
-- Create Account works without the V12/V26 backend error on deployed/static mode.
-- Login works in local demo mode.
-- Session survives page refresh in the same browser.
-- Checkout submission is implemented.
-- Local orders are stored for the current browser account when API is unavailable.
-- My Orders loads API orders or local fallback orders.
-- Search modal and Journal modal interactions are restored.
-
-IMPORTANT
-The browser fallback is for prototype/demo use. For production, connect the site to a real persistent database/auth service.
+Important:
+- Browser local account/order fallback remains prototype/demo functionality for static/Vercel deployment.
+- Production authentication, persistent database, payment and shipment tracking should use a real backend/database.

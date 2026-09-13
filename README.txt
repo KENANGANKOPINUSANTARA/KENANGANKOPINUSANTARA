@@ -13,3 +13,6 @@ Example:
 Puntang / Ciwidey / Garut / Pangalengan will correctly show JAWA BARAT instead of SUMATERA.
 
 This remains a prototype/demo architecture with localStorage fallback for static/Vercel deployment.
+
+
+V32 FIX: Order Receipt modal now uses a higher stacking layer than My Orders, so View Receipt always opens in front of the My Orders modal.

@@ -204,6 +204,10 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
 .order-item-price span{font:8px Arial,sans-serif;letter-spacing:1.5px;color:var(--muted);white-space:nowrap}
 .order-item-price strong{font:600 12px Arial,sans-serif;white-space:nowrap;text-align:right;line-height:1}
 .order-shop-btn{min-width:170px}
+/* V32 — Receipt must always sit above the My Orders modal */
+#orderReceiptModal{z-index:120!important;position:fixed;}
+#orderReceiptModal .order-receipt-box{position:relative;z-index:121;}
+#orderReceiptModal.open{display:grid;}
 .order-receipt-box{width:min(560px,100%)}
 .receipt-lines{margin:26px 0;border-top:1px solid var(--line)}
 .receipt-lines>div{display:flex;justify-content:space-between;gap:20px;padding:11px 0;border-bottom:1px solid var(--line);font:10px Arial,sans-serif}

@@ -166,3 +166,14 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
 .journal-read{position:relative;z-index:100;pointer-events:auto;cursor:pointer;user-select:none;touch-action:manipulation;}
 .journal-section,.journal-grid,.journal-grid article,.journal-read{pointer-events:auto;}
 .journal-read:active{transform:translateX(2px);}
+
+/* V26 — Cart & Checkout interaction hardening */
+.drawer{pointer-events:none;visibility:hidden;transition:right .3s ease,visibility 0s linear .3s}
+.drawer.open{pointer-events:auto;visibility:visible;transition:right .3s ease,visibility 0s linear 0s}
+.drawer *{pointer-events:auto}
+.drawer-head button,.cart-row button,.cart-bottom .btn,.empty-cart .text-link{position:relative;z-index:60;pointer-events:auto;cursor:pointer}
+.cart-row button:focus-visible,.cart-bottom .btn:focus-visible,.drawer-head button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.cart-backdrop{position:fixed;inset:0;background:rgba(23,21,18,.42);z-index:49;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s ease,visibility 0s linear .25s}
+.cart-backdrop.open{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .25s ease,visibility 0s linear 0s}
+.cart-bottom .btn:disabled{pointer-events:none}
+@media(max-width:520px){.drawer{width:min(100%,420px);padding:22px}.cart-row{padding:18px 0}}

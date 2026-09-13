@@ -331,68 +331,43 @@ function updateFinderResult(){
 }
 function productId(p){return p.id||p.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
 function addToCart(name, quantity=1){
- const p=PRODUCTS.find(x=>x.name===name); if(!p||p.type==="Seasonal")return;
- const qty=Math.max(1,Math.floor(Number(quantity)||1));
+ const p=PRODUCTS.find(x=>x.name===name);
+ if(!p||p.type==="Seasonal")return;
+ const qty=Math.max(1,Math.min(99,Math.floor(Number(quantity)||1)));
  const id=productId(p); const item=cart.find(x=>x.id===id||x.name===name);
- item?item.qty+=qty:cart.push({id,name:p.name,qty,price:p.price,region:p.region});
+ if(item)item.qty=Math.min(99,item.qty+qty);else cart.push({id,name:p.name,qty,price:p.price,region:p.region});
  saveCart();openCart();
 }
 function saveCart(){localStorage.setItem("kenangan_cart",JSON.stringify(cart));renderCart()}
 function cartSubtotal(){return cart.reduce((a,x)=>a+Number(x.price||0)*Number(x.qty||0),0)}
 function renderCart(){
- // Keep seasonal/café-exclusive products out of the online cart even if an old localStorage entry exists.
- cart=cart.filter(x=>{const p=PRODUCTS.find(p=>p.name===x.name||productId(p)===x.id); return p&&p.type!=="Seasonal";});
+ cart=cart.filter(x=>{const p=PRODUCTS.find(p=>p.name===x.name||productId(p)===x.id);return p&&p.type!=="Seasonal";});
  localStorage.setItem("kenangan_cart",JSON.stringify(cart));
- document.getElementById("count").textContent=cart.reduce((a,x)=>a+Number(x.qty||0),0);
- document.getElementById("cartItems").innerHTML=cart.length?cart.map((x,i)=>`<div class="cart-row"><div class="cart-item-copy"><h4>${esc(x.name)}</h4><small>${esc(x.region||"")} · 100g</small><strong>${rp(x.price)}</strong></div><div class="cart-item-controls"><div class="qty"><button onclick="changeQty(${i},-1)" aria-label="Decrease ${esc(x.name)}">−</button><span>${x.qty}</span><button onclick="changeQty(${i},1)" aria-label="Increase ${esc(x.name)}">+</button></div><button class="remove-item" onclick="removeFromCart(${i})" aria-label="Remove ${esc(x.name)}">REMOVE</button></div></div>`).join(""):`<div class="empty-cart"><span class="eyebrow">YOUR CART</span><h3>Your cart is waiting.</h3><p>Add a regular coffee from the collection to begin your order.</p><button class="text-link" onclick="closeCart();location.hash='shop'">CONTINUE SHOPPING →</button></div>`;
- document.getElementById("cartTotal").textContent=rp(cartSubtotal());
+ const count=document.getElementById("count"); if(count)count.textContent=cart.reduce((a,x)=>a+Number(x.qty||0),0);
+ const host=document.getElementById("cartItems"); if(!host)return;
+ host.innerHTML=cart.length?cart.map((x,i)=>`<div class="cart-row"><div class="cart-item-copy"><h4>${esc(x.name)}</h4><small>${esc(x.region||"")} · 100g</small><strong>${rp(x.price)}</strong></div><div class="cart-item-controls"><div class="qty"><button type="button" data-cart-action="qty-down" data-cart-index="${i}" aria-label="Decrease ${esc(x.name)}">−</button><span>${x.qty}</span><button type="button" data-cart-action="qty-up" data-cart-index="${i}" aria-label="Increase ${esc(x.name)}">+</button></div><button type="button" class="remove-item" data-cart-action="remove" data-cart-index="${i}" aria-label="Remove ${esc(x.name)}">REMOVE</button></div></div>`).join(""):`<div class="empty-cart"><span class="eyebrow">YOUR CART</span><h3>Your cart is waiting.</h3><p>Add a regular coffee from the collection to begin your order.</p><button type="button" class="text-link" data-cart-action="continue">CONTINUE SHOPPING →</button></div>`;
+ const total=document.getElementById("cartTotal"); if(total)total.textContent=rp(cartSubtotal());
  const checkoutBtn=document.querySelector(".cart-bottom .btn.full"); if(checkoutBtn)checkoutBtn.disabled=!cart.length;
 }
-function changeQty(i,d){if(!cart[i])return;cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);saveCart()}
+function changeQty(i,d){if(!cart[i])return;cart[i].qty=Math.max(0,Math.min(99,Number(cart[i].qty||0)+d));if(cart[i].qty===0)cart.splice(i,1);saveCart()}
 function removeFromCart(i){if(!cart[i])return;cart.splice(i,1);saveCart()}
-function openCart(){document.getElementById("cartDrawer").classList.add("open");renderCart()}
-function closeCart(){document.getElementById("cartDrawer").classList.remove("open")}
+function openCart(){const d=document.getElementById("cartDrawer");if(!d)return;d.classList.add("open");document.getElementById("cartBackdrop")?.classList.add("open");renderCart()}
+function closeCart(){document.getElementById("cartDrawer")?.classList.remove("open");document.getElementById("cartBackdrop")?.classList.remove("open")}
 function checkout(){
- if(!cart.length)return alert("Your cart is empty.");
+ if(!cart.length)return;
  if(!currentUser){closeCart();openAccount();return alert("Please login to continue to checkout.");}
  closeCart();
  document.getElementById("checkoutName").value=currentUser.name||"";
  document.getElementById("checkoutEmail").value=currentUser.email||"";
  document.getElementById("checkoutSummary").innerHTML=cart.map(x=>`<div><span>${esc(x.name)} × ${x.qty}</span><strong>${rp(x.price*x.qty)}</strong></div>`).join("")+`<div><span>Shipping</span><strong>${rp(20000)}</strong></div><div class="checkout-grand"><span>TOTAL</span><strong>${rp(cartSubtotal()+20000)}</strong></div>`;
- document.getElementById("checkoutMessage").textContent=""; document.getElementById("checkoutModal").classList.add("open");
+ document.getElementById("checkoutMessage").textContent="";document.getElementById("checkoutModal").classList.add("open");
 }
-function closeCheckout(){document.getElementById("checkoutModal")?.classList.remove("open")}
-async function submitCheckout(e){
- e.preventDefault(); if(!currentUser)return;
- const msg=document.getElementById("checkoutMessage"); msg.textContent="Placing your order…";
- const payload={customer:{name:document.getElementById("checkoutName").value.trim(),email:document.getElementById("checkoutEmail").value.trim(),phone:document.getElementById("checkoutPhone").value.trim(),address:document.getElementById("checkoutAddress").value.trim(),city:document.getElementById("checkoutCity").value.trim(),province:document.getElementById("checkoutProvince").value.trim(),postalCode:document.getElementById("checkoutPostal").value.trim()},items:cart.map(x=>({productId:x.id||productId(PRODUCTS.find(p=>p.name===x)||x),qty:x.qty})),shippingFee:20000};
- try{const order=await orderFetch("/api/orders",{method:"POST",body:JSON.stringify(payload)});cart=[];saveCart();closeCheckout();showOrderSuccess(order)}catch(err){msg.textContent=err.message||"Unable to place order."}
-}
-async function orderFetch(url,options={}){const headers={"Content-Type":"application/json",...(options.headers||{})};if(authToken)headers.Authorization=`Bearer ${authToken}`;const res=await fetch(url,{...options,headers});let data={};try{data=await res.json()}catch{}if(!res.ok)throw new Error(data.error||`Order API ${res.status}`);return data}
-function showOrderSuccess(order){document.getElementById("orderSuccessContent").innerHTML=`<span class="eyebrow">ORDER CONFIRMED</span><h2>Your coffee is on its way.</h2><p class="form-intro">Thank you, ${esc(order.customer.name)}. Your order has been recorded.</p><div class="order-number"><span>ORDER NUMBER</span><strong>${esc(order.id)}</strong></div><div class="order-summary-line"><span>TOTAL</span><strong>${rp(order.total)}</strong></div><button class="btn full" onclick="closeOrderSuccess();openAccount();">VIEW MY ORDERS →</button>`;document.getElementById("orderSuccessModal").classList.add("open")}
-function closeOrderSuccess(){document.getElementById("orderSuccessModal")?.classList.remove("open")}
-async function loadMyOrders(){const host=document.getElementById("myOrdersContent");if(!host)return;host.innerHTML='<p class="muted-copy">Loading orders…</p>';try{const orders=await orderFetch("/api/orders");host.innerHTML=orders.length?orders.map(o=>`<div class="order-card"><div><span>${esc(o.id)}</span><b>${esc(o.status)}</b></div><small>${new Date(o.createdAt).toLocaleString("en-ID")}</small><p>${o.items.map(i=>`${esc(i.name)} × ${i.qty}`).join(" · ")}</p><strong>${rp(o.total)}</strong></div>`).join(""):"<p class=\"muted-copy\">No orders yet. Your first coffee journey starts in the Shop.</p>"}catch{host.innerHTML='<p class="muted-copy">Orders are available when the V13 backend is running.</p>'}}
-function openSearch(){document.getElementById("searchModal").classList.add("open");document.getElementById("searchInput").focus()}
-function closeSearch(){document.getElementById("searchModal").classList.remove("open")}
-const JOURNAL_ARTICLES={
- "natural-washed":{eyebrow:"COFFEE 101",title:"Natural vs Washed: What’s the Difference?",body:`<p>Processing is one of the quiet forces that shapes how a coffee tastes. Two beans from a similar origin can express very different personalities simply because the fruit was handled differently after harvest.</p><h3>Natural</h3><p>In the natural process, the coffee cherry dries with its fruit still around the seed. This often brings a fuller sweetness and more expressive fruit character to the cup — think berries, raisins, tropical fruit and a richer mouthfeel.</p><h3>Washed</h3><p>Washed coffees have the fruit removed before drying. The result is often a cleaner and brighter cup, allowing acidity, florality and the character of the origin to speak more clearly.</p><p><strong>In the Kenangan collection:</strong> let the tasting notes guide you. Choose Natural when you want a fruit-forward and sweet expression; choose Washed when you are looking for clarity, brightness and a more defined origin character.</p>`},
- "five-origins":{eyebrow:"ORIGIN STORIES",title:"Five Indonesian Coffee Origins You Should Try",body:`<p>Indonesia is not one coffee profile. Its mountains, volcanic soils, climate and local traditions create a remarkable range of flavours across the archipelago.</p><ol><li><strong>Sumatera</strong> — deep, herbal and chocolate-driven, with the earthy character that makes coffees such as Mandheling distinctive.</li><li><strong>Jawa Barat</strong> — expressive and fruit-forward, with berries, grape, stone fruit and winey profiles appearing across the collection.</li><li><strong>Jawa Tengah</strong> — sweet, smooth and comforting, often showing chocolate, sugarcane, nuts and vanilla.</li><li><strong>Jawa Timur</strong> — generous sweetness supported by chocolate and caramel, from approachable naturals to experimental processing.</li><li><strong>Indonesia Timur</strong> — bolder-bodied coffees with pronounced acidity and distinctive character from Bali through Papua.</li></ol><p>Start with one region, discover its signature character, then follow the journey to another. That is the Kenangan way of exploring Indonesian coffee.</p>`},
- "brew-guide":{eyebrow:"BREWING GUIDE",title:"Finding the Right Brew for Your Bean",body:`<p>The best brew method is not about following a single rule. It is about choosing a method that lets the coffee’s character become clear in the cup.</p><h3>Pour Over / V60</h3><p>Ideal when you want clarity and detail. Bright citrus, floral and fruit notes can become especially expressive.</p><h3>French Press</h3><p>A fuller-bodied approach that works beautifully with chocolate, spice, nutty and earthy coffees when you want more texture.</p><h3>Espresso</h3><p>Great for concentrated sweetness and body. Chocolate, caramel and darker flavour profiles can become especially satisfying.</p><p><strong>Kenangan tip:</strong> start with the tasting notes printed on the coffee, then choose the brew method that matches the experience you want. The bean already has its character — your brewing method helps reveal it.</p>`}
-};
-function openJournal(key){
- const article=JOURNAL_ARTICLES[key]; if(!article)return;
- const modal=document.getElementById("journalModal"); if(!modal)return;
- document.getElementById("journalModalEyebrow").textContent=article.eyebrow;
- document.getElementById("journalModalTitle").textContent=article.title;
- document.getElementById("journalModalContent").innerHTML=article.body;
- modal.classList.add("open");
-}
-function closeJournal(){document.getElementById("journalModal")?.classList.remove("open")}
 function searchProducts(q){
  const l=q.toLowerCase();const res=PRODUCTS.filter(p=>`${p.name} ${p.region} ${p.process} ${p.notes}`.toLowerCase().includes(l)).slice(0,8);
  document.getElementById("searchResults").innerHTML=res.map(p=>`<div class="search-item" onclick="closeSearch();location.hash='shop';filterRegion('${p.region}')"><b>${esc(p.name)}</b><small>${esc(p.region)} · ${esc(p.process)} · ${esc(p.notes)}</small></div>`).join("");
 }
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeSearch();closeAccount();closeStoryForm();closeProduct();closeJournal()}});
+document.addEventListener("click",e=>{if(e.target.id==="cartBackdrop")closeCart();});
 renderRegions();
 renderSeasonal();renderProducts();renderCart();renderStories();
 restoreSession().then(()=>loadStories()).then(()=>{const m=document.getElementById("storyMode");if(m)m.textContent=storyApiAvailable?"DATABASE CONNECTED":"LOCAL FALLBACK";});
@@ -434,6 +409,19 @@ function addDetailToCart(name){
  addToCart(name,qty); closeProduct();
 }
 function closeProduct(){document.getElementById("productModal").classList.remove("open")}
+
+// V26 — direct cart interaction layer. Buttons are generated dynamically, so bind at document level.
+document.addEventListener("click",function(e){
+ const btn=e.target.closest("[data-cart-action]");
+ if(!btn)return;
+ e.preventDefault();e.stopPropagation();
+ const action=btn.dataset.cartAction;
+ const i=Number(btn.dataset.cartIndex);
+ if(action==="qty-down")changeQty(i,-1);
+ else if(action==="qty-up")changeQty(i,1);
+ else if(action==="remove")removeFromCart(i);
+ else if(action==="continue"){closeCart();location.hash="shop";}
+});
 
 // Robust interaction layer for dynamically rendered controls.
 document.addEventListener("click",function(e){

@@ -389,12 +389,13 @@
       "region": "Jawa Timur",
       "variety": "Arabica",
       "process": "Carbonic Maceration",
-      "notes": "Tasting notes to be confirmed",
+      "notes": "Chocolate · Caramel · Bergamot · Citrus",
       "price": 130000,
       "badge": "Seasonal",
       "type": "Seasonal",
       "id": "ijen-cm",
-      "stock": 0
+      "stock": 0,
+      "description": "A refined carbonic maceration profile where rich chocolate and smooth caramel meet the elegant lift of bergamot and bright citrus. Layered, aromatic and beautifully expressive, Ijen CM offers a distinctive East Java cup for those who enjoy nuanced and adventurous coffees."
     },
     {
       "name": "Lawu",

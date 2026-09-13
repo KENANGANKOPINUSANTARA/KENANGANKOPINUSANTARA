@@ -176,6 +176,55 @@ async function submitStory(e){
  }catch(e){alert("Story could not be published. Please try again.");}
 }
 
+const PRODUCT_DESCRIPTIONS = {
+ "Aceh Gayo Bourbon":"A refined Gayo cup with the comforting depth of dark chocolate and brown sugar, lifted by a bright citrus finish. Smooth, balanced and quietly elegant, it is an inviting expression of northern Sumatra.",
+ "Aceh Gayo Natural":"Lush berry sweetness meets mellow chocolate and raisin-like depth. The natural process gives this Gayo coffee a fruit-forward character that feels rich, rounded and wonderfully expressive.",
+ "Aceh Gayo Wine":"A more adventurous Gayo expression, opening with vivid red-fruit character before moving into a winey sweetness and dark-chocolate finish. Rich, layered and made for curious coffee drinkers.",
+ "Mandheling":"Deep and unmistakably Indonesian, Mandheling brings herbal tones, dark chocolate richness and a gentle spice character. Full and comforting in the cup, with the earthy depth that makes this classic so distinctive.",
+ "Lintong":"A warm, grounded profile where chocolate and brown sugar sweetness meet a subtle earthy character. Smooth and comforting, Lintong is an easy choice for those who enjoy a deeper, more mellow cup.",
+ "Kerinci":"Bright tropical fruit meets soft caramel sweetness in this expressive Kerinci lot. Its natural-process character creates a lively yet approachable cup with a sweet finish that keeps you coming back.",
+ "Kerinci Mossto":"A limited seasonal expression built for exploration: juicy red grape and crisp apple character unfold over an earthy backbone. Unusual, vibrant and intriguing, this is a cup for those who want to discover something beyond the familiar.",
+ "Pangalengan":"A bright West Java classic with sparkling citrus, silky caramel sweetness and delicate floral notes. Clean, elegant and refreshing, Pangalengan captures the lighter, more aromatic side of Indonesian coffee.",
+ "Halu Honey":"Sweet berry character meets creamy chocolate in a honey-processed cup with a soft, lingering sweetness. Lively yet smooth, Halu Honey is an approachable choice with plenty of personality.",
+ "Papandayan":"Silky caramel sweetness leads into ripe stone-fruit character, rounded by a gentle nutty finish. Honey processing gives Papandayan a polished, sweet and comforting cup with an elegant texture.",
+ "Rancabali Anaerob":"An expressive anaerobic profile bursting with berries and red cherries, followed by a distinctive winey character. Juicy, aromatic and memorable, Rancabali is made for drinkers who love adventurous fruit-forward coffees.",
+ "Patuha":"Sweet, candy-like notes meet juicy berry character for a playful and vibrant cup. Patuha is naturally expressive and delightfully approachable, with a sweetness that makes every sip feel effortless.",
+ "Manglayang":"Fresh fruitiness, ripe grape and crisp green apple create a bright, lively profile. Clean and energetic, Manglayang offers a refreshing take on West Java natural-process coffee.",
+ "Kamojang Wine":"Bold jackfruit character meets a winey sweetness with a pleasantly funky edge. Complex and unconventional, Kamojang Wine is an expressive choice for anyone drawn to distinctive, fermentation-driven cups.",
+ "Puntang":"Juicy cherry and grape notes unfold into a naturally sweet finish. Bright yet rounded, Puntang delivers a fruit-forward cup that feels elegant without losing its playful character.",
+ "Ciwidey":"Crisp apple and ripe peach meet smooth caramel sweetness in a bright, polished cup. Balanced and refreshing, Ciwidey brings together fruit clarity and comforting sweetness beautifully.",
+ "Garut":"Rich raisin sweetness leads into ripe stone-fruit character with a subtle whiskey-like impression. Warm, aromatic and intriguing, Garut offers a deeper side of West Java's natural-process coffees.",
+ "Palasari Anaerobic":"A café-exclusive seasonal lot from Palasari, Bandung, shaped by anaerobic processing. Bright citrus and orange meet soft peach for a vibrant, aromatic cup that rewards slow discovery.",
+ "Manglayang Strong Wine":"A bold seasonal expression with boozy aromatics, wine-like depth and pronounced sweetness. Rich, playful and unapologetically expressive, it is designed for a memorable café experience rather than an everyday cup.",
+ "Temanggung":"A deep and comforting profile where tobacco-like character meets chocolate richness and gentle spice. Warm, distinctive and full of personality, Temanggung is made for those who prefer a darker, more grounded cup.",
+ "Dieng":"Bright citrus and delicate florals sit over a soft brown-sugar sweetness. Clean and refreshing with a gentle finish, Dieng offers an elegant highland character that is easy to enjoy.",
+ "Kaliangkrik Anaerobic":"A seasonal anaerobic expression balancing rich chocolate and almond tones with a vivid passionfruit lift. Sweet, layered and intriguing, this is a limited cup for drinkers who enjoy contrast and complexity.",
+ "Damar Kandang":"Chocolate richness is softened by creamy coconut and a touch of vanilla sweetness. Smooth, comforting and naturally rounded, Damar Kandang feels like a warm, familiar cup with an Indonesian character.",
+ "Posong Honey":"Ripe stone fruit meets fresh green-fruit brightness in a honey-processed cup with a naturally sweet feel. Light, lively and refreshing, Posong brings a graceful balance of fruit and sweetness.",
+ "Bismo":"Sweet sugarcane character meets cocoa depth and soft vanilla. Gentle, rounded and comforting, Bismo is an easy-drinking profile that stays pleasantly sweet from first sip to finish.",
+ "Merapi Selo":"An intriguing natural-process cup with whiskey-barrel-like aromatics, nutty depth and a touch of rum-like sweetness. Warm and distinctive, Merapi Selo offers a richer, more contemplative coffee experience.",
+ "Ijen":"A balanced East Java classic combining chocolate depth with bright citrus and a subtle herbal edge. Smooth, comforting and distinctly characterful, Ijen is a dependable choice for a refined everyday cup.",
+ "Argupuro":"Sweetness takes the lead, followed by generous chocolate richness and smooth caramel. Rounded and comforting, Argupuro is an inviting East Java profile with a naturally satisfying finish.",
+ "Ijen CM":"A refined carbonic maceration profile where rich chocolate and smooth caramel meet the elegant lift of bergamot and bright citrus. Layered, aromatic and beautifully expressive, Ijen CM offers a distinctive East Java cup for those who enjoy nuanced and adventurous coffees.",
+ "Lawu":"Roasted hazelnut and chocolate richness are lifted by a subtle rum-like character. Warm, smooth and indulgent, Lawu offers a naturally processed cup with a deep, comforting finish.",
+ "Kawi Bhutak":"Brown sugar sweetness blends with cocoa and soft vanilla for a smooth, rounded profile. Gentle and comforting, Kawi Bhutak is a beautifully balanced choice for lovers of sweet, chocolate-led coffees.",
+ "Bondowoso":"Nutty almond character meets a lively passionfruit lift, grounded by chocolate sweetness. Bright yet rounded, Bondowoso creates an appealing contrast between tropical freshness and familiar cocoa depth.",
+ "Ijen Raung":"Dark chocolate and caramel create a rich foundation, finished with a pleasant nutty character. Deep, sweet and comforting, Ijen Raung is an inviting expression of East Java's fuller-bodied style.",
+ "Kintamani":"Bright citrus and delicate florals are balanced by soft brown-sugar sweetness. Refreshing, aromatic and clean, Kintamani is a vibrant introduction to Bali's distinctive coffee character.",
+ "Bajawa":"Juicy red fruit meets rich chocolate and delicate floral aromatics. Naturally expressive and beautifully balanced, Bajawa offers a lively cup with enough depth to keep every sip interesting.",
+ "Manggarai":"Berry brightness meets caramel sweetness and cocoa depth. Rounded and expressive, Manggarai delivers a rich tropical character with a smooth, satisfying finish.",
+ "Bajawa Honey":"Tropical fruit and honey-like sweetness melt into a comforting chocolate base. Smooth, fragrant and naturally sweet, Bajawa Honey is an inviting expression of Flores coffee.",
+ "Kalimutu":"Crisp citrus brings brightness to a soft cocoa and brown-sugar foundation. Clean, balanced and refreshing, Kalimutu offers a graceful cup with a gentle sweetness.",
+ "Toraja Sapan":"Herbal aromatics meet dark chocolate richness and warm spice. Full and distinctive, Toraja Sapan delivers the deeper, more structured character that makes Sulawesi coffees so compelling.",
+ "Toraja Pulu-Pulu":"Juicy berry notes meet cocoa richness and a subtle winey character. Naturally expressive and layered, Pulu-Pulu brings a fruit-driven edge to the bold personality of Sulawesi coffee.",
+ "Enrekang":"Smooth caramel sweetness is lifted by citrus brightness and rounded with nutty depth. Balanced and approachable, Enrekang offers a lively yet comforting cup with a clean finish.",
+ "Jayawijaya":"Chocolate richness sits alongside a bold, earthy character and gentle sweetness. Full-bodied and grounded, Jayawijaya delivers a strong, comforting cup with unmistakable presence.",
+ "Papua Wamena Honey":"Floral aromatics and chocolate depth meet a bright citrus lift. Elegant and refreshing, this Wamena expression balances a gentle sweetness with a lively finish.",
+ "Papua Baliem":"Tropical fruit leads into smooth caramel sweetness with delicate floral lift. Fragrant, rounded and expressive, Papua Baliem offers a bright yet substantial cup from the highlands of Papua.",
+ "Halmahera":"Cocoa richness meets warm spice and subtle nuttiness. Full, grounded and characterful, Halmahera presents a bold Maluku profile with a satisfying, lingering finish."
+};
+function productDescription(p){return PRODUCT_DESCRIPTIONS[p.name]||`A distinctive Indonesian coffee shaped by ${p.process.toLowerCase()} processing, with ${p.notes.toLowerCase()} unfolding across the cup. Balanced, expressive and selected to showcase the character of its origin.`;}
+
 const rp=n=>"Rp"+n.toLocaleString("id-ID");
 const esc=s=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 
@@ -344,7 +393,7 @@ function openProduct(name){
   <h2>${esc(p.name)}</h2>
   <p class="detail-notes">${esc(p.notes)}</p>
   <div class="detail-facts"><div><span>VARIETY</span><strong>${esc(p.variety)}</strong></div><div><span>PROCESS</span><strong>${esc(p.process)}</strong></div><div><span>FORMAT</span><strong>100G</strong></div></div>
-  <p class="detail-copy">A curated Indonesian origin selected for the Kenangan collection. The cup expresses the character of its origin and processing method.</p>
+  <p class="detail-copy">${esc(productDescription(p))}</p>
   <div class="detail-purchase"><strong class="detail-price">${rp(p.price)} <small>/ 100g</small></strong>
   ${isSeasonal?'<div class="seasonal-detail-note"><b>CAFÉ EXCLUSIVE</b><span>This seasonal coffee is not available for online purchase. Discover it at the Kenangan café.</span></div>':'<div class="detail-buy-row"><div class="detail-qty"><button type="button" class="detail-qty-btn" data-delta="-1">−</button><span id="detailQty">1</span><button type="button" class="detail-qty-btn" data-delta="1">+</button></div><button type="button" class="btn detail-add-btn">ADD TO CART →</button></div>'}</div>
  </div></div>`;

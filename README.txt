@@ -1,4 +1,4 @@
-KENANGAN KOPI NUSANTARA — V21 INTERACTIONS FIXED
+KENANGAN KOPI NUSANTARA — V23 INTERACTIONS FIXED
 
 Run START-V21.bat on Windows, then open http://localhost:3000
 
@@ -11,3 +11,5 @@ V21 fixes:
 - Existing backend and seasonal café-exclusive cart restriction retained.
 
 V21: added individual persuasive coffee tasting descriptions for all 45 coffees in Product Detail.
+
+V23 interaction fix: Seasonal “DISCOVER THIS COFFEE →” buttons now use delegated data-action handling, so all 5 seasonal cards reliably open Product Detail.

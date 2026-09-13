@@ -144,3 +144,6 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
 .product-modal{position:relative;z-index:61;isolation:isolate;}
 .product-modal .detail-buy-row{position:relative;z-index:30;}
 .product-modal .detail-add-btn{position:relative;z-index:31;}
+/* V23: seasonal discovery buttons use the same delegated interaction layer as the rest of the site. */
+.seasonal-discover-btn{position:relative;z-index:5;display:inline-block;cursor:pointer;pointer-events:auto;user-select:none;touch-action:manipulation}
+.seasonal-item-copy{position:relative;z-index:2}

@@ -13,3 +13,10 @@ V21 fixes:
 V21: added individual persuasive coffee tasting descriptions for all 45 coffees in Product Detail.
 
 V23 interaction fix: Seasonal “DISCOVER THIS COFFEE →” buttons now use delegated data-action handling, so all 5 seasonal cards reliably open Product Detail.
+
+V24 UPDATE
+- Journal READ STORY buttons are now fully interactive.
+- Added three journal article modals: Natural vs Washed, Five Indonesian Coffee Origins, and Brewing Guide.
+- Added keyboard Escape support for the journal modal.
+
+V25 FIX: Journal READ STORY buttons now use both direct onclick handlers and delegated data-action handling, with pointer-event/z-index hardening.

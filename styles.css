@@ -147,3 +147,22 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
 /* V23: seasonal discovery buttons use the same delegated interaction layer as the rest of the site. */
 .seasonal-discover-btn{position:relative;z-index:5;display:inline-block;cursor:pointer;pointer-events:auto;user-select:none;touch-action:manipulation}
 .seasonal-item-copy{position:relative;z-index:2}
+
+/* V24 — Journal interaction */
+.journal-read{display:inline-block;margin-top:22px;padding:0;border:0;border-bottom:1px solid currentColor;background:none;color:inherit;font:600 10px Arial,sans-serif;letter-spacing:2px;cursor:pointer;text-align:left;transition:opacity .2s ease,transform .2s ease;}
+.journal-read:hover{opacity:.65;transform:translateX(3px)}
+.journal-read:focus-visible{outline:1px solid currentColor;outline-offset:7px}
+.journal-modal-box{max-width:820px;padding:58px 64px}
+.journal-modal-content{margin-top:28px;color:#6f6a61;font:17px/1.75 Arial,sans-serif}
+.journal-modal-content h3{margin:28px 0 8px;color:#171512;font:500 28px/1.2 Georgia,serif}
+.journal-modal-content p{margin:0 0 18px}
+.journal-modal-content ol{padding-left:24px;margin:0 0 20px}
+.journal-modal-content li{margin-bottom:14px}
+.journal-modal-content strong{color:#171512}
+@media(max-width:760px){.journal-modal-box{padding:38px 24px}.journal-modal-content{font-size:15px;line-height:1.65}.journal-modal-content h3{font-size:24px}}
+
+/* V25 — harden Journal READ STORY controls for deployed/static environments */
+.journal-grid article{position:relative;}
+.journal-read{position:relative;z-index:100;pointer-events:auto;cursor:pointer;user-select:none;touch-action:manipulation;}
+.journal-section,.journal-grid,.journal-grid article,.journal-read{pointer-events:auto;}
+.journal-read:active{transform:translateX(2px);}

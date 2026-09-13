@@ -374,11 +374,25 @@ function closeOrderSuccess(){document.getElementById("orderSuccessModal")?.class
 async function loadMyOrders(){const host=document.getElementById("myOrdersContent");if(!host)return;host.innerHTML='<p class="muted-copy">Loading orders…</p>';try{const orders=await orderFetch("/api/orders");host.innerHTML=orders.length?orders.map(o=>`<div class="order-card"><div><span>${esc(o.id)}</span><b>${esc(o.status)}</b></div><small>${new Date(o.createdAt).toLocaleString("en-ID")}</small><p>${o.items.map(i=>`${esc(i.name)} × ${i.qty}`).join(" · ")}</p><strong>${rp(o.total)}</strong></div>`).join(""):"<p class=\"muted-copy\">No orders yet. Your first coffee journey starts in the Shop.</p>"}catch{host.innerHTML='<p class="muted-copy">Orders are available when the V13 backend is running.</p>'}}
 function openSearch(){document.getElementById("searchModal").classList.add("open");document.getElementById("searchInput").focus()}
 function closeSearch(){document.getElementById("searchModal").classList.remove("open")}
+const JOURNAL_ARTICLES={
+ "natural-washed":{eyebrow:"COFFEE 101",title:"Natural vs Washed: What’s the Difference?",body:`<p>Processing is one of the quiet forces that shapes how a coffee tastes. Two beans from a similar origin can express very different personalities simply because the fruit was handled differently after harvest.</p><h3>Natural</h3><p>In the natural process, the coffee cherry dries with its fruit still around the seed. This often brings a fuller sweetness and more expressive fruit character to the cup — think berries, raisins, tropical fruit and a richer mouthfeel.</p><h3>Washed</h3><p>Washed coffees have the fruit removed before drying. The result is often a cleaner and brighter cup, allowing acidity, florality and the character of the origin to speak more clearly.</p><p><strong>In the Kenangan collection:</strong> let the tasting notes guide you. Choose Natural when you want a fruit-forward and sweet expression; choose Washed when you are looking for clarity, brightness and a more defined origin character.</p>`},
+ "five-origins":{eyebrow:"ORIGIN STORIES",title:"Five Indonesian Coffee Origins You Should Try",body:`<p>Indonesia is not one coffee profile. Its mountains, volcanic soils, climate and local traditions create a remarkable range of flavours across the archipelago.</p><ol><li><strong>Sumatera</strong> — deep, herbal and chocolate-driven, with the earthy character that makes coffees such as Mandheling distinctive.</li><li><strong>Jawa Barat</strong> — expressive and fruit-forward, with berries, grape, stone fruit and winey profiles appearing across the collection.</li><li><strong>Jawa Tengah</strong> — sweet, smooth and comforting, often showing chocolate, sugarcane, nuts and vanilla.</li><li><strong>Jawa Timur</strong> — generous sweetness supported by chocolate and caramel, from approachable naturals to experimental processing.</li><li><strong>Indonesia Timur</strong> — bolder-bodied coffees with pronounced acidity and distinctive character from Bali through Papua.</li></ol><p>Start with one region, discover its signature character, then follow the journey to another. That is the Kenangan way of exploring Indonesian coffee.</p>`},
+ "brew-guide":{eyebrow:"BREWING GUIDE",title:"Finding the Right Brew for Your Bean",body:`<p>The best brew method is not about following a single rule. It is about choosing a method that lets the coffee’s character become clear in the cup.</p><h3>Pour Over / V60</h3><p>Ideal when you want clarity and detail. Bright citrus, floral and fruit notes can become especially expressive.</p><h3>French Press</h3><p>A fuller-bodied approach that works beautifully with chocolate, spice, nutty and earthy coffees when you want more texture.</p><h3>Espresso</h3><p>Great for concentrated sweetness and body. Chocolate, caramel and darker flavour profiles can become especially satisfying.</p><p><strong>Kenangan tip:</strong> start with the tasting notes printed on the coffee, then choose the brew method that matches the experience you want. The bean already has its character — your brewing method helps reveal it.</p>`}
+};
+function openJournal(key){
+ const article=JOURNAL_ARTICLES[key]; if(!article)return;
+ const modal=document.getElementById("journalModal"); if(!modal)return;
+ document.getElementById("journalModalEyebrow").textContent=article.eyebrow;
+ document.getElementById("journalModalTitle").textContent=article.title;
+ document.getElementById("journalModalContent").innerHTML=article.body;
+ modal.classList.add("open");
+}
+function closeJournal(){document.getElementById("journalModal")?.classList.remove("open")}
 function searchProducts(q){
  const l=q.toLowerCase();const res=PRODUCTS.filter(p=>`${p.name} ${p.region} ${p.process} ${p.notes}`.toLowerCase().includes(l)).slice(0,8);
  document.getElementById("searchResults").innerHTML=res.map(p=>`<div class="search-item" onclick="closeSearch();location.hash='shop';filterRegion('${p.region}')"><b>${esc(p.name)}</b><small>${esc(p.region)} · ${esc(p.process)} · ${esc(p.notes)}</small></div>`).join("");
 }
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeSearch();closeAccount();closeStoryForm();closeProduct()}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeSearch();closeAccount();closeStoryForm();closeProduct();closeJournal()}});
 renderRegions();
 renderSeasonal();renderProducts();renderCart();renderStories();
 restoreSession().then(()=>loadStories()).then(()=>{const m=document.getElementById("storyMode");if(m)m.textContent=storyApiAvailable?"DATABASE CONNECTED":"LOCAL FALLBACK";});
@@ -432,6 +446,7 @@ document.addEventListener("click",function(e){
  if(action==="open-product"){openProduct(el.dataset.product);return;}
  if(action==="add-cart"){addToCart(el.dataset.product);return;}
  if(action==="close-product"){closeProduct();return;}
+ if(action==="open-journal"){openJournal(el.dataset.journal);return;}
 });
 document.addEventListener("keydown",function(e){
  if((e.key==="Enter"||e.key===" ") && e.target.matches("[data-action=select-region]")){e.preventDefault();selectRegion(e.target.dataset.region);}

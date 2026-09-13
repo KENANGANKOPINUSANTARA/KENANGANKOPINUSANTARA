@@ -66,13 +66,68 @@ async function authFetch(url,options={}){
  return res.json();
 }
 function setSession(data){currentUser=data?.user||null;authToken=data?.token||"";if(currentUser)localStorage.setItem("kenangan_user",JSON.stringify(currentUser));else localStorage.removeItem("kenangan_user");if(authToken)localStorage.setItem("kenangan_auth_token",authToken);else localStorage.removeItem("kenangan_auth_token");updateAccountUI();renderStories();}
-async function restoreSession(){if(!authToken){updateAccountUI();return;}try{const data=await authFetch(`${AUTH_API}/me`);currentUser=data.user;localStorage.setItem("kenangan_user",JSON.stringify(currentUser));}catch{setSession(null);}updateAccountUI();renderStories();}
+async function restoreSession(){
+ if(!authToken){updateAccountUI();return;}
+ try{
+  const data=await authFetch(`${AUTH_API}/me`);
+  currentUser=data.user;
+  localStorage.setItem('kenangan_user',JSON.stringify(currentUser));
+ }catch{
+  // Vercel/static mode: keep the browser session instead of wiping it when /api is unavailable.
+  currentUser=JSON.parse(localStorage.getItem('kenangan_user')||'null');
+ }
+ updateAccountUI();renderStories();
+}
+async function hashText(text){
+ if(window.crypto?.subtle){
+  const bytes=new TextEncoder().encode(text); const digest=await crypto.subtle.digest('SHA-256',bytes);
+  return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join('');
+ }
+ return btoa(unescape(encodeURIComponent(text)));
+}
+function localAccounts(){return JSON.parse(localStorage.getItem('kenangan_accounts')||'[]');}
+function saveLocalAccounts(list){localStorage.setItem('kenangan_accounts',JSON.stringify(list));}
+function localToken(){return `local-${Date.now()}-${Math.random().toString(36).slice(2,12)}`;}
+async function localRegister(payload){
+ const accounts=localAccounts(); const email=payload.email.toLowerCase();
+ if(accounts.some(a=>a.email===email))throw new Error('LOCAL_409');
+ const user={id:`local-${Date.now()}`,name:payload.name,email,createdAt:new Date().toISOString()};
+ accounts.push({...user,passwordHash:await hashText(payload.password)}); saveLocalAccounts(accounts);
+ return {token:localToken(),user};
+}
+async function localLogin(payload){
+ const accounts=localAccounts(); const email=payload.email.toLowerCase(); const hash=await hashText(payload.password);
+ const account=accounts.find(a=>a.email===email && a.passwordHash===hash);
+ if(!account)throw new Error('LOCAL_401');
+ const {passwordHash,...user}=account; return {token:localToken(),user};
+}
 function updateAccountUI(){const button=document.querySelector('.actions button[onclick="openAccount()"]');if(button)button.innerHTML=currentUser?'◉':'◯';}
 function openAccount(){document.getElementById("accountModal").classList.add("open");renderAccount();}
 function closeAccount(){document.getElementById("accountModal").classList.remove("open");}
 function renderAccount(){const el=document.getElementById("accountContent");if(!el)return;if(currentUser){el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Welcome back, ${esc(currentUser.name)}.</h2><p class="form-intro">Your account connects your stories to your Kenangan identity.</p><div class="account-panel"><div><span>NAME</span><b>${esc(currentUser.name)}</b></div><div><span>EMAIL</span><b>${esc(currentUser.email)}</b></div><div><span>STATUS</span><b>ACCOUNT ACTIVE</b></div></div><div class="account-actions"><button class="btn" onclick="location.hash='stories';closeAccount()">MY STORIES →</button><button class="btn secondary-btn" onclick="showMyOrders()">MY ORDERS →</button><button class="text-link" onclick="logoutAccount()">LOG OUT</button></div>`;}else{el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Join the coffee journey.</h2><p class="form-intro">Create an account to publish, edit, and unsend your own Coffee Stories.</p><div class="auth-switch"><button class="active" id="loginTab" onclick="showAuthForm('login')">LOGIN</button><button id="registerTab" onclick="showAuthForm('register')">CREATE ACCOUNT</button></div><form id="authForm" class="auth-form" onsubmit="submitAuth(event)"></form><div id="authMessage" class="auth-message"></div>`;showAuthForm('login');}}
 function showAuthForm(mode){const form=document.getElementById("authForm");if(!form)return;document.getElementById("loginTab")?.classList.toggle("active",mode==='login');document.getElementById("registerTab")?.classList.toggle("active",mode==='register');form.dataset.mode=mode;form.innerHTML=mode==='login'?`<label>EMAIL<input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></label><label>PASSWORD<input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="••••••••"></label><button class="btn full" type="submit">LOGIN →</button>`:`<label>NAME<input id="authName" required maxlength="40" autocomplete="name" placeholder="Your name"></label><label>EMAIL<input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></label><label>PASSWORD<input id="authPassword" type="password" required minlength="6" autocomplete="new-password" placeholder="Minimum 6 characters"></label><button class="btn full" type="submit">CREATE ACCOUNT →</button>`;}
-async function submitAuth(e){e.preventDefault();const mode=e.currentTarget.dataset.mode;const payload={email:document.getElementById("authEmail").value.trim(),password:document.getElementById("authPassword").value};if(mode==='register')payload.name=document.getElementById("authName").value.trim();const msg=document.getElementById("authMessage");try{const data=await authFetch(`${AUTH_API}/${mode}`,{method:"POST",body:JSON.stringify(payload)});setSession(data);closeAccount();alert(mode==='register'?"Account created. Welcome to Kenangan!":"Welcome back to Kenangan!");}catch(err){msg.textContent=err.message.includes('409')?'Email is already registered.':err.message.includes('401')?'Email or password is incorrect.':'For the local account system, start the V12 backend and try again.';}}
+async function submitAuth(e){
+ e.preventDefault();
+ const mode=e.currentTarget.dataset.mode;
+ const payload={email:document.getElementById('authEmail').value.trim(),password:document.getElementById('authPassword').value};
+ if(mode==='register')payload.name=document.getElementById('authName').value.trim();
+ const msg=document.getElementById('authMessage'); msg.textContent='';
+ try{
+  let data;
+  try{
+   data=await authFetch(`${AUTH_API}/${mode}`,{method:'POST',body:JSON.stringify(payload)});
+  }catch(apiErr){
+   // Deployed/static mode fallback: accounts live in this browser so the site remains usable on Vercel.
+   data=mode==='register'?await localRegister(payload):await localLogin(payload);
+   data.local=true;
+  }
+  setSession(data); closeAccount();
+  alert(mode==='register'?'Account created. Welcome to Kenangan!':'Welcome back to Kenangan!');
+ }catch(err){
+  const m=String(err.message||'');
+  msg.textContent=m.includes('LOCAL_409')||m.includes('409')?'Email is already registered.':m.includes('LOCAL_401')||m.includes('401')?'Email or password is incorrect.':'Unable to create the account right now. Please try again.';
+ }
+}
 function showMyOrders(){document.getElementById("accountContent").innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>My Orders.</h2><p class="form-intro">Track the coffee journeys connected to your account.</p><div id="myOrdersContent"></div><div class="form-actions"><button class="text-link" onclick="renderAccount()">← BACK</button></div>`;loadMyOrders()}
 async function logoutAccount(){try{if(authToken)await authFetch(`${AUTH_API}/logout`,{method:"POST"});}catch{}setSession(null);renderAccount();}
 async function storyFetch(url,options={}){
@@ -409,6 +464,57 @@ function addDetailToCart(name){
  addToCart(name,qty); closeProduct();
 }
 function closeProduct(){document.getElementById("productModal").classList.remove("open")}
+
+
+// V27 — account/checkout resilience for both local Node and Vercel/static deployment.
+function closeCheckout(){document.getElementById('checkoutModal')?.classList.remove('open');}
+function closeOrderSuccess(){document.getElementById('orderSuccessModal')?.classList.remove('open');}
+function localOrders(){return JSON.parse(localStorage.getItem('kenangan_orders')||'[]');}
+function saveLocalOrders(list){localStorage.setItem('kenangan_orders',JSON.stringify(list));}
+function showOrderSuccess(order){
+ const box=document.getElementById('orderSuccessContent'); if(!box)return;
+ box.innerHTML=`<span class="eyebrow">ORDER CONFIRMED</span><h2>Thank you, ${esc(currentUser?.name||order.customer?.name||'Coffee Lover')}.</h2><p class="form-intro">Your Kenangan coffee journey has begun. Your order has been recorded successfully.</p><div class="order-confirm"><span>ORDER NUMBER</span><strong>${esc(order.id)}</strong><span>TOTAL</span><strong>${rp(order.total)}</strong><span>STATUS</span><strong>${esc(order.status||'ORDER PLACED')}</strong></div><div class="form-actions"><button type="button" class="btn" onclick="closeOrderSuccess();showMyOrders()">VIEW MY ORDERS →</button><button type="button" class="text-link" onclick="closeOrderSuccess()">CONTINUE SHOPPING</button></div>`;
+ document.getElementById('orderSuccessModal')?.classList.add('open');
+}
+async function submitCheckout(e){
+ e.preventDefault();
+ if(!currentUser){closeCheckout();openAccount();return;}
+ const message=document.getElementById('checkoutMessage'); message.textContent='';
+ const customer={name:document.getElementById('checkoutName').value.trim(),email:document.getElementById('checkoutEmail').value.trim(),phone:document.getElementById('checkoutPhone').value.trim(),postalCode:document.getElementById('checkoutPostal').value.trim(),address:document.getElementById('checkoutAddress').value.trim(),city:document.getElementById('checkoutCity').value.trim(),province:document.getElementById('checkoutProvince').value.trim()};
+ const payload={customer,items:cart.map(x=>({productId:x.id,qty:Number(x.qty)})),shippingFee:20000};
+ try{
+  let order;
+  try{
+   order=await authFetch('/api/orders',{method:'POST',body:JSON.stringify(payload)});
+  }catch(apiErr){
+   // Vercel/static demo fallback. This keeps checkout functional without pretending it is a server database.
+   const subtotal=cartSubtotal();
+   order={id:`KN-${new Date().toISOString().slice(0,10).replace(/-/g,'')}-LOCAL-${String(localOrders().length+1).padStart(3,'0')}`,userId:currentUser.id,customer,items:cart.map(x=>({...x,lineTotal:Number(x.price)*Number(x.qty)})),subtotal,shipping:20000,total:subtotal+20000,status:'ORDER PLACED',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),local:true};
+   const orders=localOrders(); orders.unshift(order); saveLocalOrders(orders);
+  }
+  cart=[];saveCart();closeCheckout();showOrderSuccess(order);
+ }catch(err){message.textContent=err?.message||'Unable to place the order. Please check your details and try again.';}
+}
+async function loadMyOrders(){
+ const host=document.getElementById('myOrdersContent'); if(!host)return;
+ host.innerHTML='<p class="form-intro">Loading your orders…</p>';
+ try{
+  let orders;
+  try{orders=await authFetch('/api/orders');}
+  catch{orders=localOrders().filter(o=>o.userId===currentUser?.id);}
+  if(!orders.length){host.innerHTML='<div class="empty-cart"><span class="eyebrow">NO ORDERS YET</span><h3>Your coffee journey starts here.</h3><p>Once you place an order, it will appear in this account.</p></div>';return;}
+  host.innerHTML=orders.map(o=>`<div class="order-card"><div><span class="eyebrow">${esc(o.status||'ORDER PLACED')}</span><h3>${esc(o.id)}</h3><small>${new Date(o.createdAt).toLocaleString('id-ID')}</small></div><strong>${rp(o.total)}</strong></div>`).join('');
+ }catch(err){host.innerHTML='<p class="auth-message">Unable to load orders right now.</p>';}
+}
+function openSearch(){const m=document.getElementById('searchModal');if(!m)return;m.classList.add('open');const input=document.getElementById('searchInput');if(input){input.value='';searchProducts('');setTimeout(()=>input.focus(),50);}}
+function closeSearch(){document.getElementById('searchModal')?.classList.remove('open');}
+const JOURNAL_CONTENT={
+ 'natural-washed':{eyebrow:'COFFEE 101',title:'Natural vs Washed: What’s the Difference?',body:'Natural processing lets the coffee cherry dry around the seed, often creating a fruit-forward cup with layered sweetness. Washed processing removes the fruit before drying, commonly revealing a cleaner, brighter and more transparent expression of origin. The best choice depends on the character you want to discover in the cup.'},
+ 'five-origins':{eyebrow:'ORIGIN STORIES',title:'Five Indonesian Coffee Origins You Should Try',body:'Indonesia offers an extraordinary range of coffee expressions. Sumatra is known for deep, earthy and chocolate-led cups; West Java brings fruit, grape and winey notes; Central Java leans sweet and comforting; East Java often delivers chocolate and caramel; while eastern origins can show bold body and pronounced acidity. Explore each region and find the character that feels like your next Kenangan.'},
+ 'brew-guide':{eyebrow:'BREWING GUIDE',title:'Finding the Right Brew for Your Bean',body:'Match the brew to the coffee’s character. V60 and pour over can highlight floral and fruit-driven coffees, French Press can emphasize body and sweetness, while espresso concentrates chocolate, caramel and richer notes. There is no single correct method—the best brew is the one that helps you notice more.'}
+};
+function openJournal(key){const j=JOURNAL_CONTENT[key]||JOURNAL_CONTENT['natural-washed'];document.getElementById('journalModalEyebrow').textContent=j.eyebrow;document.getElementById('journalModalTitle').textContent=j.title;document.getElementById('journalModalContent').innerHTML=`<p>${esc(j.body)}</p>`;document.getElementById('journalModal')?.classList.add('open');}
+function closeJournal(){document.getElementById('journalModal')?.classList.remove('open');}
 
 // V26 — direct cart interaction layer. Buttons are generated dynamically, so bind at document level.
 document.addEventListener("click",function(e){

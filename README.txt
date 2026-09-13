@@ -22,3 +22,8 @@ V33 — EDITORIAL PHOTOGRAPHY ASSETS
 - Homepage hero, origins, shop banner, seasonal, create, finder, stories, journal and cafe now use local visuals.
 - Existing V32 account, checkout, orders and receipt behavior is preserved.
 - Product data and order-name-first mapping are preserved.
+
+V34 VISUAL UPDATE
+- Updated the Jawa Timur origin photography with a high-resolution Ijen/Raung-inspired volcanic landscape.
+- Removed the incorrect Flores Bajawa visual from the Jawa Timur origin card.
+- The Jawa Timur card continues to represent the Ijen Raung / East Java collection.

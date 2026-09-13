@@ -281,17 +281,23 @@ function updateFinderResult(){
  document.getElementById("finderResult").innerHTML=`<div class="result-copy"><span class="eyebrow">YOUR COFFEE JOURNEY</span><strong>${esc(p.name)} · ${esc(p.region)}</strong><small>${esc(p.process)} · ${esc(p.notes)}${exp?` · EXPERIENCE: ${esc(exp)}`:""}</small></div><a class="result-cta" href="#cafe">DISCOVER AT THE CAFÉ →</a>`;
 }
 function productId(p){return p.id||p.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
-function addToCart(name){
+function addToCart(name, quantity=1){
  const p=PRODUCTS.find(x=>x.name===name); if(!p||p.type==="Seasonal")return;
- const id=productId(p); const item=cart.find(x=>x.id===id||x.name===name); item?item.qty++:cart.push({id,name:p.name,qty:1,price:p.price,region:p.region});
+ const qty=Math.max(1,Math.floor(Number(quantity)||1));
+ const id=productId(p); const item=cart.find(x=>x.id===id||x.name===name);
+ item?item.qty+=qty:cart.push({id,name:p.name,qty,price:p.price,region:p.region});
  saveCart();openCart();
 }
 function saveCart(){localStorage.setItem("kenangan_cart",JSON.stringify(cart));renderCart()}
 function cartSubtotal(){return cart.reduce((a,x)=>a+Number(x.price||0)*Number(x.qty||0),0)}
 function renderCart(){
- document.getElementById("count").textContent=cart.reduce((a,x)=>a+x.qty,0);
- document.getElementById("cartItems").innerHTML=cart.length?cart.map((x,i)=>`<div class="cart-row"><div><h4>${esc(x.name)}</h4><small>${rp(x.price)} / 100g</small></div><div class="qty"><button onclick="changeQty(${i},-1)">−</button> ${x.qty} <button onclick="changeQty(${i},1)">+</button><button class="remove-item" onclick="removeFromCart(${i})" aria-label="Remove ${esc(x.name)}">×</button></div></div>`).join(""):"<p>Your cart is empty.</p>";
+ // Keep seasonal/café-exclusive products out of the online cart even if an old localStorage entry exists.
+ cart=cart.filter(x=>{const p=PRODUCTS.find(p=>p.name===x.name||productId(p)===x.id); return p&&p.type!=="Seasonal";});
+ localStorage.setItem("kenangan_cart",JSON.stringify(cart));
+ document.getElementById("count").textContent=cart.reduce((a,x)=>a+Number(x.qty||0),0);
+ document.getElementById("cartItems").innerHTML=cart.length?cart.map((x,i)=>`<div class="cart-row"><div class="cart-item-copy"><h4>${esc(x.name)}</h4><small>${esc(x.region||"")} · 100g</small><strong>${rp(x.price)}</strong></div><div class="cart-item-controls"><div class="qty"><button onclick="changeQty(${i},-1)" aria-label="Decrease ${esc(x.name)}">−</button><span>${x.qty}</span><button onclick="changeQty(${i},1)" aria-label="Increase ${esc(x.name)}">+</button></div><button class="remove-item" onclick="removeFromCart(${i})" aria-label="Remove ${esc(x.name)}">REMOVE</button></div></div>`).join(""):`<div class="empty-cart"><span class="eyebrow">YOUR CART</span><h3>Your cart is waiting.</h3><p>Add a regular coffee from the collection to begin your order.</p><button class="text-link" onclick="closeCart();location.hash='shop'">CONTINUE SHOPPING →</button></div>`;
  document.getElementById("cartTotal").textContent=rp(cartSubtotal());
+ const checkoutBtn=document.querySelector(".cart-bottom .btn.full"); if(checkoutBtn)checkoutBtn.disabled=!cart.length;
 }
 function changeQty(i,d){if(!cart[i])return;cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);saveCart()}
 function removeFromCart(i){if(!cart[i])return;cart.splice(i,1);saveCart()}
@@ -330,13 +336,28 @@ restoreSession().then(()=>loadStories()).then(()=>{const m=document.getElementBy
 
 function openProduct(name){
  const p=PRODUCTS.find(x=>x.name===name); if(!p)return;
+ const isSeasonal=p.type==="Seasonal";
  document.getElementById("productDetail").innerHTML=`<div class="detail-grid">
  <div class="detail-art"><img src="${productArt(p)}" alt="${esc(p.name)}"></div>
- <div><span class="eyebrow">${esc(p.region).toUpperCase()} · ${esc(p.process).toUpperCase()}</span>
- <h2>${esc(p.name)}</h2><p class="detail-notes">${esc(p.notes)}</p>
- <p class="detail-copy">A curated Indonesian origin selected for the Kenangan collection. The cup expresses the character of its origin and processing method.</p>
- <strong class="detail-price">${rp(p.price)} / 100g</strong><br><br>
- ${p.type==="Seasonal"?'<p><b>CAFÉ EXCLUSIVE.</b> Available to discover in person at the Kenangan café.</p>':'<button class="btn" onclick="addToCart('+JSON.stringify(p.name)+');closeProduct()">ADD TO CART →</button>'}</div></div>`;
+ <div class="detail-content">
+  <span class="eyebrow">${esc(p.region).toUpperCase()} · ${esc(p.process).toUpperCase()}</span>
+  <h2>${esc(p.name)}</h2>
+  <p class="detail-notes">${esc(p.notes)}</p>
+  <div class="detail-facts"><div><span>VARIETY</span><strong>${esc(p.variety)}</strong></div><div><span>PROCESS</span><strong>${esc(p.process)}</strong></div><div><span>FORMAT</span><strong>100G</strong></div></div>
+  <p class="detail-copy">A curated Indonesian origin selected for the Kenangan collection. The cup expresses the character of its origin and processing method.</p>
+  <div class="detail-purchase"><strong class="detail-price">${rp(p.price)} <small>/ 100g</small></strong>
+  ${isSeasonal?'<div class="seasonal-detail-note"><b>CAFÉ EXCLUSIVE</b><span>This seasonal coffee is not available for online purchase. Discover it at the Kenangan café.</span></div>':'<div class="detail-buy-row"><div class="detail-qty"><button type="button" onclick="adjustDetailQty(-1)">−</button><span id="detailQty">1</span><button type="button" onclick="adjustDetailQty(1)">+</button></div><button class="btn" onclick="addDetailToCart(${JSON.stringify(p.name)})">ADD TO CART →</button></div>'}</div>
+ </div></div>`;
+ window.detailSelection={name:p.name,qty:1};
  document.getElementById("productModal").classList.add("open");
+}
+function adjustDetailQty(delta){
+ const q=document.getElementById("detailQty"); if(!q)return;
+ window.detailSelection=window.detailSelection||{name:"",qty:1};
+ window.detailSelection.qty=Math.max(1,Math.min(99,window.detailSelection.qty+delta)); q.textContent=window.detailSelection.qty;
+}
+function addDetailToCart(name){
+ const qty=window.detailSelection?.name===name?window.detailSelection.qty:1;
+ addToCart(name,qty); closeProduct();
 }
 function closeProduct(){document.getElementById("productModal").classList.remove("open")}

@@ -29,3 +29,11 @@ V15 — PRODUCT CARD ACTIONS
 
 
 V17: Product card action layout fixed globally. Price is always on its own row, with VIEW and ADD TO CART on a separate two-button row, preventing overlap at all desktop card widths.
+
+V18 — PRODUCT DETAIL + CART FLOW
+- Product detail modal upgraded with origin, process, variety, tasting notes, format and quantity controls.
+- Regular coffees can be added with a selected quantity directly from Product Detail.
+- Seasonal coffees remain café-exclusive and cannot be added to the online cart.
+- Cart now has cleaner item controls, subtotal, empty state, remove controls and checkout state.
+- Legacy seasonal cart entries are automatically removed from localStorage.
+- Existing account, stories and backend order flow are preserved.

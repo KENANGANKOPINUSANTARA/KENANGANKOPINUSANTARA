@@ -506,8 +506,22 @@ function orderStatusMarkup(status){
  return `<div class="order-status-track">${steps.map((step,i)=>`<div class="status-step ${i<current?'done':''} ${i===current?'current':''}"><span>${i<current?'✓':String(i+1).padStart(2,'0')}</span><small>${step}</small></div>`).join('')}</div>`;
 }
 function orderItemData(item){
- const product=PRODUCTS.find(p=>String(p.id||'')===String(item.productId||'')||p.name===item.name);
- return {product,name:item.name||product?.name||'Indonesian Coffee',price:Number(item.price??product?.price??0),qty:Number(item.qty||1),lineTotal:Number(item.lineTotal??((item.price??product?.price??0)*(item.qty||1)))};
+ // Resolve by coffee name first. Older/local orders may not contain productId,
+ // and comparing two missing ids would incorrectly match the first coffee (Aceh Gayo Bourbon).
+ const itemName=String(item?.name||item?.product?.name||'').trim();
+ const itemId=String(item?.productId||item?.product?.id||'').trim();
+ let product=itemName?PRODUCTS.find(p=>String(p.name).trim().toLowerCase()===itemName.toLowerCase()):null;
+ if(!product && itemId){
+   product=PRODUCTS.find(p=>String(p.id||'').trim()===itemId);
+   if(!product){
+     const normalized=itemId.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+     product=PRODUCTS.find(p=>productId(p)===normalized);
+   }
+ }
+ const name=itemName||product?.name||'Indonesian Coffee';
+ const price=Number(item?.price??product?.price??0);
+ const qty=Number(item?.qty||1);
+ return {product,name,price,qty,lineTotal:Number(item?.lineTotal??(price*qty))};
 }
 async function loadMyOrders(){
  const host=document.getElementById('myOrdersContent'); if(!host)return;
@@ -526,7 +540,7 @@ async function loadMyOrders(){
     return `<article class="order-card order-card-premium">
       <div class="order-card-head"><div><span class="order-kicker">ORDER ${String(index+1).padStart(2,'0')}</span><h3>${esc(o.id)}</h3><small>${new Date(o.createdAt).toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})} · ${esc(city)}</small></div><div class="order-total-block"><span>${esc(status)}</span><strong>${rp(o.total)}</strong></div></div>
       ${orderStatusMarkup(status)}
-      <div class="order-items">${items.map(item=>`<div class="order-item"><div class="order-item-art"><img src="${productArt(item.product||{name:item.name,region:'Sumatera',process:'Roasted',notes:''})}" alt="${esc(item.name)}"></div><div class="order-item-copy"><b>${esc(item.name)}</b><small>${esc(item.product?.region||'Indonesia')} · ${esc(item.product?.process||'Roasted')} · 100g</small><span>QTY ${item.qty}</span></div><strong>${rp(item.lineTotal)}</strong></div>`).join('')}</div>
+      <div class="order-items">${items.map(item=>`<div class="order-item"><div class="order-item-art"><img src="${productArt(item.product||{name:item.name,region:'Sumatera',process:'Roasted',notes:''})}" alt="${esc(item.name)}"></div><div class="order-item-copy"><b>${esc(item.name)}</b><small>${esc(item.product?.region||'Indonesia')} · ${esc(item.product?.process||'Roasted')} · 100g</small><span>QTY ${item.qty}</span></div><div class="order-item-price"><span>ITEM TOTAL</span><strong>${rp(item.lineTotal)}</strong></div></div>`).join('')}</div>
       <div class="order-bottom"><div class="order-price-breakdown"><div><span>SUBTOTAL</span><b>${rp(o.subtotal??(Number(o.total||0)-Number(o.shipping||20000)))}</b></div><div><span>DELIVERY</span><b>${rp(o.shipping??20000)}</b></div><div class="grand"><span>TOTAL</span><b>${rp(o.total)}</b></div></div><div class="order-actions"><button class="text-link" onclick="closeAccount();location.hash=\'shop\'">SHOP COFFEE →</button></div></div>
     </article>`;
   }).join('')}</div>`;

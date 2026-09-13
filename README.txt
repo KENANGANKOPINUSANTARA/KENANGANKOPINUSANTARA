@@ -1,19 +1,15 @@
-KENANGAN KOPI NUSANTARA — V28
-Premium My Orders UI
+KENANGAN KOPI NUSANTARA — V30
+MY ORDERS PRODUCT MAPPING FIX
 
-V28 keeps the V27 account + checkout functionality and upgrades the My Orders experience.
+V30 is based on V28 and fixes an order-history mapping bug.
 
-MY ORDERS improvements:
-- Premium wider account/orders modal
-- Order history overview: number of orders, coffees ordered, total spent
-- Delivery information note
-- Detailed order cards with order number, date, destination city and total
-- 4-step order journey: Order Placed → Preparing → Shipped → Delivered
-- Ordered coffee items with product artwork, origin/process, quantity and line total
-- Subtotal, delivery fee and grand total breakdown
-- Empty state and retry state
-- Responsive mobile layout
+FIX:
+- My Orders now resolves coffee details by the actual coffee name first.
+- Missing product IDs no longer cause every item to match the first product in the catalog.
+- Existing local orders are supported without needing to place the order again.
+- Correct region, processing method and product artwork are shown for each coffee.
 
-Important:
-- Browser local account/order fallback remains prototype/demo functionality for static/Vercel deployment.
-- Production authentication, persistent database, payment and shipment tracking should use a real backend/database.
+Example:
+Puntang / Ciwidey / Garut / Pangalengan will correctly show JAWA BARAT instead of SUMATERA.
+
+This remains a prototype/demo architecture with localStorage fallback for static/Vercel deployment.

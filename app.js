@@ -182,7 +182,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;"
 function renderRegions(){
  const regions=Object.keys(REGION_ART);
  document.getElementById("regions").innerHTML=regions.map((r,i)=>`
- <article class="region-card" onclick="selectRegion('${r}')">
+ <article class="region-card" data-action="select-region" data-region="${r}" tabindex="0" role="button">
   <img src="${REGION_ART[r]}" alt="${r} coffee region">
   <div class="region-number">0${i+1}</div>
   <div class="region-copy"><span>ORIGIN 0${i+1}</span><h3>${r}</h3><p>${REGION_TEXT[r]}</p><b>EXPLORE ORIGIN →</b></div>
@@ -193,7 +193,7 @@ function selectRegion(region){
  const products=PRODUCTS.filter(p=>p.region===region);
  const sample=products.slice(0,4);
  const detail=document.getElementById("regionDetail");
- detail.innerHTML=`<div class="region-detail-copy"><span class="eyebrow">ORIGIN ${String(Object.keys(REGION_ART).indexOf(region)+1).padStart(2,"0")}</span><h3>${region}</h3><p>${REGION_TEXT[region]}</p><div class="region-count">${products.length} COFFEES IN THE COLLECTION</div><button class="btn" onclick="filterRegion('${region}');location.hash='shop'">SHOP ${region.toUpperCase()} →</button></div><div class="region-picks"><span class="eyebrow">SELECTED ORIGINS</span>${sample.map(p=>`<button onclick="openProduct(${JSON.stringify(p.name)})"><b>${esc(p.name)}</b><small>${esc(p.notes)}</small></button>`).join("")}</div>`;
+ detail.innerHTML=`<div class="region-detail-copy"><span class="eyebrow">ORIGIN ${String(Object.keys(REGION_ART).indexOf(region)+1).padStart(2,"0")}</span><h3>${region}</h3><p>${REGION_TEXT[region]}</p><div class="region-count">${products.length} COFFEES IN THE COLLECTION</div><button class="btn" onclick="filterRegion('${region}');location.hash='shop'">SHOP ${region.toUpperCase()} →</button></div><div class="region-picks"><span class="eyebrow">SELECTED ORIGINS</span>${sample.map(p=>`<button type="button" class="origin-pick-btn" data-action="open-product" data-product="${esc(p.name)}"><b>${esc(p.name)}</b><small>${esc(p.notes)}</small></button>`).join("")}</div>`;
  detail.classList.add("show");
  detail.scrollIntoView({behavior:"smooth",block:"center"});
 }
@@ -224,7 +224,7 @@ function renderProducts(){
  document.getElementById("products").innerHTML=list.map((p,i)=>`
  <article class="product-card">
   <div class="product-art"><img src="${productArt(p)}" alt="${esc(p.name)}"><span class="product-badge">${p.badge||"REGULAR"}</span></div>
-  <div class="product-info"><div class="origin-line">${p.region.toUpperCase()} · ${p.process.toUpperCase()}</div><h3>${esc(p.name)}</h3><div class="notes">${esc(p.notes)}</div><div class="card-actions"><span class="price">${rp(p.price)} / 100g</span><button onclick='openProduct(${JSON.stringify(p.name)})'>VIEW</button><button onclick='addToCart(${JSON.stringify(p.name)})'>ADD TO CART</button></div></div>
+  <div class="product-info"><div class="origin-line">${p.region.toUpperCase()} · ${p.process.toUpperCase()}</div><h3>${esc(p.name)}</h3><div class="notes">${esc(p.notes)}</div><div class="card-actions"><span class="price">${rp(p.price)} / 100g</span><button type="button" data-action="open-product" data-product="${esc(p.name)}">VIEW</button><button type="button" data-action="add-cart" data-product="${esc(p.name)}">ADD TO CART</button></div></div>
  </article>`).join("")||`<p>No coffee found for this filter.</p>`;
 }
 function filterRegion(r){
@@ -346,10 +346,20 @@ function openProduct(name){
   <div class="detail-facts"><div><span>VARIETY</span><strong>${esc(p.variety)}</strong></div><div><span>PROCESS</span><strong>${esc(p.process)}</strong></div><div><span>FORMAT</span><strong>100G</strong></div></div>
   <p class="detail-copy">A curated Indonesian origin selected for the Kenangan collection. The cup expresses the character of its origin and processing method.</p>
   <div class="detail-purchase"><strong class="detail-price">${rp(p.price)} <small>/ 100g</small></strong>
-  ${isSeasonal?'<div class="seasonal-detail-note"><b>CAFÉ EXCLUSIVE</b><span>This seasonal coffee is not available for online purchase. Discover it at the Kenangan café.</span></div>':'<div class="detail-buy-row"><div class="detail-qty"><button type="button" onclick="adjustDetailQty(-1)">−</button><span id="detailQty">1</span><button type="button" onclick="adjustDetailQty(1)">+</button></div><button class="btn" onclick="addDetailToCart(${JSON.stringify(p.name)})">ADD TO CART →</button></div>'}</div>
+  ${isSeasonal?'<div class="seasonal-detail-note"><b>CAFÉ EXCLUSIVE</b><span>This seasonal coffee is not available for online purchase. Discover it at the Kenangan café.</span></div>':'<div class="detail-buy-row"><div class="detail-qty"><button type="button" class="detail-qty-btn" data-delta="-1">−</button><span id="detailQty">1</span><button type="button" class="detail-qty-btn" data-delta="1">+</button></div><button type="button" class="btn detail-add-btn">ADD TO CART →</button></div>'}</div>
  </div></div>`;
  window.detailSelection={name:p.name,qty:1};
- document.getElementById("productModal").classList.add("open");
+ const modal=document.getElementById("productModal");
+ modal.classList.add("open");
+ // Bind the detail controls after the modal HTML exists. This avoids inline-handler
+ // issues and makes the primary CTA reliably clickable inside the scrollable modal.
+ modal.querySelectorAll(".detail-qty-btn").forEach(btn=>{
+   btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();adjustDetailQty(Number(btn.dataset.delta)||0);});
+ });
+ const addBtn=modal.querySelector(".detail-add-btn");
+ if(addBtn){
+   addBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();addDetailToCart(p.name);});
+ }
 }
 function adjustDetailQty(delta){
  const q=document.getElementById("detailQty"); if(!q)return;
@@ -361,3 +371,19 @@ function addDetailToCart(name){
  addToCart(name,qty); closeProduct();
 }
 function closeProduct(){document.getElementById("productModal").classList.remove("open")}
+
+// Robust interaction layer for dynamically rendered controls.
+document.addEventListener("click",function(e){
+ const el=e.target.closest("[data-action]");
+ if(!el)return;
+ e.preventDefault();
+ e.stopPropagation();
+ const action=el.dataset.action;
+ if(action==="select-region"){selectRegion(el.dataset.region);return;}
+ if(action==="open-product"){openProduct(el.dataset.product);return;}
+ if(action==="add-cart"){addToCart(el.dataset.product);return;}
+ if(action==="close-product"){closeProduct();return;}
+});
+document.addEventListener("keydown",function(e){
+ if((e.key==="Enter"||e.key===" ") && e.target.matches("[data-action=select-region]")){e.preventDefault();selectRegion(e.target.dataset.region);}
+});

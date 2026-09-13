@@ -115,3 +115,32 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
 .cart-items{overflow:auto;flex:1;margin:20px -4px 20px 0;padding-right:8px}.cart-row{grid-template-columns:1fr;gap:14px;padding:20px 0}.cart-item-copy{display:grid;grid-template-columns:1fr auto;gap:5px 14px}.cart-item-copy h4{grid-column:1/-1}.cart-item-copy small{color:var(--muted);font-size:9px;letter-spacing:1px}.cart-item-copy strong{justify-self:end;font-size:12px}.cart-item-controls{display:flex;align-items:center;justify-content:space-between;gap:14px}.qty{display:flex;align-items:center;gap:9px}.qty button{width:28px;height:28px;padding:0;font-size:14px;cursor:pointer}.qty span{min-width:18px;text-align:center;font-size:11px}.remove-item{border:0;background:none;color:var(--muted);font:8px Arial;letter-spacing:1.4px;cursor:pointer}.remove-item:hover{color:var(--ink)}.empty-cart{padding:35px 5px}.empty-cart h3{font:32px var(--serif);margin:10px 0}.empty-cart p{color:var(--muted);line-height:1.6}.empty-cart .text-link{border:0;background:none;padding:0;margin-top:14px;cursor:pointer;font:9px Arial;letter-spacing:1.5px}.cart-note{display:block;color:var(--muted);font-size:9px;margin:-7px 0 15px}.cart-bottom .btn.full:disabled{opacity:.35;cursor:not-allowed}
 .detail-content{min-width:0}.detail-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:25px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0}.detail-facts div{display:flex;flex-direction:column;gap:5px}.detail-facts span{font:8px Arial;letter-spacing:1.6px;color:var(--gold)}.detail-facts strong{font:10px Arial;letter-spacing:.7px}.detail-purchase{margin-top:25px}.detail-price{font-size:21px}.detail-price small{font:10px Arial;color:var(--muted);font-weight:400}.detail-buy-row{display:flex;gap:12px;align-items:stretch;margin-top:18px}.detail-buy-row .btn{flex:1}.detail-qty{display:flex;border:1px solid var(--line);align-items:center}.detail-qty button{border:0;background:none;width:38px;height:44px;font-size:16px;cursor:pointer}.detail-qty span{width:25px;text-align:center;font-size:11px}.seasonal-detail-note{display:flex;flex-direction:column;gap:6px;margin-top:18px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:15px 0}.seasonal-detail-note b{font:9px Arial;letter-spacing:1.7px;color:var(--gold)}.seasonal-detail-note span{font-size:10px;color:var(--muted);line-height:1.6}
 @media(max-width:760px){.modal{padding:10px}.modal-box{max-height:calc(100vh - 20px)}.product-modal{width:100%;max-height:calc(100vh - 20px);padding:24px}.product-modal .detail-grid{grid-template-columns:1fr}.product-modal .detail-art,.product-modal .detail-art img{max-height:none}.detail-facts{grid-template-columns:1fr 1fr}.detail-buy-row{flex-wrap:wrap}.detail-buy-row .btn{min-height:44px}.detail-qty{flex:0 0 auto}}
+
+/* V19 — Product detail CTA interaction hardening */
+.product-modal .detail-buy-row{position:relative;z-index:10}
+.product-modal .detail-add-btn{position:relative;z-index:11;pointer-events:auto;cursor:pointer}
+.product-modal .detail-qty{position:relative;z-index:11}
+.product-modal .detail-qty-btn{cursor:pointer;pointer-events:auto}
+/* V20 interaction hardening */
+.region-card,
+.region-detail,
+.region-picks,
+.region-picks button,
+.product-card,
+.product-card button,
+.product-modal,
+.product-modal button,
+.product-modal .detail-buy-row,
+.product-modal .detail-add-btn,
+.product-modal .detail-qty,
+.product-modal .detail-qty button{pointer-events:auto;}
+.region-picks button,.product-card button,.product-modal button{position:relative;z-index:20;}
+.product-modal{position:relative;z-index:61;isolation:isolate;}
+.product-modal .detail-buy-row{position:relative;z-index:30;}
+.product-modal .detail-add-btn{position:relative;z-index:31;}
+/* V20 interaction hardening */
+.region-card,.region-detail,.region-picks,.region-picks button,.product-card,.product-card button,.product-modal,.product-modal button,.product-modal .detail-buy-row,.product-modal .detail-add-btn,.product-modal .detail-qty,.product-modal .detail-qty button{pointer-events:auto;}
+.region-picks button,.product-card button,.product-modal button{position:relative;z-index:20;}
+.product-modal{position:relative;z-index:61;isolation:isolate;}
+.product-modal .detail-buy-row{position:relative;z-index:30;}
+.product-modal .detail-add-btn{position:relative;z-index:31;}

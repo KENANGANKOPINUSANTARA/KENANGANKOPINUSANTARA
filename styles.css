@@ -241,11 +241,11 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
 .create-section{position:relative;isolation:isolate;background:#dfd6c8}
 .create-section:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(223,214,200,.98) 0%,rgba(223,214,200,.90) 43%,rgba(223,214,200,.28) 100%),url('assets/photos/sections/create-coffee.jpg') right center/cover no-repeat;z-index:-1}
 .create-copy,.create-panel{position:relative;z-index:1}
-.finder-section{background:var(--ivory)}
+.finder-section{background:linear-gradient(rgba(245,240,231,.93),rgba(245,240,231,.93)),url('assets/photos/sections/coffee-cherries.jpg') center/cover fixed}
 .stories-section{position:relative;isolation:isolate;background:#ece5d9}
-.stories-section:before{display:none}
+.stories-section:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(236,229,217,.72),rgba(236,229,217,.84)),url('assets/photos/sections/stories.jpg') center/cover;z-index:-1}
 .story-grid article{box-shadow:0 10px 24px rgba(23,21,18,.06)}
-.journal-section{position:relative;background:var(--ivory)}
+.journal-section{position:relative;isolation:isolate;background:linear-gradient(rgba(245,240,231,.93),rgba(245,240,231,.93)),url('assets/photos/journal/journal.jpg') center/cover}
 .journal-grid article{position:relative;overflow:hidden;background-size:cover;background-position:center}
 .journal-grid article:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,21,18,.12),rgba(23,21,18,.82));z-index:0}
 .journal-grid article>*{position:relative;z-index:1}
@@ -315,9 +315,3 @@ img{
   background-repeat:no-repeat;
   background-position:center;
 }
-
-/* V40 — Clean source imagery: no embedded copy, no blur, no photographic haze */
-.journal-grid article{background-color:#2b241e;background-blend-mode:normal;}
-.journal-grid article:before{background:linear-gradient(180deg,rgba(23,21,18,.04) 0%,rgba(23,21,18,.10) 38%,rgba(23,21,18,.76) 100%);}
-.region-card img,.journal-grid article{transform:translateZ(0);}
-.region-card img{filter:none;opacity:1;image-rendering:auto;}

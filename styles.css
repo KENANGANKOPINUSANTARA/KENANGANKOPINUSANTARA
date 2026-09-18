@@ -315,7 +315,3 @@ img{
   background-repeat:no-repeat;
   background-position:center;
 }
-
-/* V45: approved journal artwork contains its own editorial copy; hide duplicate HTML copy */
-.journal-grid article > *{visibility:hidden}
-.journal-grid article{background-size:cover;background-position:center;background-repeat:no-repeat}

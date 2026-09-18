@@ -261,3 +261,33 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
 
 /* V35 — Clean, text-free photography layer */
 .hero-image{aspect-ratio:4/5;overflow:hidden}.hero-image img{width:100%;height:100%;object-fit:cover;object-position:center}.seasonal-feature{overflow:hidden}.seasonal-feature img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* V37 — Contrast, journal alignment & seasonal hero clarity */
+.seasonal-item-copy{color:var(--ink)}
+.seasonal-item-copy h3{color:var(--ink);font-weight:500;line-height:1.08}
+.seasonal-item-copy p{color:#655d54}
+.seasonal-item-copy .exclusive-line small{color:#655d54}
+.seasonal-grid .seasonal-item-copy{background:#f3ecdf}
+
+/* Keep every Journal card on the same editorial rhythm. */
+.journal-grid article{min-height:430px;justify-content:flex-start;padding:34px 32px 28px}
+.journal-grid article small{display:block;min-height:18px}
+.journal-grid article h3{margin:22px 0 0;min-height:112px;line-height:1.18;color:#fff}
+.journal-grid article .journal-read{margin-top:auto;align-self:flex-start;color:#fff;background:transparent;border:0;border-bottom:1px solid rgba(255,255,255,.78);padding:0 0 8px;font-size:10px;font-weight:700;letter-spacing:1.8px;cursor:pointer}
+.journal-grid article .journal-read:hover{color:#d2b078;border-bottom-color:#d2b078}
+
+/* Seasonal feature uses a dedicated portrait master so the full scene remains visible. */
+.seasonal-feature{min-height:520px;background:#2b241e;padding:0;display:flex;align-items:stretch;justify-content:center}
+.seasonal-feature img{width:100%;height:520px;max-width:none;object-fit:cover;object-position:center center;filter:none;opacity:1;display:block}
+.seasonal-feature:before{display:none}
+.exclusive-badge{z-index:3;background:rgba(23,21,18,.62);backdrop-filter:blur(4px)}
+
+@media(max-width:760px){
+  .journal-grid article{min-height:380px;padding:28px 24px 24px}
+  .journal-grid article h3{min-height:96px;font-size:25px}
+  .seasonal-feature{min-height:0}
+  .seasonal-feature img{height:auto;aspect-ratio:2/3;object-fit:cover}
+}
+/* V37 final seasonal cleanup: no blurred/cropped background layer */
+.seasonal-hero:before{background:#171512;opacity:1}
+.seasonal-feature img{object-fit:contain;background:#2b241e}

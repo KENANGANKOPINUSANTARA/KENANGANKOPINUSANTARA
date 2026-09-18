@@ -1,0 +1,1 @@
+V44 - Origin photos replaced with clean image-only crops from a newly generated high-resolution source. All embedded UI text was excluded by cropping before upscaling. Only assets/photos/origins/*.jpg and related CSS cleanup were changed from V39.

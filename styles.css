@@ -249,9 +249,9 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
 .journal-grid article{position:relative;overflow:hidden;background-size:cover;background-position:center}
 .journal-grid article:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(23,21,18,.12),rgba(23,21,18,.82));z-index:0}
 .journal-grid article>*{position:relative;z-index:1}
-.journal-grid article:nth-child(1){background-image:url('assets/photos/journal/natural-washed.jpg')}
-.journal-grid article:nth-child(2){background-image:url('assets/photos/journal/origins-guide.jpg')}
-.journal-grid article:nth-child(3){background-image:url('assets/photos/journal/brew-guide.jpg')}
+.journal-grid article:nth-child(1){background-image:url('assets/photos/journal/natural-washed.jpg?v=50')}
+.journal-grid article:nth-child(2){background-image:url('assets/photos/journal/origins-guide.jpg?v=50')}
+.journal-grid article:nth-child(3){background-image:url('assets/photos/journal/brew-guide.jpg?v=50')}
 .cafe-section{background:linear-gradient(90deg,rgba(23,21,18,.88),rgba(23,21,18,.24)),url('assets/photos/sections/cafe-interior.jpg') center/cover no-repeat}
 @media(max-width:760px){
  .hero:before{opacity:.35;background:linear-gradient(90deg,rgba(245,240,231,.98),rgba(245,240,231,.72)),url('assets/photos/sections/hero-mountain.jpg') center/cover}

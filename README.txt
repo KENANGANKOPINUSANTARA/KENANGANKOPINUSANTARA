@@ -1,18 +1,17 @@
-KENANGAN KOPI NUSANTARA — V36 CLEAN VISUAL ASSETS
+JAWA TENGAH IMAGE FIX
+=======================
 
-Based on V34. This version replaces the website photography layer with clean, text-free scenic visuals generated for this project.
+This package fixes the broken Jawa Tengah / Origin 03 image.
 
-Origin visuals:
-- Sumatera: volcanic mountain/lake + coffee landscape
-- Jawa Barat: terraced coffee highlands
-- Jawa Tengah: volcanic highlands and coffee landscape
-- Jawa Timur: Ijen/Raung-inspired volcanic crater landscape
-- Indonesia Timur: tropical island/coastal landscape
+INSTALL:
+1. Extract this ZIP.
+2. Copy the `assets` folder into the ROOT of your GitHub website repository.
+3. If GitHub asks whether to replace/merge the folder, choose MERGE/REPLACE.
+4. Make sure the final path is exactly:
 
-Homepage hero:
-- Indonesian coffee highland landscape with coffee cherries and volcanic mountains
-- No embedded copy, logos, packaging, quotes, or watermark
+   assets/jateng.svg
 
-Other section/journal visuals are also clean photography with all website text rendered separately by HTML/CSS.
+5. Commit and push to GitHub, then wait for Vercel to redeploy.
 
-V34 functionality remains intact: account/login, cart, checkout, My Orders, receipt, product detail, seasonal/journal interactions, and backend files.
+No app.js change is required because the existing code already points to:
+assets/jateng.svg

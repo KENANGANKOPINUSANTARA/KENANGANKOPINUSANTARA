@@ -1,5 +1,5 @@
 const REGION_ART={
-"Sumatera":"assets/photos/origins/sumatera.jpg","Jawa Barat":"assets/photos/origins/jawa-barat.jpg","Jawa Tengah":"assets/photos/origins/jawa-tengah.jpg","Jawa Timur":"assets/photos/origins/jawa-timur.jpg","Indonesia Timur":"assets/photos/origins/indonesia-timur.jpg"
+"Sumatera":"assets/photos/origins/v52-sumatera.jpg","Jawa Barat":"assets/photos/origins/v52-jawa-barat.jpg","Jawa Tengah":"assets/photos/origins/v52-jawa-tengah.jpg","Jawa Timur":"assets/photos/origins/v52-jawa-timur.jpg","Indonesia Timur":"assets/photos/origins/v52-indonesia-timur.jpg"
 };
 const REGION_TEXT={
 "Sumatera":"Bold, earthy, chocolate-led expressions.","Jawa Barat":"Fruity, grape, berry and winey character.","Jawa Tengah":"Sweet, smooth and comforting cups.","Jawa Timur":"Sweet, chocolate and caramel-driven profile.","Indonesia Timur":"Bold body with pronounced acidity."

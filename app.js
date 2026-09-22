@@ -316,7 +316,18 @@ function renderSeasonal(){
    <div class="seasonal-item-copy"><span class="eyebrow">${esc(p.region).toUpperCase()} · ${esc(p.process).toUpperCase()}</span><h3>${esc(p.name)}</h3><p>${esc(p.notes)}</p><div class="exclusive-line"><b>CAFÉ EXCLUSIVE</b><small>NOT AVAILABLE ONLINE</small></div><button type="button" class="seasonal-discover-btn" data-action="open-product" data-product="${esc(p.name)}">DISCOVER THIS COFFEE →</button></div>
  </article>`).join("");
 }
+const PRODUCT_ART={
+ "aceh-gayo-bourbon":"assets/photos/products/aceh-gayo-bourbon.jpg",
+ "aceh-gayo-natural":"assets/photos/products/aceh-gayo-natural.jpg",
+ "aceh-gayo-wine":"assets/photos/products/aceh-gayo-wine.jpg",
+ "mandheling":"assets/photos/products/mandheling.jpg",
+ "lintong":"assets/photos/products/lintong.jpg",
+ "kerinci":"assets/photos/products/kerinci.jpg",
+ "kerinci-mossto":"assets/photos/products/kerinci-mossto.jpg"
+};
 function productArt(p){
+ const id=productId(p);
+ if(PRODUCT_ART[id])return PRODUCT_ART[id];
  const region=p?.region||"Indonesia Timur";
  return REGION_ART[region]||REGION_ART["Indonesia Timur"];
 }

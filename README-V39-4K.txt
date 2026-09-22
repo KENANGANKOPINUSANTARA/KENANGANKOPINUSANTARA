@@ -22,4 +22,3 @@ GITHUB
 
 RUN LOCALLY
 Double-click START-V39.bat.
-

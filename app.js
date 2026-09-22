@@ -1,5 +1,5 @@
 const REGION_ART={
-"Sumatera":"assets/photos/origins/v52-sumatera.jpg","Jawa Barat":"assets/photos/origins/v52-jawa-barat.jpg","Jawa Tengah":"assets/photos/origins/v52-jawa-tengah.jpg","Jawa Timur":"assets/photos/origins/v52-jawa-timur.jpg","Indonesia Timur":"assets/photos/origins/v52-indonesia-timur.jpg"
+"Sumatera":"assets/photos/origins/v54-sumatera.jpg","Jawa Barat":"assets/photos/origins/v54-jawa-barat.jpg","Jawa Tengah":"assets/photos/origins/v54-jawa-tengah.jpg","Jawa Timur":"assets/photos/origins/v54-jawa-timur.jpg","Indonesia Timur":"assets/photos/origins/v54-indonesia-timur.jpg"
 };
 const REGION_TEXT={
 "Sumatera":"Bold, earthy, chocolate-led expressions.","Jawa Barat":"Fruity, grape, berry and winey character.","Jawa Tengah":"Sweet, smooth and comforting cups.","Jawa Timur":"Sweet, chocolate and caramel-driven profile.","Indonesia Timur":"Bold body with pronounced acidity."
@@ -66,74 +66,14 @@ async function authFetch(url,options={}){
  return res.json();
 }
 function setSession(data){currentUser=data?.user||null;authToken=data?.token||"";if(currentUser)localStorage.setItem("kenangan_user",JSON.stringify(currentUser));else localStorage.removeItem("kenangan_user");if(authToken)localStorage.setItem("kenangan_auth_token",authToken);else localStorage.removeItem("kenangan_auth_token");updateAccountUI();renderStories();}
-async function restoreSession(){
- if(!authToken){updateAccountUI();return;}
- try{
-  const data=await authFetch(`${AUTH_API}/me`);
-  currentUser=data.user;
-  localStorage.setItem('kenangan_user',JSON.stringify(currentUser));
- }catch{
-  // Vercel/static mode: keep the browser session instead of wiping it when /api is unavailable.
-  currentUser=JSON.parse(localStorage.getItem('kenangan_user')||'null');
- }
- updateAccountUI();renderStories();
-}
-async function hashText(text){
- if(window.crypto?.subtle){
-  const bytes=new TextEncoder().encode(text); const digest=await crypto.subtle.digest('SHA-256',bytes);
-  return [...new Uint8Array(digest)].map(b=>b.toString(16).padStart(2,'0')).join('');
- }
- return btoa(unescape(encodeURIComponent(text)));
-}
-function localAccounts(){return JSON.parse(localStorage.getItem('kenangan_accounts')||'[]');}
-function saveLocalAccounts(list){localStorage.setItem('kenangan_accounts',JSON.stringify(list));}
-function localToken(){return `local-${Date.now()}-${Math.random().toString(36).slice(2,12)}`;}
-async function localRegister(payload){
- const accounts=localAccounts(); const email=payload.email.toLowerCase();
- if(accounts.some(a=>a.email===email))throw new Error('LOCAL_409');
- const user={id:`local-${Date.now()}`,name:payload.name,email,createdAt:new Date().toISOString()};
- accounts.push({...user,passwordHash:await hashText(payload.password)}); saveLocalAccounts(accounts);
- return {token:localToken(),user};
-}
-async function localLogin(payload){
- const accounts=localAccounts(); const email=payload.email.toLowerCase(); const hash=await hashText(payload.password);
- const account=accounts.find(a=>a.email===email && a.passwordHash===hash);
- if(!account)throw new Error('LOCAL_401');
- const {passwordHash,...user}=account; return {token:localToken(),user};
-}
+async function restoreSession(){if(!authToken){updateAccountUI();return;}try{const data=await authFetch(`${AUTH_API}/me`);currentUser=data.user;localStorage.setItem("kenangan_user",JSON.stringify(currentUser));}catch{setSession(null);}updateAccountUI();renderStories();}
 function updateAccountUI(){const button=document.querySelector('.actions button[onclick="openAccount()"]');if(button)button.innerHTML=currentUser?'◉':'◯';}
 function openAccount(){document.getElementById("accountModal").classList.add("open");renderAccount();}
 function closeAccount(){document.getElementById("accountModal").classList.remove("open");}
-function renderAccount(){document.querySelector('#accountModal .account-box')?.classList.remove('orders-account-box');const el=document.getElementById("accountContent");if(!el)return;if(currentUser){el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Welcome back, ${esc(currentUser.name)}.</h2><p class="form-intro">Your account connects your stories to your Kenangan identity.</p><div class="account-panel"><div><span>NAME</span><b>${esc(currentUser.name)}</b></div><div><span>EMAIL</span><b>${esc(currentUser.email)}</b></div><div><span>STATUS</span><b>ACCOUNT ACTIVE</b></div></div><div class="account-actions"><button class="btn" onclick="location.hash='stories';closeAccount()">MY STORIES →</button><button class="btn secondary-btn" onclick="showMyOrders()">MY ORDERS →</button><button class="text-link" onclick="logoutAccount()">LOG OUT</button></div>`;}else{el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Join the coffee journey.</h2><p class="form-intro">Create an account to publish, edit, and unsend your own Coffee Stories.</p><div class="auth-switch"><button class="active" id="loginTab" onclick="showAuthForm('login')">LOGIN</button><button id="registerTab" onclick="showAuthForm('register')">CREATE ACCOUNT</button></div><form id="authForm" class="auth-form" onsubmit="submitAuth(event)"></form><div id="authMessage" class="auth-message"></div>`;showAuthForm('login');}}
+function renderAccount(){const el=document.getElementById("accountContent");if(!el)return;if(currentUser){el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Welcome back, ${esc(currentUser.name)}.</h2><p class="form-intro">Your account connects your stories to your Kenangan identity.</p><div class="account-panel"><div><span>NAME</span><b>${esc(currentUser.name)}</b></div><div><span>EMAIL</span><b>${esc(currentUser.email)}</b></div><div><span>STATUS</span><b>ACCOUNT ACTIVE</b></div></div><div class="account-actions"><button class="btn" onclick="location.hash='stories';closeAccount()">MY STORIES →</button><button class="btn secondary-btn" onclick="showMyOrders()">MY ORDERS →</button><button class="text-link" onclick="logoutAccount()">LOG OUT</button></div>`;}else{el.innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>Join the coffee journey.</h2><p class="form-intro">Create an account to publish, edit, and unsend your own Coffee Stories.</p><div class="auth-switch"><button class="active" id="loginTab" onclick="showAuthForm('login')">LOGIN</button><button id="registerTab" onclick="showAuthForm('register')">CREATE ACCOUNT</button></div><form id="authForm" class="auth-form" onsubmit="submitAuth(event)"></form><div id="authMessage" class="auth-message"></div>`;showAuthForm('login');}}
 function showAuthForm(mode){const form=document.getElementById("authForm");if(!form)return;document.getElementById("loginTab")?.classList.toggle("active",mode==='login');document.getElementById("registerTab")?.classList.toggle("active",mode==='register');form.dataset.mode=mode;form.innerHTML=mode==='login'?`<label>EMAIL<input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></label><label>PASSWORD<input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="••••••••"></label><button class="btn full" type="submit">LOGIN →</button>`:`<label>NAME<input id="authName" required maxlength="40" autocomplete="name" placeholder="Your name"></label><label>EMAIL<input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com"></label><label>PASSWORD<input id="authPassword" type="password" required minlength="6" autocomplete="new-password" placeholder="Minimum 6 characters"></label><button class="btn full" type="submit">CREATE ACCOUNT →</button>`;}
-async function submitAuth(e){
- e.preventDefault();
- const mode=e.currentTarget.dataset.mode;
- const payload={email:document.getElementById('authEmail').value.trim(),password:document.getElementById('authPassword').value};
- if(mode==='register')payload.name=document.getElementById('authName').value.trim();
- const msg=document.getElementById('authMessage'); msg.textContent='';
- try{
-  let data;
-  try{
-   data=await authFetch(`${AUTH_API}/${mode}`,{method:'POST',body:JSON.stringify(payload)});
-  }catch(apiErr){
-   // Deployed/static mode fallback: accounts live in this browser so the site remains usable on Vercel.
-   data=mode==='register'?await localRegister(payload):await localLogin(payload);
-   data.local=true;
-  }
-  setSession(data); closeAccount();
-  alert(mode==='register'?'Account created. Welcome to Kenangan!':'Welcome back to Kenangan!');
- }catch(err){
-  const m=String(err.message||'');
-  msg.textContent=m.includes('LOCAL_409')||m.includes('409')?'Email is already registered.':m.includes('LOCAL_401')||m.includes('401')?'Email or password is incorrect.':'Unable to create the account right now. Please try again.';
- }
-}
-function showMyOrders(){
- const box=document.querySelector('#accountModal .account-box');
- box?.classList.add('orders-account-box');
- document.getElementById("accountContent").innerHTML=`<div class="orders-head"><div><span class="eyebrow">YOUR KENANGAN</span><h2>My Orders.</h2><p class="form-intro">A complete record of the coffees you have chosen, from order placed to the next cup.</p></div><button class="orders-back" onclick="renderAccount()">← ACCOUNT</button></div><div id="myOrdersContent"></div>`;
- loadMyOrders()
-}
+async function submitAuth(e){e.preventDefault();const mode=e.currentTarget.dataset.mode;const payload={email:document.getElementById("authEmail").value.trim(),password:document.getElementById("authPassword").value};if(mode==='register')payload.name=document.getElementById("authName").value.trim();const msg=document.getElementById("authMessage");try{const data=await authFetch(`${AUTH_API}/${mode}`,{method:"POST",body:JSON.stringify(payload)});setSession(data);closeAccount();alert(mode==='register'?"Account created. Welcome to Kenangan!":"Welcome back to Kenangan!");}catch(err){msg.textContent=err.message.includes('409')?'Email is already registered.':err.message.includes('401')?'Email or password is incorrect.':'For the local account system, start the V12 backend and try again.';}}
+function showMyOrders(){document.getElementById("accountContent").innerHTML=`<span class="eyebrow">YOUR KENANGAN</span><h2>My Orders.</h2><p class="form-intro">Track the coffee journeys connected to your account.</p><div id="myOrdersContent"></div><div class="form-actions"><button class="text-link" onclick="renderAccount()">← BACK</button></div>`;loadMyOrders()}
 async function logoutAccount(){try{if(authToken)await authFetch(`${AUTH_API}/logout`,{method:"POST"});}catch{}setSession(null);renderAccount();}
 async function storyFetch(url,options={}){
  const headers={"Content-Type":"application/json",...(options.headers||{})};if(authToken)headers.Authorization=`Bearer ${authToken}`;const res=await fetch(url,{...options,headers});
@@ -316,20 +256,15 @@ function renderSeasonal(){
    <div class="seasonal-item-copy"><span class="eyebrow">${esc(p.region).toUpperCase()} · ${esc(p.process).toUpperCase()}</span><h3>${esc(p.name)}</h3><p>${esc(p.notes)}</p><div class="exclusive-line"><b>CAFÉ EXCLUSIVE</b><small>NOT AVAILABLE ONLINE</small></div><button type="button" class="seasonal-discover-btn" data-action="open-product" data-product="${esc(p.name)}">DISCOVER THIS COFFEE →</button></div>
  </article>`).join("");
 }
-const PRODUCT_ART={
- "aceh-gayo-bourbon":"assets/photos/products/aceh-gayo-bourbon.jpg",
- "aceh-gayo-natural":"assets/photos/products/aceh-gayo-natural.jpg",
- "aceh-gayo-wine":"assets/photos/products/aceh-gayo-wine.jpg",
- "mandheling":"assets/photos/products/mandheling.jpg",
- "lintong":"assets/photos/products/lintong.jpg",
- "kerinci":"assets/photos/products/kerinci.jpg",
- "kerinci-mossto":"assets/photos/products/kerinci-mossto.jpg"
-};
 function productArt(p){
- const id=productId(p);
- if(PRODUCT_ART[id])return PRODUCT_ART[id];
- const region=p?.region||"Indonesia Timur";
- return REGION_ART[region]||REGION_ART["Indonesia Timur"];
+ const palettes={"Sumatera":["#24342b","#b08a4a"],"Jawa Barat":["#4a3325","#c89a58"],"Jawa Tengah":["#171512","#b08a4a"],"Jawa Timur":["#5a3b28","#d0a66a"],"Indonesia Timur":["#24342b","#d1aa70"]};
+ const [ink,gold]=palettes[p.region]||["#171512","#b08a4a"];
+ const title=p.name.toUpperCase();
+ const notes=p.notes.toUpperCase().split(" · ");
+ const note1=notes[0]||"INDONESIAN COFFEE";
+ const note2=notes.slice(1).join(" · ").slice(0,34);
+ const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000"><defs><radialGradient id="g"><stop stop-color="${gold}" stop-opacity=".25"/><stop offset="1" stop-color="${gold}" stop-opacity="0"/></radialGradient><filter id="s"><feGaussianBlur stdDeviation="16"/></filter></defs><rect width="800" height="1000" fill="#e7dfd1"/><circle cx="650" cy="180" r="260" fill="url(#g)"/><ellipse cx="400" cy="845" rx="250" ry="52" fill="#2d241e" opacity=".2" filter="url(#s)"/><g transform="translate(175 115)"><rect x="20" y="18" width="430" height="700" rx="28" fill="#171512" opacity=".22"/><rect width="430" height="700" rx="28" fill="#f7f0e3"/><rect x="24" y="24" width="382" height="652" rx="20" fill="#fbf6ed" stroke="${gold}" stroke-width="2"/><text x="215" y="92" text-anchor="middle" font-family="Georgia" font-size="25" letter-spacing="6" fill="#171512">KENANGAN</text><text x="215" y="120" text-anchor="middle" font-family="Arial" font-size="9" letter-spacing="4" fill="#5a493c">KOPI NUSANTARA</text><circle cx="215" cy="300" r="105" fill="${ink}"/><path d="M215 200 C160 275 170 345 215 405 C260 345 270 275 215 200Z" fill="${gold}"/><path d="M215 222 C192 275 199 335 215 372 C231 335 238 275 215 222Z" fill="#f5f0e7" opacity=".72"/><text x="215" y="485" text-anchor="middle" font-family="Georgia" font-size="20" fill="#171512">${title}</text><text x="215" y="516" text-anchor="middle" font-family="Arial" font-size="9" letter-spacing="3" fill="#5a493c">${p.process.toUpperCase()}</text><line x1="105" y1="552" x2="325" y2="552" stroke="${gold}"/><text x="215" y="584" text-anchor="middle" font-family="Arial" font-size="9" letter-spacing="1.5" fill="#4a3325">${note1}</text><text x="215" y="606" text-anchor="middle" font-family="Arial" font-size="8" letter-spacing="1.3" fill="#4a3325">${note2}</text><text x="215" y="648" text-anchor="middle" font-family="Arial" font-size="8" letter-spacing="3" fill="#8a7867">100 G · ROASTED IN INDONESIA</text></g></svg>`;
+ return 'data:image/svg+xml;charset=UTF-8,'+encodeURIComponent(svg);
 }
 function renderProducts(){
  const proc=document.getElementById("processFilter").value;
@@ -396,46 +331,73 @@ function updateFinderResult(){
 }
 function productId(p){return p.id||p.name.toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
 function addToCart(name, quantity=1){
- const p=PRODUCTS.find(x=>x.name===name);
- if(!p||p.type==="Seasonal")return;
- const qty=Math.max(1,Math.min(99,Math.floor(Number(quantity)||1)));
+ const p=PRODUCTS.find(x=>x.name===name); if(!p||p.type==="Seasonal")return;
+ const qty=Math.max(1,Math.floor(Number(quantity)||1));
  const id=productId(p); const item=cart.find(x=>x.id===id||x.name===name);
- if(item)item.qty=Math.min(99,item.qty+qty);else cart.push({id,name:p.name,qty,price:p.price,region:p.region});
+ item?item.qty+=qty:cart.push({id,name:p.name,qty,price:p.price,region:p.region});
  saveCart();openCart();
 }
 function saveCart(){localStorage.setItem("kenangan_cart",JSON.stringify(cart));renderCart()}
 function cartSubtotal(){return cart.reduce((a,x)=>a+Number(x.price||0)*Number(x.qty||0),0)}
 function renderCart(){
- cart=cart.filter(x=>{const p=PRODUCTS.find(p=>p.name===x.name||productId(p)===x.id);return p&&p.type!=="Seasonal";});
+ // Keep seasonal/café-exclusive products out of the online cart even if an old localStorage entry exists.
+ cart=cart.filter(x=>{const p=PRODUCTS.find(p=>p.name===x.name||productId(p)===x.id); return p&&p.type!=="Seasonal";});
  localStorage.setItem("kenangan_cart",JSON.stringify(cart));
- const count=document.getElementById("count"); if(count)count.textContent=cart.reduce((a,x)=>a+Number(x.qty||0),0);
- const host=document.getElementById("cartItems"); if(!host)return;
- host.innerHTML=cart.length?cart.map((x,i)=>`<div class="cart-row"><div class="cart-item-copy"><h4>${esc(x.name)}</h4><small>${esc(x.region||"")} · 100g</small><strong>${rp(x.price)}</strong></div><div class="cart-item-controls"><div class="qty"><button type="button" data-cart-action="qty-down" data-cart-index="${i}" aria-label="Decrease ${esc(x.name)}">−</button><span>${x.qty}</span><button type="button" data-cart-action="qty-up" data-cart-index="${i}" aria-label="Increase ${esc(x.name)}">+</button></div><button type="button" class="remove-item" data-cart-action="remove" data-cart-index="${i}" aria-label="Remove ${esc(x.name)}">REMOVE</button></div></div>`).join(""):`<div class="empty-cart"><span class="eyebrow">YOUR CART</span><h3>Your cart is waiting.</h3><p>Add a regular coffee from the collection to begin your order.</p><button type="button" class="text-link" data-cart-action="continue">CONTINUE SHOPPING →</button></div>`;
- const total=document.getElementById("cartTotal"); if(total)total.textContent=rp(cartSubtotal());
+ document.getElementById("count").textContent=cart.reduce((a,x)=>a+Number(x.qty||0),0);
+ document.getElementById("cartItems").innerHTML=cart.length?cart.map((x,i)=>`<div class="cart-row"><div class="cart-item-copy"><h4>${esc(x.name)}</h4><small>${esc(x.region||"")} · 100g</small><strong>${rp(x.price)}</strong></div><div class="cart-item-controls"><div class="qty"><button onclick="changeQty(${i},-1)" aria-label="Decrease ${esc(x.name)}">−</button><span>${x.qty}</span><button onclick="changeQty(${i},1)" aria-label="Increase ${esc(x.name)}">+</button></div><button class="remove-item" onclick="removeFromCart(${i})" aria-label="Remove ${esc(x.name)}">REMOVE</button></div></div>`).join(""):`<div class="empty-cart"><span class="eyebrow">YOUR CART</span><h3>Your cart is waiting.</h3><p>Add a regular coffee from the collection to begin your order.</p><button class="text-link" onclick="closeCart();location.hash='shop'">CONTINUE SHOPPING →</button></div>`;
+ document.getElementById("cartTotal").textContent=rp(cartSubtotal());
  const checkoutBtn=document.querySelector(".cart-bottom .btn.full"); if(checkoutBtn)checkoutBtn.disabled=!cart.length;
 }
-function changeQty(i,d){if(!cart[i])return;cart[i].qty=Math.max(0,Math.min(99,Number(cart[i].qty||0)+d));if(cart[i].qty===0)cart.splice(i,1);saveCart()}
+function changeQty(i,d){if(!cart[i])return;cart[i].qty+=d;if(cart[i].qty<=0)cart.splice(i,1);saveCart()}
 function removeFromCart(i){if(!cart[i])return;cart.splice(i,1);saveCart()}
-function openCart(){const d=document.getElementById("cartDrawer");if(!d)return;d.classList.add("open");document.getElementById("cartBackdrop")?.classList.add("open");renderCart()}
-function closeCart(){document.getElementById("cartDrawer")?.classList.remove("open");document.getElementById("cartBackdrop")?.classList.remove("open")}
+function openCart(){document.getElementById("cartDrawer").classList.add("open");renderCart()}
+function closeCart(){document.getElementById("cartDrawer").classList.remove("open")}
 function checkout(){
- if(!cart.length)return;
+ if(!cart.length)return alert("Your cart is empty.");
  if(!currentUser){closeCart();openAccount();return alert("Please login to continue to checkout.");}
  closeCart();
  document.getElementById("checkoutName").value=currentUser.name||"";
  document.getElementById("checkoutEmail").value=currentUser.email||"";
  document.getElementById("checkoutSummary").innerHTML=cart.map(x=>`<div><span>${esc(x.name)} × ${x.qty}</span><strong>${rp(x.price*x.qty)}</strong></div>`).join("")+`<div><span>Shipping</span><strong>${rp(20000)}</strong></div><div class="checkout-grand"><span>TOTAL</span><strong>${rp(cartSubtotal()+20000)}</strong></div>`;
- document.getElementById("checkoutMessage").textContent="";document.getElementById("checkoutModal").classList.add("open");
+ document.getElementById("checkoutMessage").textContent=""; document.getElementById("checkoutModal").classList.add("open");
 }
+function closeCheckout(){document.getElementById("checkoutModal")?.classList.remove("open")}
+async function submitCheckout(e){
+ e.preventDefault(); if(!currentUser)return;
+ const msg=document.getElementById("checkoutMessage"); msg.textContent="Placing your order…";
+ const payload={customer:{name:document.getElementById("checkoutName").value.trim(),email:document.getElementById("checkoutEmail").value.trim(),phone:document.getElementById("checkoutPhone").value.trim(),address:document.getElementById("checkoutAddress").value.trim(),city:document.getElementById("checkoutCity").value.trim(),province:document.getElementById("checkoutProvince").value.trim(),postalCode:document.getElementById("checkoutPostal").value.trim()},items:cart.map(x=>({productId:x.id||productId(PRODUCTS.find(p=>p.name===x)||x),qty:x.qty})),shippingFee:20000};
+ try{const order=await orderFetch("/api/orders",{method:"POST",body:JSON.stringify(payload)});cart=[];saveCart();closeCheckout();showOrderSuccess(order)}catch(err){msg.textContent=err.message||"Unable to place order."}
+}
+async function orderFetch(url,options={}){const headers={"Content-Type":"application/json",...(options.headers||{})};if(authToken)headers.Authorization=`Bearer ${authToken}`;const res=await fetch(url,{...options,headers});let data={};try{data=await res.json()}catch{}if(!res.ok)throw new Error(data.error||`Order API ${res.status}`);return data}
+function showOrderSuccess(order){document.getElementById("orderSuccessContent").innerHTML=`<span class="eyebrow">ORDER CONFIRMED</span><h2>Your coffee is on its way.</h2><p class="form-intro">Thank you, ${esc(order.customer.name)}. Your order has been recorded.</p><div class="order-number"><span>ORDER NUMBER</span><strong>${esc(order.id)}</strong></div><div class="order-summary-line"><span>TOTAL</span><strong>${rp(order.total)}</strong></div><button class="btn full" onclick="closeOrderSuccess();openAccount();">VIEW MY ORDERS →</button>`;document.getElementById("orderSuccessModal").classList.add("open")}
+function closeOrderSuccess(){document.getElementById("orderSuccessModal")?.classList.remove("open")}
+async function loadMyOrders(){const host=document.getElementById("myOrdersContent");if(!host)return;host.innerHTML='<p class="muted-copy">Loading orders…</p>';try{const orders=await orderFetch("/api/orders");host.innerHTML=orders.length?orders.map(o=>`<div class="order-card"><div><span>${esc(o.id)}</span><b>${esc(o.status)}</b></div><small>${new Date(o.createdAt).toLocaleString("en-ID")}</small><p>${o.items.map(i=>`${esc(i.name)} × ${i.qty}`).join(" · ")}</p><strong>${rp(o.total)}</strong></div>`).join(""):"<p class=\"muted-copy\">No orders yet. Your first coffee journey starts in the Shop.</p>"}catch{host.innerHTML='<p class="muted-copy">Orders are available when the V13 backend is running.</p>'}}
+function openSearch(){document.getElementById("searchModal").classList.add("open");document.getElementById("searchInput").focus()}
+function closeSearch(){document.getElementById("searchModal").classList.remove("open")}
 function searchProducts(q){
  const l=q.toLowerCase();const res=PRODUCTS.filter(p=>`${p.name} ${p.region} ${p.process} ${p.notes}`.toLowerCase().includes(l)).slice(0,8);
  document.getElementById("searchResults").innerHTML=res.map(p=>`<div class="search-item" onclick="closeSearch();location.hash='shop';filterRegion('${p.region}')"><b>${esc(p.name)}</b><small>${esc(p.region)} · ${esc(p.process)} · ${esc(p.notes)}</small></div>`).join("");
 }
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeCart();closeSearch();closeAccount();closeStoryForm();closeProduct();closeJournal()}});
-document.addEventListener("click",e=>{if(e.target.id==="cartBackdrop")closeCart();});
 renderRegions();
 renderSeasonal();renderProducts();renderCart();renderStories();
 restoreSession().then(()=>loadStories()).then(()=>{const m=document.getElementById("storyMode");if(m)m.textContent=storyApiAvailable?"DATABASE CONNECTED":"LOCAL FALLBACK";});
+
+const JOURNAL_CONTENT={
+ 'natural-washed':{eyebrow:'COFFEE 101',title:'Natural vs Washed: What’s the Difference?',body:'Natural processing dries the coffee cherry with the fruit around the seed, often bringing layered sweetness and fruit character. Washed processing removes the fruit before drying, commonly revealing a cleaner, brighter expression of the coffee’s origin.'},
+ 'five-origins':{eyebrow:'ORIGIN STORIES',title:'Five Indonesian Coffee Origins You Should Try',body:'Indonesia offers a wide range of coffee expressions shaped by region, elevation, climate, variety and processing. Explore Sumatera, Jawa Barat, Jawa Tengah, Jawa Timur and Indonesia Timur to discover how differently one archipelago can taste.'},
+ 'brew-guide':{eyebrow:'BREWING GUIDE',title:'Finding the Right Brew for Your Bean',body:'Start with the bean’s natural character, then adjust grind size, water temperature, ratio and pouring technique. Pour over can highlight clarity, French Press can emphasize body, and espresso can concentrate richer chocolate and caramel notes.'}
+};
+function openJournal(key){
+ const j=JOURNAL_CONTENT[key]||JOURNAL_CONTENT['natural-washed'];
+ const modal=document.getElementById('journalModal');
+ if(!modal)return;
+ document.getElementById('journalModalEyebrow').textContent=j.eyebrow;
+ document.getElementById('journalModalTitle').textContent=j.title;
+ document.getElementById('journalModalContent').innerHTML=`<p>${esc(j.body)}</p>`;
+ modal.classList.add('open');
+}
+function closeJournal(){document.getElementById('journalModal')?.classList.remove('open');}
 
 function openProduct(name){
  const p=PRODUCTS.find(x=>x.name===name); if(!p)return;
@@ -475,134 +437,6 @@ function addDetailToCart(name){
 }
 function closeProduct(){document.getElementById("productModal").classList.remove("open")}
 
-
-// V27 — account/checkout resilience for both local Node and Vercel/static deployment.
-function closeCheckout(){document.getElementById('checkoutModal')?.classList.remove('open');}
-function closeOrderSuccess(){document.getElementById('orderSuccessModal')?.classList.remove('open');}
-function localOrders(){return JSON.parse(localStorage.getItem('kenangan_orders')||'[]');}
-function saveLocalOrders(list){localStorage.setItem('kenangan_orders',JSON.stringify(list));}
-function showOrderSuccess(order){
- const box=document.getElementById('orderSuccessContent'); if(!box)return;
- box.innerHTML=`<span class="eyebrow">ORDER CONFIRMED</span><h2>Thank you, ${esc(currentUser?.name||order.customer?.name||'Coffee Lover')}.</h2><p class="form-intro">Your Kenangan coffee journey has begun. Your order has been recorded successfully.</p><div class="order-confirm"><span>ORDER NUMBER</span><strong>${esc(order.id)}</strong><span>TOTAL</span><strong>${rp(order.total)}</strong><span>STATUS</span><strong>${esc(order.status||'ORDER PLACED')}</strong></div><div class="form-actions"><button type="button" class="btn" onclick="closeOrderSuccess();showMyOrders()">VIEW MY ORDERS →</button><button type="button" class="text-link" onclick="closeOrderSuccess()">CONTINUE SHOPPING</button></div>`;
- document.getElementById('orderSuccessModal')?.classList.add('open');
-}
-async function submitCheckout(e){
- e.preventDefault();
- if(!currentUser){closeCheckout();openAccount();return;}
- const message=document.getElementById('checkoutMessage'); message.textContent='';
- const customer={name:document.getElementById('checkoutName').value.trim(),email:document.getElementById('checkoutEmail').value.trim(),phone:document.getElementById('checkoutPhone').value.trim(),postalCode:document.getElementById('checkoutPostal').value.trim(),address:document.getElementById('checkoutAddress').value.trim(),city:document.getElementById('checkoutCity').value.trim(),province:document.getElementById('checkoutProvince').value.trim()};
- const payload={customer,items:cart.map(x=>({productId:x.id,qty:Number(x.qty)})),shippingFee:20000};
- try{
-  let order;
-  try{
-   order=await authFetch('/api/orders',{method:'POST',body:JSON.stringify(payload)});
-  }catch(apiErr){
-   // Vercel/static demo fallback. This keeps checkout functional without pretending it is a server database.
-   const subtotal=cartSubtotal();
-   order={id:`KN-${new Date().toISOString().slice(0,10).replace(/-/g,'')}-LOCAL-${String(localOrders().length+1).padStart(3,'0')}`,userId:currentUser.id,customer,items:cart.map(x=>({...x,lineTotal:Number(x.price)*Number(x.qty)})),subtotal,shipping:20000,total:subtotal+20000,status:'ORDER PLACED',createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),local:true};
-   const orders=localOrders(); orders.unshift(order); saveLocalOrders(orders);
-  }
-  cart=[];saveCart();closeCheckout();showOrderSuccess(order);
- }catch(err){message.textContent=err?.message||'Unable to place the order. Please check your details and try again.';}
-}
-function orderStatusMarkup(status){
- const steps=['ORDER PLACED','PREPARING','SHIPPED','DELIVERED'];
- const current=Math.max(0,steps.indexOf(String(status||'ORDER PLACED').toUpperCase()));
- return `<div class="order-status-track">${steps.map((step,i)=>`<div class="status-step ${i<current?'done':''} ${i===current?'current':''}"><span>${i<current?'✓':String(i+1).padStart(2,'0')}</span><small>${step}</small></div>`).join('')}</div>`;
-}
-function orderItemData(item){
- // Resolve by coffee name first. Older/local orders may not contain productId,
- // and comparing two missing ids would incorrectly match the first coffee (Aceh Gayo Bourbon).
- const itemName=String(item?.name||item?.product?.name||'').trim();
- const itemId=String(item?.productId||item?.product?.id||'').trim();
- let product=itemName?PRODUCTS.find(p=>String(p.name).trim().toLowerCase()===itemName.toLowerCase()):null;
- if(!product && itemId){
-   product=PRODUCTS.find(p=>String(p.id||'').trim()===itemId);
-   if(!product){
-     const normalized=itemId.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-     product=PRODUCTS.find(p=>productId(p)===normalized);
-   }
- }
- const name=itemName||product?.name||'Indonesian Coffee';
- const price=Number(item?.price??product?.price??0);
- const qty=Number(item?.qty||1);
- return {product,name,price,qty,lineTotal:Number(item?.lineTotal??(price*qty))};
-}
-async function loadMyOrders(){
- const host=document.getElementById('myOrdersContent'); if(!host)return;
- host.innerHTML='<div class="orders-loading"><span class="eyebrow">YOUR COFFEE JOURNEY</span><p>Loading your orders…</p></div>';
- try{
-  let orders;
-  try{orders=await authFetch('/api/orders');}
-  catch{orders=localOrders().filter(o=>o.userId===currentUser?.id);}
-  if(!orders.length){host.innerHTML='<div class="orders-empty"><div class="empty-mark">K</div><span class="eyebrow">NO ORDERS YET</span><h3>Your next Kenangan starts here.</h3><p>Explore Indonesian origins, choose a regular coffee, and make your first order. Your coffee journey will be saved here.</p><button class="btn" onclick="closeAccount();location.hash=\'shop\'">EXPLORE COFFEE →</button></div>';return;}
-  const totalSpent=orders.reduce((sum,o)=>sum+Number(o.total||0),0);
-  const totalCoffees=orders.reduce((sum,o)=>sum+(o.items||[]).reduce((n,i)=>n+Number(i.qty||0),0),0);
-  host.innerHTML=`<div class="orders-overview"><div><span>ORDERS</span><strong>${String(orders.length).padStart(2,'0')}</strong></div><div><span>COFFEES</span><strong>${String(totalCoffees).padStart(2,'0')}</strong></div><div><span>TOTAL SPENT</span><strong>${rp(totalSpent)}</strong></div></div><div class="orders-note"><span>KENANGAN DELIVERY</span><p>Every regular coffee order is prepared for delivery. Seasonal coffees remain café-exclusive.</p></div><div class="orders-list">${orders.map((o,index)=>{
-    const status=String(o.status||'ORDER PLACED').toUpperCase();
-    const items=(o.items||[]).map(orderItemData);
-    const city=o.customer?.city||o.customer?.province||'Delivery address';
-    return `<article class="order-card order-card-premium">
-      <div class="order-card-head"><div><span class="order-kicker">ORDER ${String(index+1).padStart(2,'0')}</span><h3>${esc(o.id)}</h3><small>${new Date(o.createdAt).toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})} · ${esc(city)}</small></div><div class="order-total-block"><span>${esc(status)}</span><strong>${rp(o.total)}</strong></div></div>
-      ${orderStatusMarkup(status)}
-      <div class="order-items-section">
-        <div class="order-items-heading"><span>ORDER ITEMS (${items.length})</span><button type="button" class="order-receipt-link" onclick="openOrderReceipt('${esc(o.id)}')">VIEW RECEIPT →</button></div>
-        <div class="order-items">${items.map(item=>`<div class="order-item">
-          <div class="order-item-main">
-            <div class="order-item-art"><img src="${productArt(item.product||{name:item.name,region:'Indonesia',process:'Roasted',notes:''})}" alt="${esc(item.name)}"></div>
-            <div class="order-item-copy"><b>${esc(item.name)}</b><small>${esc(item.product?.region||'Indonesia')}<br>${esc(item.product?.process||'Roasted')} · 100g</small><span>QTY ${item.qty}</span></div>
-          </div>
-          <div class="order-item-price"><span>ITEM TOTAL</span><strong>${rp(item.lineTotal)}</strong></div>
-        </div>`).join('')}</div>
-      </div>
-      <div class="order-bottom"><div class="order-price-breakdown"><div><span>SUBTOTAL</span><b>${rp(o.subtotal??(Number(o.total||0)-Number(o.shipping||20000)))}</b></div><div><span>DELIVERY</span><b>${rp(o.shipping??20000)}</b></div><div class="grand"><span>TOTAL</span><b>${rp(o.total)}</b></div></div><div class="order-actions"><button class="btn order-shop-btn" type="button" onclick="closeAccount();location.hash=\'shop\'">SHOP COFFEE →</button></div></div>
-    </article>`;
-  }).join('')}</div>`;
- }catch(err){host.innerHTML='<div class="orders-error"><span class="eyebrow">ORDER HISTORY</span><h3>We could not load your orders.</h3><p>Please try again in a moment.</p><button class="btn" onclick="loadMyOrders()">TRY AGAIN →</button></div>';}
-}
-function openOrderReceipt(orderId){
- const orders=localOrders();
- const order=orders.find(o=>String(o.id)===String(orderId));
- if(!order){
-   const cards=[...document.querySelectorAll('.order-card-premium h3')];
-   const card=cards.find(el=>el.textContent.trim()===String(orderId))?.closest('.order-card-premium');
-   if(!card)return;
-   const total=card.querySelector('.order-total-block strong')?.textContent||'';
-   const modal=document.getElementById('orderReceiptModal');
-   if(modal){document.getElementById('orderReceiptContent').innerHTML=`<span class="eyebrow">KENANGAN RECEIPT</span><h2>Order Receipt.</h2><p class="form-intro">${esc(orderId)} · ${esc(total)}</p><button class="btn" type="button" onclick="window.print()">PRINT RECEIPT →</button>`;modal.classList.add('open');}
-   return;
- }
- const items=(order.items||[]).map(orderItemData);
- const modal=document.getElementById('orderReceiptModal');
- const box=document.getElementById('orderReceiptContent');
- if(!modal||!box)return;
- box.innerHTML=`<span class="eyebrow">KENANGAN RECEIPT</span><h2>Order Receipt.</h2><p class="form-intro">${esc(order.id)} · ${new Date(order.createdAt).toLocaleString('id-ID',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})}</p><div class="receipt-lines">${items.map(i=>`<div><span>${esc(i.name)} × ${i.qty}</span><b>${rp(i.lineTotal)}</b></div>`).join('')}<div><span>DELIVERY</span><b>${rp(order.shipping??20000)}</b></div><div class="receipt-total"><span>TOTAL</span><b>${rp(order.total)}</b></div></div><div class="form-actions"><button class="btn" type="button" onclick="window.print()">PRINT RECEIPT →</button><button class="text-link" type="button" onclick="closeOrderReceipt()">CLOSE</button></div>`;
- modal.classList.add('open');
-}
-function closeOrderReceipt(){document.getElementById('orderReceiptModal')?.classList.remove('open');}
-function openSearch(){const m=document.getElementById('searchModal');if(!m)return;m.classList.add('open');const input=document.getElementById('searchInput');if(input){input.value='';searchProducts('');setTimeout(()=>input.focus(),50);}}
-function closeSearch(){document.getElementById('searchModal')?.classList.remove('open');}
-const JOURNAL_CONTENT={
- 'natural-washed':{eyebrow:'COFFEE 101',title:'Natural vs Washed: What’s the Difference?',body:'Natural processing lets the coffee cherry dry around the seed, often creating a fruit-forward cup with layered sweetness. Washed processing removes the fruit before drying, commonly revealing a cleaner, brighter and more transparent expression of origin. The best choice depends on the character you want to discover in the cup.'},
- 'five-origins':{eyebrow:'ORIGIN STORIES',title:'Five Indonesian Coffee Origins You Should Try',body:'Indonesia offers an extraordinary range of coffee expressions. Sumatra is known for deep, earthy and chocolate-led cups; West Java brings fruit, grape and winey notes; Central Java leans sweet and comforting; East Java often delivers chocolate and caramel; while eastern origins can show bold body and pronounced acidity. Explore each region and find the character that feels like your next Kenangan.'},
- 'brew-guide':{eyebrow:'BREWING GUIDE',title:'Finding the Right Brew for Your Bean',body:'Match the brew to the coffee’s character. V60 and pour over can highlight floral and fruit-driven coffees, French Press can emphasize body and sweetness, while espresso concentrates chocolate, caramel and richer notes. There is no single correct method—the best brew is the one that helps you notice more.'}
-};
-function openJournal(key){const j=JOURNAL_CONTENT[key]||JOURNAL_CONTENT['natural-washed'];document.getElementById('journalModalEyebrow').textContent=j.eyebrow;document.getElementById('journalModalTitle').textContent=j.title;document.getElementById('journalModalContent').innerHTML=`<p>${esc(j.body)}</p>`;document.getElementById('journalModal')?.classList.add('open');}
-function closeJournal(){document.getElementById('journalModal')?.classList.remove('open');}
-
-// V26 — direct cart interaction layer. Buttons are generated dynamically, so bind at document level.
-document.addEventListener("click",function(e){
- const btn=e.target.closest("[data-cart-action]");
- if(!btn)return;
- e.preventDefault();e.stopPropagation();
- const action=btn.dataset.cartAction;
- const i=Number(btn.dataset.cartIndex);
- if(action==="qty-down")changeQty(i,-1);
- else if(action==="qty-up")changeQty(i,1);
- else if(action==="remove")removeFromCart(i);
- else if(action==="continue"){closeCart();location.hash="shop";}
-});
-
 // Robust interaction layer for dynamically rendered controls.
 document.addEventListener("click",function(e){
  const el=e.target.closest("[data-action]");
@@ -613,8 +447,9 @@ document.addEventListener("click",function(e){
  if(action==="select-region"){selectRegion(el.dataset.region);return;}
  if(action==="open-product"){openProduct(el.dataset.product);return;}
  if(action==="add-cart"){addToCart(el.dataset.product);return;}
- if(action==="close-product"){closeProduct();return;}
  if(action==="open-journal"){openJournal(el.dataset.journal);return;}
+ if(action==="close-journal"){closeJournal();return;}
+ if(action==="close-product"){closeProduct();return;}
 });
 document.addEventListener("keydown",function(e){
  if((e.key==="Enter"||e.key===" ") && e.target.matches("[data-action=select-region]")){e.preventDefault();selectRegion(e.target.dataset.region);}

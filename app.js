@@ -1,5 +1,5 @@
 const REGION_ART={
-"Sumatera":"assets/photos/origins/sumatera.jpg","Jawa Barat":"assets/photos/origins/jawa-barat.jpg","Jawa Tengah":"assets/photos/origins/jawa-tengah.jpg","Jawa Timur":"assets/photos/origins/jawa-timur.jpg","Indonesia Timur":"assets/photos/origins/indonesia-timur.jpg"
+"Sumatera":"assets/photos/origins/v54-sumatera.jpg","Jawa Barat":"assets/photos/origins/v54-jawa-barat.jpg","Jawa Tengah":"assets/photos/origins/v52-jawa-tengah.jpg","Jawa Timur":"assets/photos/origins/v54-jawa-timur.jpg","Indonesia Timur":"assets/photos/origins/v54-indonesia-timur.jpg"
 };
 const REGION_TEXT={
 "Sumatera":"Bold, earthy, chocolate-led expressions.","Jawa Barat":"Fruity, grape, berry and winey character.","Jawa Tengah":"Sweet, smooth and comforting cups.","Jawa Timur":"Sweet, chocolate and caramel-driven profile.","Indonesia Timur":"Bold body with pronounced acidity."
@@ -694,8 +694,8 @@ function naturalWashedArticleMarkup(){
 
    <div class="journal-related">
     <div class="journal-related-heading"><span class="eyebrow">KEEP EXPLORING</span><h3>More from the Journal.</h3></div>
-    <button type="button" class="journal-related-card" onclick="openJournal('five-origins')"><img src="assets/photos/journal/origins-guide.jpg" alt="Indonesian highland coffee landscape" loading="lazy"><span><small>ORIGIN STORIES</small><b>Five Indonesian Coffee Origins You Should Try</b><em>READ STORY →</em></span></button>
-    <button type="button" class="journal-related-card" onclick="openJournal('brew-guide')"><img src="assets/photos/journal/brew-guide.jpg" alt="Coffee brewing in a glass dripper" loading="lazy"><span><small>BREWING GUIDE</small><b>Finding the Right Brew for Your Bean</b><em>READ STORY →</em></span></button>
+    <button type="button" class="journal-related-card" onclick="openJournal('five-origins')"><img src="assets/photos/journal/v54-origin-stories.jpg" alt="Indonesian highland coffee landscape" loading="lazy"><span><small>ORIGIN STORIES</small><b>Five Indonesian Coffee Origins You Should Try</b><em>READ STORY →</em></span></button>
+    <button type="button" class="journal-related-card" onclick="openJournal('brew-guide')"><img src="assets/photos/journal/v54-brew-guide.jpg" alt="Coffee brewing in a glass dripper" loading="lazy"><span><small>BREWING GUIDE</small><b>Finding the Right Brew for Your Bean</b><em>READ STORY →</em></span></button>
    </div>
   </article>`;
 }

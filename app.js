@@ -579,7 +579,7 @@ function openSearch(){const m=document.getElementById('searchModal');if(!m)retur
 function closeSearch(){document.getElementById('searchModal')?.classList.remove('open');}
 const JOURNAL_CONTENT={
  'natural-washed':{eyebrow:'COFFEE 101',title:'Natural vs Washed: What’s the Difference?',readtime:'8 MIN READ',type:'long'},
- 'five-origins':{eyebrow:'ORIGIN STORIES',title:'Five Indonesian Coffee Origins You Should Try',readtime:'4 MIN READ',body:'Indonesia offers a wide range of coffee expressions shaped by region, elevation, climate, variety and processing. Explore Sumatera, Jawa Barat, Jawa Tengah, Jawa Timur and Indonesia Timur to discover how differently one archipelago can taste.'},
+ 'five-origins':{eyebrow:'ORIGIN STORIES',title:'Five Indonesian Coffee Origins You Should Try',readtime:'11 MIN READ',type:'origins'},
  'brew-guide':{eyebrow:'BREWING GUIDE',title:'Finding the Right Brew for Your Bean',readtime:'4 MIN READ',body:'Start with the bean’s natural character, then adjust grind size, water temperature, ratio and pouring technique. Pour over can highlight clarity, French Press can emphasize body, and espresso can concentrate richer chocolate and caramel notes.'}
 };
 
@@ -700,6 +700,205 @@ function naturalWashedArticleMarkup(){
   </article>`;
 }
 
+function fiveOriginsArticleMarkup(){
+ return `
+  <article class="journal-article journal-origins-article">
+   <figure class="journal-cover">
+    <img src="assets/photos/journal/indonesian-coffee-origins-hero.webp" alt="Petani memetik buah kopi matang di perkebunan dataran tinggi Indonesia saat matahari terbit" fetchpriority="high">
+    <figcaption>Dari pegunungan Sumatera hingga perkebunan di kepulauan timur, setiap daerah menyimpan cerita kopi yang berbeda.</figcaption>
+   </figure>
+   <h2 class="journal-article-headline">Five Indonesian Coffee Origins You Should Try</h2>
+   <div class="journal-byline"><span class="journal-author-mark">K</span><strong>Kenangan Coffee Editorial</strong><span class="journal-byline-divider">·</span><time datetime="2026-11-20">20 November 2026</time><span class="journal-byline-divider">·</span><span>11 min read</span></div>
+   <p class="journal-standfirst">Satu kepulauan, begitu banyak karakter dalam cangkir. Kenali lima kawasan kopi Indonesia melalui lanskap, tradisi budidaya, proses pascapanen, dan cita rasa yang membuat setiap origin layak dijelajahi.</p>
+
+   <div class="journal-article-copy">
+    <p>Indonesia bukan sekadar negara penghasil kopi; Indonesia adalah rangkaian lanskap yang membentuk pengalaman minum kopi dengan cara berbeda. Pegunungan vulkanik, ketinggian kebun, curah hujan, varietas tanaman, kebiasaan petani, hingga metode pascapanen ikut menentukan karakter biji yang akhirnya diseduh. Karena itu, dua kopi yang sama-sama berasal dari Indonesia belum tentu menghadirkan rasa yang serupa.</p>
+    <p>Di balik nama daerah pada kemasan, ada komunitas petani, pengetahuan lokal, dan keputusan kecil yang berlangsung sejak buah dipetik sampai biji siap dipanggang. Artikel ini mengajak kamu mengenal lima kawasan besar yang sudah akrab dalam perjalanan kopi Nusantara: Sumatera, Jawa Barat, Jawa Tengah, Jawa Timur, dan Indonesia Timur. Di dalamnya, kita juga akan berjumpa dengan nama-nama origin yang dikenal luas, seperti Gayo, Mandheling, Java Preanger, Ijen-Raung, Toraja, Flores Bajawa, dan Kintamani.</p>
+    <p>Perlu diingat, istilah rasa seperti cokelat, rempah, citrus, floral, atau buah-buahan adalah catatan sensori yang membantu kita membayangkan karakter kopi. Catatan tersebut bukan bahan tambahan di dalam biji, dan bukan jaminan bahwa setiap lot dari satu daerah akan terasa sama. Varietas, tingkat kematangan buah, proses, penyimpanan, roasting, serta cara seduh dapat menghasilkan pengalaman yang berbeda.</p>
+
+    <section class="journal-origin-overview" aria-labelledby="origin-overview-title">
+     <span class="eyebrow">A JOURNEY THROUGH THE ARCHIPELAGO</span>
+     <h3 id="origin-overview-title">Five Regions, Many Ways to Enjoy Coffee.</h3>
+     <div class="journal-origin-overview-grid">
+      <a href="#origin-sumatera"><span>01</span><b>Sumatera</b><small>Bold · earthy · full-bodied</small></a>
+      <a href="#origin-jabar"><span>02</span><b>Jawa Barat</b><small>Fruity · bright · expressive</small></a>
+      <a href="#origin-jateng"><span>03</span><b>Jawa Tengah</b><small>Sweet · warm · balanced</small></a>
+      <a href="#origin-jatim"><span>04</span><b>Jawa Timur</b><small>Spiced · clean · structured</small></a>
+      <a href="#origin-east"><span>05</span><b>Indonesia Timur</b><small>Complex · diverse · memorable</small></a>
+     </div>
+    </section>
+
+    <section class="journal-article-section journal-origin-section" id="origin-sumatera">
+     <div class="journal-section-heading"><span>01</span><div><span class="eyebrow">THE ISLAND OF MANY EXPRESSIONS</span><h3>Sumatera: Bold, Earthy, and Full of Character</h3></div></div>
+     <figure class="journal-inline-figure journal-origin-image"><img src="assets/photos/origins/v54-sumatera.jpg" alt="Lanskap dataran tinggi Sumatera dengan pegunungan dan kebun kopi" loading="lazy"><figcaption>Perbukitan dan dataran tinggi Sumatera menjadi rumah bagi beragam komunitas dan kebun kopi.</figcaption></figure>
+     <p>Ketika membicarakan kopi Sumatera, dua nama yang sering muncul adalah <strong>Gayo</strong> dari dataran tinggi Aceh dan <strong>Mandheling</strong> dari Sumatera Utara. Keduanya memiliki identitas geografis dan tradisi produksi masing-masing, sehingga sebaiknya tidak dianggap sebagai satu nama untuk origin yang sama. Di sekitar kawasan Danau Toba, Lintong juga dikenal sebagai salah satu nama kopi Arabika yang dicari para penikmat kopi.</p>
+     <p>Kopi Gayo tumbuh di kawasan pegunungan Aceh Tengah, Bener Meriah, dan Gayo Lues. Lingkungan dataran tinggi, pemilihan buah matang, serta keterampilan petani menjadi bagian penting dari identitasnya. Dokumen indikasi geografis ASEAN mencatat kopi Arabika Gayo memiliki aroma kuat, cita rasa kompleks, keasaman relatif ringan, dan body yang tebal. Gayo juga tercatat sebagai produk indikasi geografis Indonesia sejak 2010.</p>
+     <p>Mandheling dan beberapa kopi Sumatera Utara kerap diasosiasikan dengan tekstur yang mantap serta kesan rasa yang dalam. Pada banyak lot, penikmat dapat menemukan nuansa kakao, rempah, herbal, atau karakter earthy. Sebagian kopi Sumatera diproses dengan metode <em>giling basah</em> atau <em>wet-hulling</em>, sebuah tahapan pascapanen yang berbeda dari washed process biasa. Metode ini ikut membentuk identitas tekstur dan profil rasa, tetapi bukan satu-satunya faktor penentu kualitas.</p>
+     <div class="journal-taste-card"><div class="journal-taste-icon">✳</div><div><strong>What to look for in the cup</strong><p>Mulailah dengan mencari kesan body yang terasa penuh, cokelat, rempah, herbal, atau earthy. Perhatikan juga apakah keasamannya lembut dan bagaimana rasa tertinggal setelah kopi ditelan. Karakter setiap lot dapat berbeda, jadi gunakan catatan ini sebagai petunjuk awal, bukan aturan mutlak.</p></div></div>
+     <p><strong>Cocok untuk siapa?</strong> Sumatera menarik bagi penikmat yang menyukai kopi dengan tekstur terasa, rasa yang dalam, dan karakter yang nyaman diminum perlahan. Cobalah menyeduhnya dengan French Press atau sebagai espresso blend, lalu bandingkan hasilnya dengan metode pour-over untuk melihat sisi lain dari biji yang sama.</p>
+    </section>
+
+    <section class="journal-article-section journal-origin-section" id="origin-jabar">
+     <div class="journal-section-heading"><span>02</span><div><span class="eyebrow">JAVA PREANGER COUNTRY</span><h3>Jawa Barat: Fruity, Bright, and Expressive</h3></div></div>
+     <figure class="journal-inline-figure journal-origin-image"><img src="assets/photos/origins/v54-jawa-barat.jpg" alt="Perkebunan kopi dan pegunungan di Jawa Barat" loading="lazy"><figcaption>Dataran tinggi Priangan dan kawasan sekitarnya membentuk salah satu cerita panjang kopi Jawa Barat.</figcaption></figure>
+     <p>Jawa Barat memiliki sejarah panjang dalam perjalanan kopi Indonesia. Salah satu nama yang paling dikenal adalah <strong>Java Preanger</strong>, atau kopi Arabika Priangan. Nama Preanger merujuk pada kawasan Priangan di Jawa Barat, yang memiliki kebun-kebun dataran tinggi dengan kondisi alam yang beragam. Wilayah seperti Pangalengan, Ciwidey, Garut, dan beberapa kawasan pegunungan lain juga dikenal melalui lot kopi dengan karakter masing-masing.</p>
+     <p>Java Preanger tercatat sebagai salah satu kopi Indonesia yang memperoleh pengakuan indikasi geografis. Namun, nama daerah bukan berarti seluruh biji akan mempunyai profil rasa yang seragam. Perbedaan ketinggian, varietas, tingkat kematangan buah, proses washed, natural, atau honey, serta keputusan roasting dapat membuat satu lot terasa berbeda dari lot lainnya.</p>
+     <p>Dalam cangkir, kopi dari Jawa Barat dapat menghadirkan pengalaman yang cerah dan ekspresif. Beberapa lot memperlihatkan kesan citrus, buah, floral, atau rasa manis yang bersih; lot lainnya mungkin terasa lebih bulat dengan sentuhan karamel atau cokelat. Jika kamu menemukan catatan grape, berry, atau wine-like pada kemasan, anggap itu sebagai petunjuk aroma dan rasa yang mungkin muncul pada lot tersebut, bukan identitas wajib semua kopi Jawa Barat.</p>
+     <div class="journal-taste-card journal-taste-card-washed"><div class="journal-taste-icon">◌</div><div><strong>What to look for in the cup</strong><p>Perhatikan keseimbangan antara keasaman, rasa manis, dan kejernihan rasa. Cobalah mengenali apakah sensasi citrus atau buah muncul lebih dulu, kemudian lihat bagaimana rasa manisnya bertahan ketika kopi mulai mendingin.</p></div></div>
+     <p><strong>Cocok untuk siapa?</strong> Jawa Barat layak dicoba oleh penikmat yang senang mengeksplorasi kopi filter dengan aroma yang terbuka dan karakter yang dinamis. V60 atau Kalita dapat membantu menonjolkan detail rasa, terutama ketika rasio seduh dan ukuran gilingan dijaga konsisten.</p>
+    </section>
+
+    <section class="journal-article-section journal-origin-section" id="origin-jateng">
+     <div class="journal-section-heading"><span>03</span><div><span class="eyebrow">THE CENTRAL HIGHLANDS</span><h3>Jawa Tengah: Sweet, Warm, and Balanced</h3></div></div>
+     <figure class="journal-inline-figure journal-origin-image"><img src="assets/photos/origins/v52-jawa-tengah.jpg" alt="Lanskap pegunungan dan perkebunan di Jawa Tengah" loading="lazy"><figcaption>Kawasan Sindoro-Sumbing, Temanggung, dan dataran tinggi sekitarnya memiliki tradisi kopi yang beragam.</figcaption></figure>
+     <p>Jawa Tengah menawarkan pemandangan kopi yang tidak kalah menarik. Nama seperti <strong>Java Sindoro-Sumbing</strong>, Temanggung, dan Dieng sering hadir dalam percakapan mengenai kopi dari dataran tinggi bagian tengah Pulau Jawa. Di kawasan ini, ketinggian, kondisi tanah, iklim mikro, serta jenis tanaman membuat produk kopi bisa sangat bervariasi. Sebagian kebun menghasilkan Arabika, sementara daerah lain juga dikenal dengan Robusta.</p>
+     <p>Karena itu, penting untuk membaca informasi pada kemasan dengan teliti. Nama Temanggung, misalnya, tidak otomatis menunjukkan satu jenis kopi atau satu metode proses. Periksa apakah bijinya Arabika atau Robusta, bagaimana proses pascapanennya, dan siapa produsen atau kelompok tani yang mengerjakannya. Asosiasi eksportir kopi Indonesia mencatat Temanggung Robusta dan Java Sindoro-Sumbing Arabika sebagai dua nama indikasi geografis yang berbeda.</p>
+     <p>Secara sensori, sejumlah lot dari kawasan ini dapat terasa hangat dan nyaman dengan kesan manis, kacang, rempah, atau cokelat. Pada proses tertentu, rasa buah dan floral juga dapat muncul. Jangan terpaku pada satu deskripsi: biji yang sama-sama berasal dari Jawa Tengah dapat menunjukkan karakter berbeda ketika varietas dan prosesnya tidak sama.</p>
+     <div class="journal-taste-card"><div class="journal-taste-icon">✳</div><div><strong>What to look for in the cup</strong><p>Amati rasa manis alami, tekstur, dan keseimbangan setelah kopi mulai dingin. Jika kamu mencoba Arabika dan Robusta dari kawasan ini, bandingkan keduanya secara terpisah agar perbedaan varietas tidak tertukar dengan pengaruh proses.</p></div></div>
+     <p><strong>Cocok untuk siapa?</strong> Pilihan dari Jawa Tengah menarik bagi penikmat yang ingin mengeksplorasi rasa yang terasa akrab sekaligus menemukan detail baru. Kopi dengan body menengah dapat dinikmati sebagai pour-over, sedangkan lot yang lebih pekat juga dapat menjadi pilihan untuk seduhan susu atau kopi harian.</p>
+    </section>
+
+    <section class="journal-article-section journal-origin-section" id="origin-jatim">
+     <div class="journal-section-heading"><span>04</span><div><span class="eyebrow">VOLCANIC EAST JAVA</span><h3>Jawa Timur: Spiced, Clean, and Distinctive</h3></div></div>
+     <figure class="journal-inline-figure journal-origin-image"><img src="assets/photos/origins/v54-jawa-timur.jpg" alt="Bentang pegunungan vulkanik dan perkebunan di Jawa Timur" loading="lazy"><figcaption>Kawasan Ijen-Raung memperlihatkan hubungan erat antara lanskap vulkanik dan budidaya kopi di Jawa Timur.</figcaption></figure>
+     <p>Di Jawa Timur, salah satu nama penting adalah <strong>Java Ijen-Raung</strong>. Kawasan dataran tinggi di sekitar Pegunungan Ijen dan Raung menjadi rumah bagi perkebunan kopi serta komunitas produsen yang telah lama mengolah hasil panen setempat. Dalam catatan mengenai kopi Indonesia, Java Coffee dari dataran tinggi Ijen pernah digambarkan memiliki aroma dan rasa yang baik, nada rempah, keasaman yang bersih, serta body menengah.</p>
+     <p>Nama Ijen-Raung juga tercatat dalam daftar indikasi geografis kopi Arabika Indonesia. Di luar itu, Jawa Timur memiliki banyak kawasan dan produsen lain, sehingga pengalaman dalam cangkir tetap bergantung pada asal kebun yang lebih spesifik, varietas, serta proses pascapanen yang digunakan. Satu label provinsi saja belum cukup untuk menjelaskan seluruh karakter sebuah kopi.</p>
+     <p>Beberapa lot dapat terasa rapi dan seimbang, dengan sentuhan cokelat, citrus, herbal, atau rempah. Kopi natural dari kawasan yang sama mungkin terasa lebih manis atau menonjolkan buah, sedangkan washed dapat memberi kesan lebih bersih. Perbedaan ini memperlihatkan bahwa proses bukan sekadar keterangan teknis; ia merupakan bagian dari cerita rasa yang dibangun bersama oleh petani dan pengolah.</p>
+     <div class="journal-taste-card journal-taste-card-washed"><div class="journal-taste-icon">◌</div><div><strong>What to look for in the cup</strong><p>Cari keseimbangan antara aroma rempah, rasa manis, dan keasaman yang terasa bersih. Coba seduh dengan air dan rasio yang sama seperti kopi Jawa Barat agar perbedaan origin lebih mudah dikenali.</p></div></div>
+     <p><strong>Cocok untuk siapa?</strong> Jawa Timur patut dicoba oleh penikmat yang menginginkan kopi dengan karakter jelas namun tetap seimbang. Untuk eksplorasi, gunakan metode pour-over; untuk sajian yang lebih pekat, uji juga sebagai espresso dan perhatikan bagaimana karakter rempah serta cokelatnya berubah.</p>
+    </section>
+
+    <section class="journal-article-section journal-origin-section" id="origin-east">
+     <div class="journal-section-heading"><span>05</span><div><span class="eyebrow">ACROSS THE EASTERN ISLANDS</span><h3>Indonesia Timur: Diverse, Complex, and Memorable</h3></div></div>
+     <figure class="journal-inline-figure journal-origin-image"><img src="assets/photos/origins/v54-indonesia-timur.jpg" alt="Lanskap kepulauan dan dataran tinggi Indonesia bagian timur" loading="lazy"><figcaption>Di luar Jawa dan Sumatera, banyak komunitas di Sulawesi, Nusa Tenggara, dan Papua ikut menjaga keragaman kopi Nusantara.</figcaption></figure>
+     <p>Istilah Indonesia Timur dalam artikel ini digunakan sebagai pengelompokan editorial untuk memperkenalkan beberapa wilayah kopi di bagian timur kepulauan, bukan sebagai satu origin tunggal. Di dalamnya ada nama yang sangat dikenal, seperti <strong>Toraja</strong> dan <strong>Kalosi</strong> dari Sulawesi, <strong>Flores Bajawa</strong> dari Nusa Tenggara Timur, serta kopi dari kawasan <strong>Baliem Wamena</strong> di Papua. Setiap wilayah memiliki kondisi alam, komunitas, dan tradisi produksi yang tidak sama.</p>
+     <p>Kopi Toraja tumbuh di kawasan pegunungan Sulawesi Selatan dan dikenal melalui aroma yang kuat serta rasa yang kompleks. Catatan dari Kementerian Luar Negeri Indonesia menggambarkan Toraja/Kalosi sebagai kopi dengan aroma baik, rasa kompleks, body menengah, dan kepahitan yang seimbang. Toraja Arabica juga tercantum sebagai kopi indikasi geografis Indonesia pada 2013. Di Flores, Arabika Bajawa memperoleh pengakuan indikasi geografis pada 2012.</p>
+     <p>Di Bali, <strong>Kintamani</strong> juga layak masuk daftar eksplorasi. Kopi Arabika Kintamani Bali memiliki pengakuan indikasi geografis sejak 2008. Wilayah pegunungan di sekitar Kintamani dikenal dengan sistem pertanian komunitas dan budidaya kopi yang hidup berdampingan dengan tanaman lain. Profil rasa pada lot tertentu dapat menampilkan citrus, floral, atau rasa manis yang segar, tetapi pengalaman sebenarnya tetap dipengaruhi oleh proses, panen, dan roasting. Secara geografis, Bali berada di kawasan Indonesia bagian tengah; karena itu, Kintamani kami hadirkan sebagai catatan lintas-kepulauan, bukan sebagai bagian dari kategori Indonesia Timur dalam pembagian lima kawasan artikel ini.</p>
+     <p>Sementara itu, kopi Flores Bajawa dapat memberikan pengalaman yang berbeda lagi. Beberapa lot dikenal melalui kesan kacang, karamel, cokelat, atau buah tropis. Kopi dari Papua, termasuk wilayah Baliem, menambah luasnya cerita kopi dataran tinggi Nusantara. Keragaman ini mengingatkan kita bahwa sebutan Indonesia Timur tidak bisa disederhanakan menjadi satu profil rasa atau satu cara pengolahan.</p>
+     <div class="journal-taste-card"><div class="journal-taste-icon">✳</div><div><strong>What to look for in the cup</strong><p>Jangan hanya mencari satu rasa khas. Pada Toraja, perhatikan kompleksitas dan keseimbangan; pada Kintamani, cermati kesegaran dan kesan citrus jika muncul; pada Bajawa, eksplorasi nuansa manis, kacang, atau cokelat. Bandingkan setiap lot secara terpisah dan catat pengalamanmu sendiri.</p></div></div>
+     <p><strong>Cocok untuk siapa?</strong> Kawasan ini menarik bagi penikmat yang senang mencoba kopi dengan identitas daerah yang kuat dan profil yang beragam. Pilih satu origin terlebih dahulu, cari informasi proses dan varietasnya, lalu nikmati tanpa terburu-buru membandingkannya dengan kopi dari pulau lain.</p>
+    </section>
+
+    <section class="journal-article-section">
+     <div class="journal-section-heading"><span>06</span><div><span class="eyebrow">A SIMPLE TASTING GUIDE</span><h3>How to Explore the Differences at Home</h3></div></div>
+     <p>Mencoba lima kawasan kopi sekaligus bisa terasa seperti perjalanan kecil tanpa harus meninggalkan rumah. Agar perbandingan terasa adil, siapkan kopi dengan tingkat roasting yang relatif sebanding, gunakan metode seduh yang sama, dan jaga rasio kopi terhadap air tetap konsisten. Dengan begitu, kamu dapat lebih mudah melihat perbedaan dari origin dan lot, bukan semata-mata dari teknik seduh.</p>
+     <ol class="journal-number-list">
+      <li><strong>Mulai dari aroma kering.</strong> Cium bubuk kopi sebelum diseduh. Catat kesan awal seperti cokelat, kacang, herbal, bunga, rempah, atau buah.</li>
+      <li><strong>Gunakan metode yang sama.</strong> Seduh setiap kopi dengan brewer, rasio air, suhu, dan waktu yang sedekat mungkin. Jika menggunakan V60, pertahankan resep dasar lalu lakukan penyesuaian kecil hanya jika diperlukan.</li>
+      <li><strong>Cicipi pada beberapa suhu.</strong> Saat kopi panas, aroma mungkin terasa dominan. Ketika mulai hangat, rasa manis, keasaman, dan body sering lebih mudah dikenali.</li>
+      <li><strong>Tulis kesanmu sendiri.</strong> Tidak perlu langsung memakai istilah profesional. Catatan seperti “terasa seperti jeruk”, “lebih tebal”, atau “ada kesan rempah” sudah cukup untuk membangun preferensi pribadi.</li>
+      <li><strong>Ulangi dengan proses berbeda.</strong> Jika tersedia, bandingkan washed dan natural dari daerah yang sama. Ini membantu memisahkan pengaruh origin dari pengaruh proses.</li>
+     </ol>
+     <figure class="journal-inline-figure journal-inline-wide"><img src="assets/photos/journal/v54-brew-guide.jpg" alt="Proses menyeduh kopi menggunakan dripper pour-over" loading="lazy"><figcaption>Gunakan resep seduh yang konsisten agar perbedaan antar-origin lebih mudah diamati.</figcaption></figure>
+    </section>
+
+    <section class="journal-article-section">
+     <div class="journal-section-heading"><span>07</span><div><span class="eyebrow">CHOOSING YOUR NEXT CUP</span><h3>Which Indonesian Origin Should You Try First?</h3></div></div>
+     <div class="journal-table-wrap" role="region" aria-label="Ringkasan lima kawasan kopi Indonesia" tabindex="0">
+      <table class="journal-comparison-table">
+       <thead><tr><th>Region</th><th>Names to explore</th><th>Starting flavour cues</th><th>Try it if you enjoy</th></tr></thead>
+       <tbody>
+        <tr><th>Sumatera</th><td>Gayo, Mandheling, Lintong</td><td>Earthy, cocoa, herbal, spice</td><td>Body penuh dan rasa mendalam</td></tr>
+        <tr><th>Jawa Barat</th><td>Java Preanger, Pangalengan</td><td>Fruit, citrus, floral, sweet</td><td>Kejernihan dan eksplorasi rasa</td></tr>
+        <tr><th>Jawa Tengah</th><td>Sindoro-Sumbing, Temanggung, Dieng</td><td>Sweet, nutty, warm spice</td><td>Kopi harian yang seimbang</td></tr>
+        <tr><th>Jawa Timur</th><td>Ijen-Raung, Argopuro</td><td>Spice, chocolate, clean acidity</td><td>Karakter tegas namun rapi</td></tr>
+        <tr><th>Indonesia Timur</th><td>Toraja, Flores Bajawa, Baliem Wamena</td><td>Complex, cocoa, spice, tropical fruit</td><td>Keragaman origin dan karakter</td></tr>
+       </tbody>
+      </table>
+     </div>
+     <p class="journal-table-note">Tabel ini adalah panduan awal, bukan standar rasa resmi. Kintamani di Bali juga patut dicoba sebagai origin lintas-kepulauan. Tasting notes dapat berbeda antar-kebun, varietas, musim panen, proses pascapanen, tingkat roasting, dan resep seduh.</p>
+    </section>
+
+    <section class="journal-conclusion">
+     <span class="eyebrow">THE TAKEAWAY</span>
+     <h3>Five regions. Countless stories in every cup.</h3>
+     <p>Sumatera, Jawa Barat, Jawa Tengah, Jawa Timur, dan Indonesia Timur memperlihatkan betapa luasnya karakter kopi Indonesia. Dari body yang terasa penuh hingga cangkir yang cerah dan ekspresif, setiap kawasan menawarkan pintu masuk yang berbeda untuk mengenal petani, lanskap, dan proses di balik biji kopi.</p>
+     <p>Tidak ada satu origin yang harus menjadi favorit semua orang. Mulailah dari rasa yang kamu sukai, cobalah daerah yang belum pernah kamu kenal, lalu biarkan pengalamanmu berkembang dari satu cangkir ke cangkir berikutnya. Sebab menjelajahi kopi Nusantara bukan sekadar mencari rasa terbaik, melainkan menemukan cerita yang ingin kamu bawa pulang.</p>
+    </section>
+
+    <div class="journal-sources"><span class="eyebrow">SOURCES & FURTHER READING</span><a href="https://gaeki.or.id/en/areal-dan-produksi/" target="_blank" rel="noopener">Indonesia Coffee Exporters Association (GAEKI/ICEA) · Coffee Production & Geographical Indications ↗</a><a href="https://ajcep.asean.org/wp-content/uploads/2021/01/GEOGRAPHICAL-INDICATIONS-IN-THE-ASEAN-REGION.pdf" target="_blank" rel="noopener">ASEAN / EUIPO · Geographical Indications in the ASEAN Region — Gayo Arabica Coffee ↗</a><a href="https://gaeki.or.id/wp-content/uploads/2013/09/Brosur-Kopi-Specialti-A4-tanpa-background.pdf" target="_blank" rel="noopener">GAEKI · The Characteristic of Indonesian Arabica Specialty Coffee ↗</a><a href="https://kemlu.go.id/files/repositori/56577/Indoinvites%20I.pdf" target="_blank" rel="noopener">Ministry of Foreign Affairs of Indonesia · Indonesia Invites: Exotic & Unique Indonesian Coffee ↗</a></div>
+   </div>
+
+   <div class="journal-related">
+    <div class="journal-related-heading"><span class="eyebrow">KEEP EXPLORING</span><h3>More from the Journal.</h3></div>
+    <button type="button" class="journal-related-card" onclick="openJournal('natural-washed')"><img src="assets/photos/journal/v54-natural-washed.jpg" alt="Buah kopi merah di antara daun hijau" loading="lazy"><span><small>COFFEE 101</small><b>Natural vs Washed: What’s the Difference?</b><em>READ STORY →</em></span></button>
+    <button type="button" class="journal-related-card" onclick="openJournal('brew-guide')"><img src="assets/photos/journal/v54-brew-guide.jpg" alt="Kopi diseduh dengan dripper" loading="lazy"><span><small>BREWING GUIDE</small><b>Finding the Right Brew for Your Bean</b><em>READ STORY →</em></span></button>
+   </div>
+  </article>`;
+}
+
+function readJournalStore(name,fallback){
+ try{const value=JSON.parse(localStorage.getItem(name)||'null');return value===null?fallback:value;}catch{return fallback;}
+}
+function writeJournalStore(name,value){try{localStorage.setItem(name,JSON.stringify(value));}catch(error){console.warn('Journal interaction could not be saved locally.',error);}}
+function getJournalLikes(){return readJournalStore('kn_journal_likes',[]);}
+function getJournalSaves(){return readJournalStore('kn_journal_saves',[]);}
+function getJournalComments(){return readJournalStore('kn_journal_comments',{});}
+function journalEngagementMarkup(key){
+ const likes=getJournalLikes();const saves=getJournalSaves();const comments=getJournalComments();
+ const liked=likes.includes(key),saved=saves.includes(key),count=Array.isArray(comments[key])?comments[key].length:0;
+ return `<section class="journal-engagement" data-journal-social="${key}" aria-label="Article actions">
+  <div class="journal-engagement-actions">
+   <button type="button" class="journal-social-btn ${liked?'is-active':''}" data-journal-action="like" data-journal-key="${key}" aria-pressed="${liked}"><span aria-hidden="true">${liked?'♥':'♡'}</span> Like <b data-journal-like-count="${key}">${liked?1:0}</b></button>
+   <button type="button" class="journal-social-btn" data-journal-action="comment" data-journal-key="${key}"><span aria-hidden="true">◯</span> Comment <b data-journal-comment-count="${key}">${count}</b></button>
+   <button type="button" class="journal-social-btn ${saved?'is-active':''}" data-journal-action="save" data-journal-key="${key}" aria-pressed="${saved}"><span aria-hidden="true">${saved?'▣':'▱'}</span> ${saved?'Saved':'Save'}</button>
+  </div>
+  <p class="journal-social-feedback" data-journal-feedback="${key}" aria-live="polite"></p>
+ </section>`;
+}
+function journalCommentsMarkup(key){
+ return `<section class="journal-comments" id="journal-comments-${key}" data-journal-comments="${key}">
+  <div class="journal-comments-heading"><span class="eyebrow">JOIN THE CONVERSATION</span><h3>Share Your Coffee Thoughts.</h3><p>Bagikan pengalaman, pertanyaan, atau origin favoritmu. Jaga percakapan tetap ramah dan relevan dengan kopi.</p></div>
+  <form class="journal-comment-form" data-journal-comment-form="${key}">
+   <label><span>YOUR NAME</span><input name="author" type="text" maxlength="40" placeholder="Nama kamu (opsional)"></label>
+   <label class="journal-comment-message"><span>YOUR COMMENT</span><textarea name="comment" rows="3" maxlength="500" required placeholder="Tulis komentar hingga 500 karakter..."></textarea></label>
+   <div class="journal-comment-form-footer"><small>Maksimal 500 karakter. Komentar disimpan pada browser ini.</small><button class="btn" type="submit">POST COMMENT →</button></div>
+  </form>
+  <div class="journal-comments-list" data-journal-comments-list="${key}" aria-live="polite"></div>
+  <p class="journal-storage-note">Catatan: Like, Save, dan komentar saat ini tersimpan secara lokal di browser/perangkat ini. Interaksi belum dibagikan ke pengunjung lain karena belum terhubung ke database komunitas.</p>
+ </section>`;
+}
+function renderJournalSocial(key){
+ const likes=getJournalLikes(),saves=getJournalSaves(),comments=getJournalComments();
+ const liked=likes.includes(key),saved=saves.includes(key),items=Array.isArray(comments[key])?comments[key]:[];
+ document.querySelectorAll(`[data-journal-social="${key}"] [data-journal-action="like"]`).forEach(btn=>{btn.classList.toggle('is-active',liked);btn.setAttribute('aria-pressed',String(liked));const icon=btn.querySelector('span');if(icon)icon.textContent=liked?'♥':'♡';});
+ document.querySelectorAll(`[data-journal-social="${key}"] [data-journal-action="save"]`).forEach(btn=>{btn.classList.toggle('is-active',saved);btn.setAttribute('aria-pressed',String(saved));const icon=btn.querySelector('span');if(icon)icon.textContent=saved?'▣':'▱';const label=Array.from(btn.childNodes).find(n=>n.nodeType===Node.TEXT_NODE);if(label)label.textContent=saved?' Saved':' Save';});
+ document.querySelectorAll(`[data-journal-like-count="${key}"]`).forEach(el=>el.textContent=liked?'1':'0');
+ document.querySelectorAll(`[data-journal-comment-count="${key}"]`).forEach(el=>el.textContent=String(items.length));
+ const list=document.querySelector(`[data-journal-comments-list="${key}"]`);
+ if(list){list.innerHTML=items.length?items.slice().reverse().map(item=>`<article class="journal-comment"><div class="journal-comment-avatar">${esc((item.author||'P').trim().charAt(0).toUpperCase()||'P')}</div><div class="journal-comment-body"><div class="journal-comment-meta"><strong>${esc(item.author||'Pembaca')}</strong><time>${esc(item.dateLabel||'Baru saja')}</time></div><p>${esc(item.text||'')}</p></div></article>`).join(''):'<p class="journal-no-comments">Belum ada komentar. Jadilah pembaca pertama yang memulai percakapan.</p>';}
+}
+function attachJournalEngagement(key){
+ const host=document.getElementById('journalModalContent');if(!host)return;
+ const article=host.querySelector('.journal-article')||host.querySelector('.journal-short-article');if(!article)return;
+ if(!article.querySelector('.journal-engagement')){
+  const anchor=article.querySelector('.journal-standfirst')||article.querySelector('.journal-byline')||article.firstElementChild;
+  if(anchor)anchor.insertAdjacentHTML('afterend',journalEngagementMarkup(key));
+ }
+ if(!article.querySelector('.journal-comments')){
+  const related=article.querySelector('.journal-related');
+  if(related)related.insertAdjacentHTML('beforebegin',journalCommentsMarkup(key));
+  else article.insertAdjacentHTML('beforeend',journalCommentsMarkup(key));
+ }
+ renderJournalSocial(key);
+}
+function toggleJournalLike(key){
+ const likes=getJournalLikes();const index=likes.indexOf(key);if(index>=0)likes.splice(index,1);else likes.push(key);writeJournalStore('kn_journal_likes',likes);renderJournalSocial(key);
+ const feedback=document.querySelector(`[data-journal-feedback="${key}"]`);if(feedback)feedback.textContent=likes.includes(key)?'Terima kasih sudah menyukai artikel ini.':'Like dibatalkan.';
+}
+function toggleJournalSave(key){
+ const saves=getJournalSaves();const index=saves.indexOf(key);if(index>=0)saves.splice(index,1);else saves.push(key);writeJournalStore('kn_journal_saves',saves);renderJournalSocial(key);
+ const feedback=document.querySelector(`[data-journal-feedback="${key}"]`);if(feedback)feedback.textContent=saves.includes(key)?'Artikel disimpan di browser ini.':'Artikel dihapus dari simpanan.';
+}
+function postJournalComment(form){
+ const key=form.dataset.journalCommentForm;const data=new FormData(form);const text=String(data.get('comment')||'').trim();const author=String(data.get('author')||'').trim().slice(0,40)||'Pembaca';
+ if(!text)return;
+ const comments=getJournalComments();if(!Array.isArray(comments[key]))comments[key]=[];
+ comments[key].push({author,text,createdAt:new Date().toISOString(),dateLabel:new Date().toLocaleString('id-ID',{dateStyle:'medium',timeStyle:'short'})});
+ writeJournalStore('kn_journal_comments',comments);form.reset();renderJournalSocial(key);
+ const feedback=document.querySelector(`[data-journal-feedback="${key}"]`);if(feedback)feedback.textContent='Komentar tersimpan di browser ini.';
+}
+
 let journalReturnFocus=null;
 function openJournal(key){
  const j=JOURNAL_CONTENT[key]||JOURNAL_CONTENT['natural-washed'];
@@ -712,7 +911,10 @@ function openJournal(key){
  if(readtime)readtime.textContent=j.readtime||'4 MIN READ';
  const content=document.getElementById('journalModalContent');
  if(j.type==='long')content.innerHTML=naturalWashedArticleMarkup();
- else content.innerHTML=`<div class="journal-short-article"><p>${esc(j.body)}</p><p>Great coffee is shaped by origin, harvest, processing, roasting, and the way we brew it. Keep exploring, stay curious, and discover the character that feels right for your cup.</p></div>`;
+ else if(j.type==='origins')content.innerHTML=fiveOriginsArticleMarkup();
+ else content.innerHTML=`<div class="journal-short-article"><h2 class="journal-article-headline">${esc(j.title)}</h2><p>${esc(j.body)}</p><p>Setiap biji kopi membawa cerita dari kebun, proses pascapanen, roasting, hingga cara kita menyeduhnya. Teruslah bereksplorasi, catat rasa yang kamu temukan, dan pilih metode yang paling sesuai dengan karakter kopi pilihanmu.</p></div>`;
+ document.body.classList.toggle('journal-long-open',j.type==='long'||j.type==='origins');
+ attachJournalEngagement(key);
  modal.classList.add('open');
  modal.setAttribute('aria-hidden','false');
  const box=modal.querySelector('.journal-modal-box');
@@ -721,6 +923,7 @@ function openJournal(key){
  if(closeButton)closeButton.focus({preventScroll:true});
 }
 function closeJournal(){
+ document.body.classList.remove('journal-long-open');
  const modal=document.getElementById('journalModal');
  if(!modal)return;
  modal.classList.remove('open');
@@ -742,6 +945,25 @@ document.addEventListener("click",function(e){
  else if(action==="qty-up")changeQty(i,1);
  else if(action==="remove")removeFromCart(i);
  else if(action==="continue"){closeCart();location.hash="shop";}
+});
+
+
+// Journal social interactions — local-browser prototype until a shared API/database is connected.
+document.addEventListener('click',function(e){
+ const btn=e.target.closest('[data-journal-action]');if(!btn)return;
+ e.preventDefault();e.stopPropagation();
+ const key=btn.dataset.journalKey;if(!key)return;
+ const action=btn.dataset.journalAction;
+ if(action==='like'){toggleJournalLike(key);return;}
+ if(action==='save'){toggleJournalSave(key);return;}
+ if(action==='comment'){
+  const section=document.getElementById(`journal-comments-${key}`);
+  if(section){section.scrollIntoView({behavior:'smooth',block:'start'});section.querySelector('textarea')?.focus({preventScroll:true});}
+ }
+});
+document.addEventListener('submit',function(e){
+ const form=e.target.closest('[data-journal-comment-form]');if(!form)return;
+ e.preventDefault();e.stopPropagation();postJournalComment(form);
 });
 
 // Robust interaction layer for dynamically rendered controls.

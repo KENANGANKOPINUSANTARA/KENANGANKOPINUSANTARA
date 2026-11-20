@@ -580,7 +580,7 @@ function closeSearch(){document.getElementById('searchModal')?.classList.remove(
 const JOURNAL_CONTENT={
  'natural-washed':{eyebrow:'COFFEE 101',title:'Natural vs Washed: What’s the Difference?',readtime:'8 MIN READ',type:'long'},
  'five-origins':{eyebrow:'ORIGIN STORIES',title:'Five Indonesian Coffee Origins You Should Try',readtime:'11 MIN READ',type:'origins'},
- 'brew-guide':{eyebrow:'BREWING GUIDE',title:'Finding the Right Brew for Your Bean',readtime:'4 MIN READ',body:'Start with the bean’s natural character, then adjust grind size, water temperature, ratio and pouring technique. Pour over can highlight clarity, French Press can emphasize body, and espresso can concentrate richer chocolate and caramel notes.'}
+ 'brew-guide':{eyebrow:'BREWING GUIDE',title:'Finding the Right Brew for Your Bean',readtime:'6 MIN READ',type:'brew'}
 };
 
 function naturalWashedArticleMarkup(){
@@ -704,7 +704,7 @@ function fiveOriginsArticleMarkup(){
  return `
   <article class="journal-article journal-origins-article">
    <figure class="journal-cover">
-    <img src="assets/photos/journal/indonesian-coffee-origins-hero.webp" alt="Petani memetik buah kopi matang di perkebunan dataran tinggi Indonesia saat matahari terbit" fetchpriority="high">
+    <img src="assets/photos/journal/indonesian-coffee-origins-hero.webp" alt="Lanskap perkebunan kopi Indonesia di dataran tinggi saat matahari terbit" fetchpriority="high" onerror="this.onerror=null;this.src='assets/photos/journal/v54-origin-stories.jpg'">
     <figcaption>Dari pegunungan Sumatera hingga perkebunan di kepulauan timur, setiap daerah menyimpan cerita kopi yang berbeda.</figcaption>
    </figure>
    <h2 class="journal-article-headline">Five Indonesian Coffee Origins You Should Try</h2>
@@ -827,6 +827,131 @@ function fiveOriginsArticleMarkup(){
   </article>`;
 }
 
+function brewGuideArticleMarkup(){
+ return `
+  <article class="journal-article journal-brew-article">
+   <figure class="journal-cover journal-brew-cover">
+    <img src="assets/photos/journal/brew-guide-hero.webp" alt="Seduhan pour-over V60 dengan ketel leher angsa, carafe kaca, dan biji kopi di meja kayu" fetchpriority="high" onerror="this.onerror=null;this.src='assets/photos/journal/v52-brew-guide.jpg'">
+    <figcaption>Metode seduh yang tepat bukan untuk mengubah asal biji, melainkan membantu karakter alaminya tampil lebih jelas.</figcaption>
+   </figure>
+   <h2 class="journal-article-headline">Finding the Right Brew for Your Bean</h2>
+   <div class="journal-byline"><span class="journal-author-mark">K</span><strong>Kenangan Coffee Editorial</strong><span class="journal-byline-divider">·</span><time datetime="2026-11-20">20 November 2026</time><span class="journal-byline-divider">·</span><span>6 min read</span></div>
+   <p class="journal-standfirst">Setiap biji kopi menyimpan karakter yang unik. Dengan metode seduh yang tepat, kamu bisa menonjolkan kejernihan rasa, aroma buah, body yang penuh, atau manis yang lembut. Temukan cara menyeduh yang paling sesuai dengan kopi pilihanmu.</p>
+
+   <div class="journal-article-copy">
+    <p>Kopi yang sama bisa terasa sangat berbeda ketika diseduh dengan metode yang berbeda. Satu biji Arabika yang diseduh menggunakan V60 mungkin menampilkan aroma floral dan keasaman yang segar, sementara ketika dibuat dengan French Press, cangkirnya dapat terasa lebih tebal dan teksturnya lebih nyata. Bukan berarti salah satu hasil lebih baik. Keduanya hanya menonjolkan sisi yang berbeda dari kopi yang sama.</p>
+    <p>Itulah alasan memilih alat seduh sebaiknya dimulai dari pertanyaan sederhana: <strong>rasa seperti apa yang ingin kamu nikmati?</strong> Apakah kamu ingin mengenali detail rasa dari suatu origin, mencari cangkir yang nyaman dan berisi, atau membuat espresso pekat sebagai dasar minuman susu? Setelah tujuan itu jelas, pilihan metode akan terasa jauh lebih mudah.</p>
+
+    <div class="journal-brew-quote"><span aria-hidden="true">“</span><p>Tidak ada satu metode seduh yang paling benar untuk semua kopi. Metode terbaik adalah metode yang membantu kamu menikmati karakter biji yang sedang ada di tanganmu.</p></div>
+
+    <section class="journal-article-section" id="brew-bean-character">
+     <div class="journal-section-heading"><span>01</span><div><span class="eyebrow">COFFEE FUNDAMENTALS</span><h3>Kenali Karakter Biji Kopimu</h3></div></div>
+     <p>Sebelum memilih alat seduh, luangkan waktu untuk mengenali biji kopi yang akan digunakan. Informasi pada kemasan dapat memberi petunjuk awal, tetapi pengalaman mencicipi tetap menjadi panduan utama. Perhatikan empat hal berikut.</p>
+     <div class="journal-brew-profile-grid">
+      <div class="journal-brew-profile"><span class="journal-brew-profile-icon">◈</span><b>Origin & varietas</b><p>Asal kebun, varietas, ketinggian, dan lingkungan tumbuh dapat memengaruhi karakter rasa. Catatan fruity, floral, earthy, atau spicy adalah petunjuk sensori, bukan jaminan untuk setiap lot.</p></div>
+      <div class="journal-brew-profile"><span class="journal-brew-profile-icon">◐</span><b>Proses pascapanen</b><p>Natural, washed, honey, dan wet-hulled dapat menghasilkan pengalaman yang berbeda. Pelajari prosesnya agar kamu punya gambaran tentang karakter yang mungkin muncul.</p></div>
+      <div class="journal-brew-profile"><span class="journal-brew-profile-icon">◒</span><b>Tingkat sangrai</b><p>Light roast sering dipilih ketika ingin mengeksplorasi karakter origin dan detail rasa. Medium memberi ruang untuk keseimbangan, sedangkan dark roast cenderung menonjolkan rasa sangrai, cokelat, dan body.</p></div>
+      <div class="journal-brew-profile"><span class="journal-brew-profile-icon">◉</span><b>Kesegaran & penyimpanan</b><p>Simpan biji dalam wadah tertutup, jauh dari panas, cahaya, udara berlebih, dan kelembapan. Giling sesaat sebelum menyeduh untuk membantu menjaga aroma.</p></div>
+     </div>
+     <figure class="journal-inline-figure journal-inline-wide">
+      <img src="assets/photos/journal/v52-brew-guide.jpg" alt="Perangkat pour-over, biji kopi, dan carafe untuk menyeduh kopi secara manual" loading="lazy">
+      <figcaption>Mulailah dengan mengenali biji dan menyiapkan alat yang bersih. Konsistensi kecil membuat proses eksplorasi lebih menyenangkan.</figcaption>
+     </figure>
+    </section>
+
+    <section class="journal-article-section" id="brew-methods">
+     <div class="journal-section-heading"><span>02</span><div><span class="eyebrow">BREWING METHODS</span><h3>Lima Metode Seduh dan Karakter Rasanya</h3></div></div>
+     <p>Setiap alat bekerja dengan cara yang berbeda. Ada yang membiarkan air mengalir melewati bubuk kopi, ada yang merendam kopi di dalam air, dan ada pula yang menggunakan tekanan. Perbedaan cara ekstraksi ini memengaruhi kejernihan, tekstur, intensitas, serta rasa akhir.</p>
+     <div class="journal-brew-method-grid">
+      <article class="journal-brew-method-card"><div class="journal-brew-method-icon">◒</div><span class="eyebrow">FILTER · POUR OVER</span><h4>V60 / Kalita</h4><p>Air mengalir melewati bubuk kopi dan filter kertas. Hasilnya sering terasa bersih, dengan detail aroma dan rasa yang lebih mudah dikenali.</p><small>Cocok untuk: fruity, floral, dan kopi yang ingin dieksplorasi asalnya.</small></article>
+      <article class="journal-brew-method-card"><div class="journal-brew-method-icon">▤</div><span class="eyebrow">IMMERSION</span><h4>French Press</h4><p>Bubuk kopi direndam bersama air sebelum dipisahkan dengan saringan logam. Minyak kopi dan partikel halus lebih banyak tertinggal dalam cangkir, sehingga body terasa penuh.</p><small>Cocok untuk: cokelat, kacang, rempah, dan penikmat tekstur tebal.</small></article>
+      <article class="journal-brew-method-card"><div class="journal-brew-method-icon">◍</div><span class="eyebrow">IMMERSION + PRESSURE</span><h4>AeroPress</h4><p>Air dan kopi direndam singkat, lalu didorong melewati filter menggunakan tekanan manual. Metode ini fleksibel dan mudah disesuaikan dengan resep pribadi.</p><small>Cocok untuk: eksperimen resep, cangkir seimbang, dan seduhan praktis.</small></article>
+      <article class="journal-brew-method-card"><div class="journal-brew-method-icon">◉</div><span class="eyebrow">PRESSURE BREW</span><h4>Espresso</h4><p>Air panas dialirkan melalui kopi yang digiling halus dengan tekanan mesin. Hasilnya pekat dan terkonsentrasi, sering menjadi dasar espresso-based drinks.</p><small>Cocok untuk: rasa intens, cokelat, karamel, dan minuman berbasis susu.</small></article>
+      <article class="journal-brew-method-card"><div class="journal-brew-method-icon">❄</div><span class="eyebrow">COLD EXTRACTION</span><h4>Cold Brew</h4><p>Kopi direndam dalam air bersuhu dingin atau ruang selama beberapa jam, lalu disaring. Seduhan ini dinikmati dingin dan dapat dibuat sebagai konsentrat atau siap minum.</p><small>Cocok untuk: minuman dingin yang lembut dan mudah dipadukan.</small></article>
+     </div>
+     <p class="journal-table-note">Catatan: deskripsi rasa di atas merupakan kecenderungan umum, bukan hasil yang pasti. Jenis biji, rasio, gilingan, suhu, durasi, filter, dan teknik seduh dapat mengubah hasil akhir.</p>
+    </section>
+
+    <section class="journal-article-section" id="brew-variables">
+     <div class="journal-section-heading"><span>03</span><div><span class="eyebrow">THE BREWING VARIABLES</span><h3>Empat Kunci untuk Mengatur Hasil Seduhan</h3></div></div>
+     <p>Alat seduh hanya satu bagian dari proses. Untuk mendapatkan hasil yang konsisten, perhatikan empat variabel yang paling mudah kamu kendalikan: ukuran gilingan, rasio kopi dan air, suhu air, serta waktu kontak. Ubah satu variabel pada satu waktu agar kamu tahu perubahan mana yang membuat rasa menjadi lebih baik.</p>
+     <div class="journal-brew-variable-grid">
+      <div><b>01 · Ukuran gilingan</b><p>Gilingan lebih halus memperbesar luas permukaan kopi dan umumnya mempercepat ekstraksi. Gilingan lebih kasar memperlambatnya. Sesuaikan dengan alat dan waktu seduh.</p></div>
+      <div><b>02 · Rasio kopi dan air</b><p>Rasio menentukan seberapa pekat minuman. Sebagai titik awal untuk filter coffee, coba sekitar 1:15–1:17, lalu sesuaikan dengan selera dan jenis biji.</p></div>
+      <div><b>03 · Suhu air</b><p>Air yang lebih panas dapat membantu ekstraksi, tetapi suhu yang tepat juga dipengaruhi sangrai dan karakter kopi. Untuk filter, 92–96°C merupakan rentang awal yang banyak digunakan.</p></div>
+      <div><b>04 · Waktu kontak</b><p>Waktu terlalu singkat dapat menghasilkan cangkir tipis atau asam tajam; terlalu lama bisa meningkatkan rasa pahit atau kering. Perhatikan aliran air dan ukuran gilingan.</p></div>
+     </div>
+     <div class="journal-brew-highlight"><strong>Mulai dari resep sederhana</strong><p>Untuk V60, panduan Hario menggunakan 15 gram kopi dan 250 ml air, gilingan medium hingga medium-fine, suhu sekitar 92–96°C, serta waktu seduh kurang lebih 2,5 menit. Anggap angka ini sebagai titik awal, bukan formula yang wajib diikuti semua kopi.</p></div>
+    </section>
+
+    <section class="journal-article-section" id="brew-recommendations">
+     <div class="journal-section-heading"><span>04</span><div><span class="eyebrow">MATCH BEAN & BREWER</span><h3>Memilih Metode Berdasarkan Karakter Kopi</h3></div></div>
+     <p>Setelah memahami metode dan variabelnya, kamu bisa mulai mencocokkan kopi dengan alat seduh. Rekomendasi ini bukan batasan. Justru menarik untuk mencoba satu biji menggunakan dua metode berbeda dan mencatat apa yang berubah.</p>
+     <div class="journal-table-wrap"><table class="journal-comparison-table journal-brew-table"><thead><tr><th>Karakter yang ingin ditonjolkan</th><th>Metode yang bisa dicoba</th><th>Hal yang perlu diperhatikan</th></tr></thead><tbody>
+      <tr><th>Fruity & floral</th><td>V60, Kalita, AeroPress</td><td>Mulai dengan filter paper dan rasio konsisten untuk melihat kejernihan aroma.</td></tr>
+      <tr><th>Chocolate & nutty</th><td>French Press, V60, Moka Pot</td><td>Bandingkan body dan rasa manis pada beberapa tingkat gilingan.</td></tr>
+      <tr><th>Earthy & full-bodied</th><td>French Press, AeroPress, Espresso</td><td>Perhatikan tekstur, intensitas, dan rasa akhir agar tidak terasa terlalu berat.</td></tr>
+      <tr><th>Bright & clean</th><td>V60, Kalita, AeroPress paper filter</td><td>Jaga aliran air dan hindari perubahan resep yang terlalu banyak sekaligus.</td></tr>
+      <tr><th>Dark roast & bold</th><td>Espresso, Moka Pot, French Press</td><td>Coba suhu sedikit lebih rendah atau waktu lebih singkat bila rasa terlalu pahit.</td></tr>
+     </tbody></table></div>
+     <figure class="journal-inline-figure journal-inline-wide">
+      <img src="assets/photos/sections/create-coffee.jpg" alt="Kopi hitam dituangkan ke dalam cangkir di samping biji kopi" loading="lazy">
+      <figcaption>Rasa terbaik bukan hanya soal alat, tetapi juga tentang resep yang sesuai dengan biji dan preferensimu.</figcaption>
+     </figure>
+    </section>
+
+    <section class="journal-article-section" id="brew-recipes">
+     <div class="journal-section-heading"><span>05</span><div><span class="eyebrow">STARTER RECIPES</span><h3>Resep Awal yang Bisa Kamu Uji di Rumah</h3></div></div>
+     <p>Gunakan resep berikut sebagai titik awal. Timbang kopi dan air bila memungkinkan, gunakan air yang bersih, dan catat hasilnya. Jika alat atau ukuran sajianmu berbeda, sesuaikan jumlah bahan sambil mempertahankan rasio.</p>
+     <div class="journal-brew-recipe-grid">
+      <div class="journal-brew-recipe"><span class="eyebrow">V60 · POUR OVER</span><b>15 g kopi · 250 g air</b><p>Gilingan medium-fine · 92–96°C · sekitar 2,5–3 menit. Basahi seluruh bubuk pada awal seduh dan beri waktu bloom sekitar 30 detik.</p></div>
+      <div class="journal-brew-recipe"><span class="eyebrow">FRENCH PRESS</span><b>30 g kopi · 450 g air</b><p>Gilingan kasar · 92–96°C · sekitar 4 menit. Aduk perlahan, tekan plunger dengan lembut, lalu tuangkan kopi agar tidak terus terekstraksi di dalam bejana.</p></div>
+      <div class="journal-brew-recipe"><span class="eyebrow">AEROPRESS</span><b>16–18 g kopi per sajian</b><p>Gunakan gilingan medium atau medium-fine. AeroPress memberi ruang untuk bereksperimen; suhu sekitar 85°C dan waktu rendam sekitar 60 detik dapat menjadi awal mengikuti panduan resmi produsennya.</p></div>
+      <div class="journal-brew-recipe"><span class="eyebrow">ESPRESSO</span><b>18–20 g in · sekitar 36–40 g out</b><p>Rasio sekitar 1:2 dan waktu ekstraksi 25–30 detik sering dipakai sebagai titik awal. Hasilnya tetap perlu disesuaikan dengan mesin, basket, kopi, dan rasa yang kamu cari.</p></div>
+     </div>
+     <p class="journal-table-note">Resep espresso di atas merangkum praktik rata-rata yang dilaporkan dalam artikel Specialty Coffee Association; bukan standar tunggal untuk setiap mesin atau biji.</p>
+    </section>
+
+    <section class="journal-article-section" id="brew-troubleshooting">
+     <div class="journal-section-heading"><span>06</span><div><span class="eyebrow">TROUBLESHOOT YOUR CUP</span><h3>Jika Rasanya Belum Pas, Apa yang Harus Diubah?</h3></div></div>
+     <p>Jangan buru-buru mengganti biji kopi ketika hasil seduhan belum sesuai harapan. Coba kenali rasa yang muncul, kemudian ubah satu variabel pada satu waktu.</p>
+     <div class="journal-brew-fix-grid">
+      <div><b>Asam tajam, tipis, atau terasa belum matang</b><p>Periksa apakah air mengalir terlalu cepat. Coba giling sedikit lebih halus, naikkan suhu secara bertahap, atau tambah waktu kontak.</p></div>
+      <div><b>Pahit berlebihan atau terasa kering</b><p>Coba gilingan sedikit lebih kasar, waktu seduh lebih singkat, atau suhu sedikit lebih rendah. Pastikan juga kopi tidak tertinggal terlalu lama dalam French Press.</p></div>
+      <div><b>Terlalu encer atau kurang intens</b><p>Periksa rasio. Kamu dapat menambah dosis kopi atau mengurangi air sedikit demi sedikit sambil menjaga cara seduh tetap konsisten.</p></div>
+      <div><b>Terlalu pekat atau berat</b><p>Tambahkan air atau kurangi dosis kopi. Untuk espresso, evaluasi rasio hasil seduhan dan sesuaikan dengan gaya minuman yang ingin dibuat.</p></div>
+     </div>
+    </section>
+
+    <section class="journal-article-section" id="brew-home-routine">
+     <div class="journal-section-heading"><span>07</span><div><span class="eyebrow">A SIMPLE HOME ROUTINE</span><h3>Bangun Ritual Seduh yang Konsisten</h3></div></div>
+     <ol class="journal-number-list">
+      <li><strong>Siapkan alat dan air bersih.</strong> Pastikan brewer, server, dan cangkir tidak menyimpan aroma sisa seduhan sebelumnya.</li>
+      <li><strong>Timbang biji kopi.</strong> Mulailah dengan dosis yang sama setiap kali agar perubahan rasa lebih mudah diamati.</li>
+      <li><strong>Giling sesaat sebelum menyeduh.</strong> Gunakan ukuran yang sesuai dengan alat, lalu ratakan bubuk kopi sebelum air dituangkan.</li>
+      <li><strong>Catat waktu dan jumlah air.</strong> Gunakan timer dan timbangan. Untuk pour-over, basahi bubuk secara merata dan tuangkan dengan aliran stabil.</li>
+      <li><strong>Cicipi saat suhu berubah.</strong> Aroma dan rasa dapat terasa berbeda ketika kopi mulai mendingin. Catat manis, asam, body, aroma, dan aftertaste yang kamu temukan.</li>
+      <li><strong>Ubah satu hal pada percobaan berikutnya.</strong> Misalnya, giling sedikit lebih halus tanpa mengubah dosis, suhu, dan teknik tuang pada saat yang sama.</li>
+     </ol>
+    </section>
+
+    <div class="journal-conclusion"><span class="eyebrow">THE KENANGAN NOTE</span><h3>Metode Terbaik adalah yang Membuatmu Menikmati Kopi.</h3><p>V60 dapat membantu kamu mengenali detail, French Press menawarkan body yang lebih penuh, AeroPress membuka ruang eksperimen, sedangkan espresso menghadirkan intensitas dalam sajian kecil. Tidak ada metode yang harus dipilih hanya karena sedang populer.</p><p>Mulailah dari karakter biji, tentukan rasa yang kamu cari, lalu bereksperimen secara bertahap. Setiap seduhan adalah kesempatan untuk memahami kopi sedikit lebih dekat — dari kebun tempat ia tumbuh sampai cangkir yang kamu nikmati.</p></div>
+
+    <div class="journal-sources"><span class="eyebrow">FURTHER READING & BREWING REFERENCES</span>
+     <a href="https://www.hario.co.uk/pages/brew-guides-v60-expert" target="_blank" rel="noopener">Hario UK · Expert V60 Brew Guide ↗</a>
+     <a href="https://bodumuk.com/brew-guide/" target="_blank" rel="noopener">Bodum · French Press Brew Guide ↗</a>
+     <a href="https://aeropress.com/pages/how-to-use" target="_blank" rel="noopener">AeroPress · Official How to Use Guide ↗</a>
+     <a href="https://sca.coffee/sca-news/25-magazine/issue-3/defining-ever-changing-espresso-25-magazine-issue-3-zyx36" target="_blank" rel="noopener">Specialty Coffee Association · Defining the Ever-Changing Espresso ↗</a>
+    </div>
+    <div class="journal-related">
+     <div class="journal-related-heading"><span class="eyebrow">KEEP EXPLORING</span><h3>More from the Journal.</h3></div>
+     <button type="button" class="journal-related-card" onclick="openJournal('natural-washed')"><img src="assets/photos/journal/v54-natural-washed.jpg" alt="Buah kopi merah dan proses pengolahan kopi" loading="lazy"><span><small>COFFEE 101</small><b>Natural vs Washed: What’s the Difference?</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('five-origins')"><img src="assets/photos/journal/v54-origin-stories.jpg" alt="Lanskap dataran tinggi kopi Indonesia" loading="lazy"><span><small>ORIGIN STORIES</small><b>Five Indonesian Coffee Origins You Should Try</b><em>READ STORY →</em></span></button>
+    </div>
+   </div>
+  </article>`;
+}
+
 function readJournalStore(name,fallback){
  try{const value=JSON.parse(localStorage.getItem(name)||'null');return value===null?fallback:value;}catch{return fallback;}
 }
@@ -912,8 +1037,9 @@ function openJournal(key){
  const content=document.getElementById('journalModalContent');
  if(j.type==='long')content.innerHTML=naturalWashedArticleMarkup();
  else if(j.type==='origins')content.innerHTML=fiveOriginsArticleMarkup();
- else content.innerHTML=`<div class="journal-short-article"><h2 class="journal-article-headline">${esc(j.title)}</h2><p>${esc(j.body)}</p><p>Setiap biji kopi membawa cerita dari kebun, proses pascapanen, roasting, hingga cara kita menyeduhnya. Teruslah bereksplorasi, catat rasa yang kamu temukan, dan pilih metode yang paling sesuai dengan karakter kopi pilihanmu.</p></div>`;
- document.body.classList.toggle('journal-long-open',j.type==='long'||j.type==='origins');
+ else if(j.type==='brew')content.innerHTML=brewGuideArticleMarkup();
+ else content.innerHTML=`<div class="journal-short-article"><h2 class="journal-article-headline">${esc(j.title)}</h2><p>${esc(j.body||'')}</p><p>Setiap biji kopi membawa cerita dari kebun, proses pascapanen, roasting, hingga cara kita menyeduhnya. Teruslah bereksplorasi, catat rasa yang kamu temukan, dan pilih metode yang paling sesuai dengan karakter kopi pilihanmu.</p></div>`;
+ document.body.classList.toggle('journal-long-open',j.type==='long'||j.type==='origins'||j.type==='brew');
  attachJournalEngagement(key);
  modal.classList.add('open');
  modal.setAttribute('aria-hidden','false');

@@ -453,3 +453,47 @@ footer{background:var(--ink);color:var(--ivory);padding:70px 8vw;display:grid;gr
  .journal-origin-overview-grid b{font-size:15px}
  .journal-comment-form{padding:12px}
 }
+
+/* Coffee Journal Article 03 — illustrated brewing guide */
+.journal-brew-quote{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;margin:24px 0;padding:20px 22px;background:#f0e7d9;border-left:3px solid #b08a4a}
+.journal-brew-quote>span{color:#a27b3e;font:500 42px/.8 Georgia,serif}
+.journal-brew-quote p{margin:0;color:#4a3427;font:italic 17px/1.55 Georgia,serif}
+.journal-brew-profile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}
+.journal-brew-profile{min-width:0;padding:16px 17px;background:#f1e9dc;border:1px solid rgba(162,123,62,.16)}
+.journal-brew-profile-icon{display:block;margin-bottom:8px;color:#a27b3e;font:24px Georgia,serif}
+.journal-brew-profile b{display:block;color:#2d251d;font:600 13px Arial,sans-serif}
+.journal-brew-profile p{margin:6px 0 0;color:#675d51;font:12px/1.7 Arial,sans-serif}
+.journal-brew-method-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:19px 0}
+.journal-brew-method-card{position:relative;min-width:0;padding:19px 18px 17px;background:#faf7f0;border:1px solid rgba(162,123,62,.20)}
+.journal-brew-method-card:last-child{grid-column:1/-1}
+.journal-brew-method-icon{width:38px;height:38px;display:grid;place-items:center;margin-bottom:13px;border-radius:50%;background:#eee2cf;color:#8e6330;font:23px Georgia,serif}
+.journal-brew-method-card>.eyebrow{display:block;margin:0 0 5px;font-size:8px;letter-spacing:1.6px}
+.journal-brew-method-card h4{margin:0 0 8px;color:#211d19;font:500 23px/1.15 var(--serif)}
+.journal-brew-method-card p{margin:0 0 10px;color:#5d554b;font:12px/1.7 Arial,sans-serif}
+.journal-brew-method-card small{display:block;padding-top:9px;border-top:1px solid rgba(23,21,18,.10);color:#8a6a43;font:italic 11px/1.55 Georgia,serif}
+.journal-brew-variable-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}
+.journal-brew-variable-grid>div{padding:16px;background:#f1e9dc;border:1px solid rgba(162,123,62,.16)}
+.journal-brew-variable-grid b{color:#33271d;font:600 12px Arial,sans-serif}
+.journal-brew-variable-grid p{margin:7px 0 0;color:#62594e;font:12px/1.7 Arial,sans-serif}
+.journal-brew-highlight{margin:20px 0;padding:18px 20px;background:#3d2a20;color:#f4ecdf}
+.journal-brew-highlight strong{display:block;margin-bottom:6px;color:#e3c18a;font:600 12px Arial,sans-serif;letter-spacing:.04em}
+.journal-brew-highlight p{margin:0;color:#eee2d2;font:12px/1.75 Arial,sans-serif}
+.journal-brew-recipe-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin:18px 0}
+.journal-brew-recipe{padding:17px 18px;background:#f6f0e6;border:1px solid rgba(162,123,62,.19)}
+.journal-brew-recipe .eyebrow{display:block;margin-bottom:7px;font-size:8px;letter-spacing:1.6px}
+.journal-brew-recipe b{display:block;color:#2c241d;font:600 13px/1.4 Arial,sans-serif}
+.journal-brew-recipe p{margin:7px 0 0;color:#655c50;font:12px/1.7 Arial,sans-serif}
+.journal-brew-fix-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}
+.journal-brew-fix-grid>div{padding:16px 17px;background:#f0e8dc;border-left:2px solid #b08a4a}
+.journal-brew-fix-grid b{display:block;color:#33271d;font:600 12px/1.45 Arial,sans-serif}
+.journal-brew-fix-grid p{margin:7px 0 0;color:#655c50;font:12px/1.7 Arial,sans-serif}
+.journal-brew-table{min-width:660px}
+.journal-brew-article .journal-cover img{object-position:center 52%}
+@media(max-width:760px){
+ .journal-brew-profile-grid,.journal-brew-method-grid,.journal-brew-variable-grid,.journal-brew-recipe-grid,.journal-brew-fix-grid{grid-template-columns:1fr}
+ .journal-brew-method-card:last-child{grid-column:auto}
+ .journal-brew-quote{padding:16px}
+ .journal-brew-quote p{font-size:15px}
+ .journal-brew-profile,.journal-brew-method-card,.journal-brew-recipe{padding:14px}
+}
+

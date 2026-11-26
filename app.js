@@ -580,7 +580,8 @@ function closeSearch(){document.getElementById('searchModal')?.classList.remove(
 const JOURNAL_CONTENT={
  'natural-washed':{eyebrow:'COFFEE 101',title:'Natural vs Washed: What’s the Difference?',readtime:'8 MIN READ',type:'long'},
  'five-origins':{eyebrow:'ORIGIN STORIES',title:'Five Indonesian Coffee Origins You Should Try',readtime:'11 MIN READ',type:'origins'},
- 'brew-guide':{eyebrow:'BREWING GUIDE',title:'Finding the Right Brew for Your Bean',readtime:'6 MIN READ',type:'brew'}
+ 'brew-guide':{eyebrow:'BREWING GUIDE',title:'Finding the Right Brew for Your Bean',readtime:'6 MIN READ',type:'brew'},
+ 'coffee-roasting':{eyebrow:'COFFEE KNOWLEDGE',title:'The Art of Roasting: How Roast Level Shapes Your Coffee’s Flavor',readtime:'10 MIN READ',type:'roast'}
 };
 
 function naturalWashedArticleMarkup(){
@@ -694,8 +695,8 @@ function naturalWashedArticleMarkup(){
 
    <div class="journal-related">
     <div class="journal-related-heading"><span class="eyebrow">KEEP EXPLORING</span><h3>More from the Journal.</h3></div>
-    <button type="button" class="journal-related-card" onclick="openJournal('five-origins')"><img src="assets/photos/journal/v54-origin-stories.jpg" alt="Indonesian highland coffee landscape" loading="lazy"><span><small>ORIGIN STORIES</small><b>Five Indonesian Coffee Origins You Should Try</b><em>READ STORY →</em></span></button>
-    <button type="button" class="journal-related-card" onclick="openJournal('brew-guide')"><img src="assets/photos/journal/v54-brew-guide.jpg" alt="Coffee brewing in a glass dripper" loading="lazy"><span><small>BREWING GUIDE</small><b>Finding the Right Brew for Your Bean</b><em>READ STORY →</em></span></button>
+    <button type="button" class="journal-related-card" onclick="openJournal('five-origins')"><img src="assets/photos/journal/indonesian-coffee-origins-hero.webp" alt="Indonesian highland coffee landscape" loading="lazy"><span><small>ORIGIN STORIES</small><b>Five Indonesian Coffee Origins You Should Try</b><em>READ STORY →</em></span></button>
+    <button type="button" class="journal-related-card" onclick="openJournal('brew-guide')"><img src="assets/photos/journal/brew-guide-hero.webp" alt="Coffee brewing in a glass dripper" loading="lazy"><span><small>BREWING GUIDE</small><b>Finding the Right Brew for Your Bean</b><em>READ STORY →</em></span></button>
    </div>
   </article>`;
 }
@@ -704,7 +705,7 @@ function fiveOriginsArticleMarkup(){
  return `
   <article class="journal-article journal-origins-article">
    <figure class="journal-cover">
-    <img src="assets/photos/journal/indonesian-coffee-origins-hero.webp" alt="Lanskap perkebunan kopi Indonesia di dataran tinggi saat matahari terbit" fetchpriority="high" onerror="this.onerror=null;this.src='assets/photos/journal/v54-origin-stories.jpg'">
+    <img src="assets/photos/journal/indonesian-coffee-origins-hero.webp" alt="Lanskap perkebunan kopi Indonesia di dataran tinggi saat matahari terbit" fetchpriority="high" onerror="this.onerror=null;this.src='assets/photos/journal/indonesian-coffee-origins-hero.webp'">
     <figcaption>Dari pegunungan Sumatera hingga perkebunan di kepulauan timur, setiap daerah menyimpan cerita kopi yang berbeda.</figcaption>
    </figure>
    <h2 class="journal-article-headline">Five Indonesian Coffee Origins You Should Try</h2>
@@ -789,7 +790,7 @@ function fiveOriginsArticleMarkup(){
       <li><strong>Tulis kesanmu sendiri.</strong> Tidak perlu langsung memakai istilah profesional. Catatan seperti “terasa seperti jeruk”, “lebih tebal”, atau “ada kesan rempah” sudah cukup untuk membangun preferensi pribadi.</li>
       <li><strong>Ulangi dengan proses berbeda.</strong> Jika tersedia, bandingkan washed dan natural dari daerah yang sama. Ini membantu memisahkan pengaruh origin dari pengaruh proses.</li>
      </ol>
-     <figure class="journal-inline-figure journal-inline-wide"><img src="assets/photos/journal/v54-brew-guide.jpg" alt="Proses menyeduh kopi menggunakan dripper pour-over" loading="lazy"><figcaption>Gunakan resep seduh yang konsisten agar perbedaan antar-origin lebih mudah diamati.</figcaption></figure>
+     <figure class="journal-inline-figure journal-inline-wide"><img src="assets/photos/journal/brew-guide-hero.webp" alt="Proses menyeduh kopi menggunakan dripper pour-over" loading="lazy"><figcaption>Gunakan resep seduh yang konsisten agar perbedaan antar-origin lebih mudah diamati.</figcaption></figure>
     </section>
 
     <section class="journal-article-section">
@@ -821,8 +822,8 @@ function fiveOriginsArticleMarkup(){
 
    <div class="journal-related">
     <div class="journal-related-heading"><span class="eyebrow">KEEP EXPLORING</span><h3>More from the Journal.</h3></div>
-    <button type="button" class="journal-related-card" onclick="openJournal('natural-washed')"><img src="assets/photos/journal/v54-natural-washed.jpg" alt="Buah kopi merah di antara daun hijau" loading="lazy"><span><small>COFFEE 101</small><b>Natural vs Washed: What’s the Difference?</b><em>READ STORY →</em></span></button>
-    <button type="button" class="journal-related-card" onclick="openJournal('brew-guide')"><img src="assets/photos/journal/v54-brew-guide.jpg" alt="Kopi diseduh dengan dripper" loading="lazy"><span><small>BREWING GUIDE</small><b>Finding the Right Brew for Your Bean</b><em>READ STORY →</em></span></button>
+    <button type="button" class="journal-related-card" onclick="openJournal('natural-washed')"><img src="assets/photos/journal/article-natural-washed/coffee-cherries-hero.webp" alt="Buah kopi merah di antara daun hijau" loading="lazy"><span><small>COFFEE 101</small><b>Natural vs Washed: What’s the Difference?</b><em>READ STORY →</em></span></button>
+    <button type="button" class="journal-related-card" onclick="openJournal('brew-guide')"><img src="assets/photos/journal/brew-guide-hero.webp" alt="Kopi diseduh dengan dripper" loading="lazy"><span><small>BREWING GUIDE</small><b>Finding the Right Brew for Your Bean</b><em>READ STORY →</em></span></button>
    </div>
   </article>`;
 }
@@ -945,8 +946,146 @@ function brewGuideArticleMarkup(){
     </div>
     <div class="journal-related">
      <div class="journal-related-heading"><span class="eyebrow">KEEP EXPLORING</span><h3>More from the Journal.</h3></div>
-     <button type="button" class="journal-related-card" onclick="openJournal('natural-washed')"><img src="assets/photos/journal/v54-natural-washed.jpg" alt="Buah kopi merah dan proses pengolahan kopi" loading="lazy"><span><small>COFFEE 101</small><b>Natural vs Washed: What’s the Difference?</b><em>READ STORY →</em></span></button>
-     <button type="button" class="journal-related-card" onclick="openJournal('five-origins')"><img src="assets/photos/journal/v54-origin-stories.jpg" alt="Lanskap dataran tinggi kopi Indonesia" loading="lazy"><span><small>ORIGIN STORIES</small><b>Five Indonesian Coffee Origins You Should Try</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('natural-washed')"><img src="assets/photos/journal/article-natural-washed/coffee-cherries-hero.webp" alt="Buah kopi merah dan proses pengolahan kopi" loading="lazy"><span><small>COFFEE 101</small><b>Natural vs Washed: What’s the Difference?</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('five-origins')"><img src="assets/photos/journal/indonesian-coffee-origins-hero.webp" alt="Lanskap dataran tinggi kopi Indonesia" loading="lazy"><span><small>ORIGIN STORIES</small><b>Five Indonesian Coffee Origins You Should Try</b><em>READ STORY →</em></span></button>
+    </div>
+   </div>
+  </article>`;
+}
+
+function roastArticleMarkup(){
+ return `
+  <article class="journal-article journal-roast-article">
+   <figure class="journal-cover journal-roast-cover">
+    <img src="assets/photos/journal/roasting-hero.webp" alt="Biji kopi sangrai keluar dari mesin drum roaster menuju cooling tray" fetchpriority="high" onerror="this.onerror=null;this.src='assets/photos/journal/v52-brew-guide.jpg'">
+    <figcaption>Roasting mengubah green coffee menjadi biji yang siap digiling dan diseduh — sekaligus membentuk aroma serta karakter rasa.</figcaption>
+   </figure>
+   <h2 class="journal-article-headline">The Art of Roasting: How Roast Level Shapes Your Coffee’s Flavor</h2>
+   <div class="journal-byline"><span class="journal-author-mark">K</span><strong>Kenangan Coffee Editorial</strong><span class="journal-byline-divider">·</span><time datetime="2026-11-26">26 November 2026</time><span class="journal-byline-divider">·</span><span>10 min read</span></div>
+   <p class="journal-standfirst">Dari biji hijau hingga menjadi secangkir kopi yang penuh karakter. Kenali seni sangrai dan bagaimana setiap tingkat roasting membentuk pengalaman rasa yang berbeda.</p>
+
+   <div class="journal-article-copy">
+    <div class="journal-roast-intro">
+     <h3>More Than Just Roasting Beans</h3>
+     <p>Pernahkah kamu bertanya-tanya mengapa dua cangkir kopi dapat menghadirkan aroma, rasa, dan karakter yang begitu berbeda? Salah satu jawabannya terletak pada proses penting yang sering kali tidak terlihat oleh penikmat kopi: <em>coffee roasting</em>. Di balik perubahan warna biji, ada rangkaian perubahan fisik dan kimia yang membantu membentuk identitas setiap cangkir.</p>
+    </div>
+    <figure class="journal-inline-figure journal-roast-cherry-banner">
+     <img src="assets/photos/journal/roast-cherries.webp" alt="Buah kopi matang berwarna merah di antara daun hijau pada perkebunan dataran tinggi" loading="lazy" onerror="this.onerror=null;this.src='assets/photos/journal/article-natural-washed/coffee-cherries-hero.webp'">
+     <figcaption>Perjalanan roasting dimulai jauh sebelum biji masuk mesin — dari buah kopi yang dipanen dan diproses dengan cermat.</figcaption>
+    </figure>
+
+    <section class="journal-article-section" id="roast-green-beans">
+     <div class="journal-section-heading"><span>01</span><div><span class="eyebrow">BEFORE THE ROAST</span><h3>The Journey of Green Coffee Beans</h3></div></div>
+     <div class="journal-roast-media-row">
+      <div>
+       <p>Sebelum disangrai, kopi hadir sebagai <strong>green coffee beans</strong> — biji kopi mentah yang telah dipisahkan dari buah dan dikeringkan melalui proses pascapanen. Biji ini belum memiliki aroma khas seperti kopi seduh yang biasa kita kenal. Potensi rasanya masih dipengaruhi oleh asal kebun, varietas, tingkat kematangan saat panen, dan metode pengolahan.</p>
+       <p>Setelah buah kopi dipanen, produsen dapat menggunakan proses Natural, Washed, Honey, atau metode lain yang sesuai dengan karakter lot dan kondisi setempat. Biji kemudian dikeringkan, disortir, dan disimpan sebelum memasuki tahap roasting. Setiap keputusan di tahap awal ini memberi konteks bagi roaster saat menyusun profil sangrai.</p>
+      </div>
+      <figure class="journal-inline-figure"><img src="assets/photos/journal/green-coffee-beans.webp" alt="Biji kopi hijau atau green coffee beans di dalam karung goni" loading="lazy" onerror="this.onerror=null;this.src='assets/photos/journal/roast-cherries.webp'"><figcaption>Green coffee beans menjadi bahan awal yang akan dikembangkan melalui panas.</figcaption></figure>
+     </div>
+     <div class="journal-roast-note"><strong>What the roaster looks at</strong><p>Origin, varietas, proses pascapanen, ukuran, kepadatan, dan kadar air membantu roaster memahami bahan baku. Tidak ada satu profil sangrai yang otomatis cocok untuk semua biji.</p></div>
+    </section>
+
+    <section class="journal-article-section" id="roast-process">
+     <div class="journal-section-heading"><span>02</span><div><span class="eyebrow">INSIDE THE ROASTING MACHINE</span><h3>Understanding the Roasting Process</h3></div></div>
+     <p>Roasting adalah proses pemanasan terkontrol. Selama biji menerima panas, kandungan air berkurang, warna berubah, struktur mengembang, dan reaksi kimia membentuk senyawa aroma serta rasa. Detail suhu dan durasi bergantung pada mesin, ukuran batch, karakter green coffee, dan profil yang dituju; karena itu, tahapan berikut adalah gambaran umum, bukan resep angka yang berlaku untuk semua roaster.</p>
+     <figure class="journal-inline-figure journal-roast-process-image"><img src="assets/photos/journal/roasting-drum-detail.webp" alt="Biji kopi bergerak di dalam drum mesin roasting" loading="lazy" onerror="this.onerror=null;this.src='assets/photos/journal/roasting-hero.webp'"><figcaption>Drum yang berputar membantu menggerakkan biji agar menerima panas secara lebih merata.</figcaption></figure>
+     <div class="journal-roast-stage-grid" aria-label="Tahapan umum roasting kopi">
+      <div><span>01</span><b>Drying Phase</b><small>Mengurangi kadar air dan mengubah warna biji dari hijau menuju kuning.</small></div>
+      <div><span>02</span><b>Browning Phase</b><small>Reaksi pencokelatan, termasuk Maillard reaction, membantu membangun warna dan aroma.</small></div>
+      <div><span>03</span><b>First Crack</b><small>Letupan yang terdengar saat struktur biji mengembang dan tekanan di dalamnya meningkat.</small></div>
+      <div><span>04</span><b>Development</b><small>Roaster mengatur perkembangan rasa setelah first crack hingga titik akhir sangrai.</small></div>
+      <div><span>05</span><b>Cooling</b><small>Biji segera didinginkan untuk menghentikan perkembangan panas lebih lanjut.</small></div>
+     </div>
+     <p><strong>First crack</strong> sering menjadi momen penting yang dikenali melalui suara letupan kecil. Namun, proses tidak selalu berhenti saat suara pertama terdengar. Roaster mengevaluasi warna, aroma, data waktu dan suhu, serta tujuan rasa sebelum menentukan kapan biji dikeluarkan dari mesin. Setelah itu, pendinginan yang cepat membantu menjaga titik sangrai yang sudah dipilih.</p>
+     <div class="journal-roast-note"><strong>A small detail that matters</strong><p>Waktu setelah first crack sering disebut <em>development time</em>. Perubahan singkat pada tahap ini dapat memengaruhi karakter akhir, sehingga roaster mengamati keseluruhan profil — bukan hanya satu angka atau satu suara.</p></div>
+    </section>
+
+    <section class="journal-article-section" id="roast-levels">
+     <div class="journal-section-heading"><span>03</span><div><span class="eyebrow">THREE ROAST EXPRESSIONS</span><h3>Light, Medium, and Dark Roast</h3></div></div>
+     <p>Istilah Light, Medium, dan Dark Roast membantu kita membayangkan tingkat perkembangan sangrai. Kategori ini bukan ukuran kualitas. Masing-masing dapat menghasilkan kopi yang menarik ketika profilnya sesuai dengan karakter biji dan tujuan roaster.</p>
+     <div class="journal-roast-level-grid">
+      <article class="journal-roast-level-card journal-roast-light"><span class="journal-roast-bean" aria-hidden="true"></span><span class="eyebrow">LIGHT ROAST</span><h4>Bringing Out the Origin</h4><p>Biasanya menampilkan warna lebih terang, karakter asal yang lebih mudah dikenali, serta kesan floral, fruity, atau citrus pada lot tertentu.</p><ul><li>Acidity dapat terasa lebih menonjol.</li><li>Body sering terasa lebih ringan.</li><li>Cocok untuk eksplorasi detail rasa.</li></ul></article>
+      <article class="journal-roast-level-card journal-roast-medium"><span class="journal-roast-bean" aria-hidden="true"></span><span class="eyebrow">MEDIUM ROAST</span><h4>Finding the Balance</h4><p>Menawarkan titik tengah antara karakter origin dan rasa hasil sangrai, dengan kemungkinan munculnya kesan manis, cokelat, karamel, atau kacang.</p><ul><li>Rasa dapat terasa lebih seimbang.</li><li>Body sering berada di tingkat sedang.</li><li>Fleksibel untuk berbagai metode seduh.</li></ul></article>
+      <article class="journal-roast-level-card journal-roast-dark"><span class="journal-roast-bean" aria-hidden="true"></span><span class="eyebrow">DARK ROAST</span><h4>Bold, Deep and Intense</h4><p>Karakter sangrai lebih dominan, dengan kesan roasted, dark chocolate, karamel gelap, atau bittersweet pada beberapa profil.</p><ul><li>Acidity sering terasa lebih rendah.</li><li>Body dapat terasa lebih penuh.</li><li>Perlu dijaga agar tidak menjadi pahit berlebihan.</li></ul></article>
+     </div>
+     <div class="journal-table-wrap" role="region" aria-label="Perbandingan tingkat sangrai kopi" tabindex="0">
+      <table class="journal-comparison-table journal-roast-comparison">
+       <thead><tr><th>Aspek</th><th>Light Roast</th><th>Medium Roast</th><th>Dark Roast</th></tr></thead>
+       <tbody>
+        <tr><th>Warna biji</th><td>Cokelat lebih terang</td><td>Cokelat sedang</td><td>Cokelat gelap</td></tr>
+        <tr><th>Karakter aroma</th><td>Sering floral atau fruity</td><td>Manis, cokelat, nutty</td><td>Roasted, karamel gelap</td></tr>
+        <tr><th>Acidity</th><td>Dapat terasa lebih jelas</td><td>Cenderung seimbang</td><td>Sering terasa lebih rendah</td></tr>
+        <tr><th>Body</th><td>Sering lebih ringan</td><td>Sedang hingga penuh</td><td>Dapat terasa lebih penuh</td></tr>
+        <tr><th>Karakter umum</th><td>Origin-forward</td><td>Balanced</td><td>Roast-forward</td></tr>
+       </tbody>
+      </table>
+     </div>
+     <p class="journal-table-note">Perbandingan ini bersifat umum. Hasil dapat berubah menurut biji, profil sangrai, ukuran gilingan, dan metode ekstraksi.</p>
+    </section>
+
+    <section class="journal-article-section" id="roast-flavour">
+     <div class="journal-section-heading"><span>04</span><div><span class="eyebrow">WHAT CHANGES IN THE CUP?</span><h3>How Roasting Shapes Coffee Flavor</h3></div></div>
+     <p>Roasting memengaruhi lebih dari sekadar warna. Panas mengubah komposisi kimia dan struktur biji sehingga dapat memengaruhi aroma, rasa, tekstur, dan bagaimana kopi diekstraksi ketika diseduh. Lima aspek berikut dapat menjadi panduan saat kamu mencicipi kopi.</p>
+     <div class="journal-roast-flavour-grid">
+      <div><span>01</span><b>Acidity</b><p>Kesan cerah atau segar yang dapat mengingatkan pada citrus, apel, atau buah beri. Profil sangrai yang lebih berkembang sering mengubah bagaimana keasaman dirasakan.</p></div>
+      <div><span>02</span><b>Sweetness</b><p>Persepsi manis dapat muncul sebagai kesan madu, gula merah, karamel, atau buah. Manis bukan berarti ada gula tambahan di dalam kopi.</p></div>
+      <div><span>03</span><b>Body</b><p>Sensasi tekstur ketika kopi berada di mulut. Tingkat sangrai, jenis biji, dan metode seduh sama-sama dapat memengaruhinya.</p></div>
+      <div><span>04</span><b>Aroma</b><p>Senyawa volatil yang terbentuk selama pemanasan menghasilkan aroma yang beragam, dari floral dan buah hingga cokelat dan roasted.</p></div>
+      <div><span>05</span><b>Aftertaste</b><p>Rasa yang tertinggal setelah kopi ditelan. Perhatikan apakah kesannya bersih, manis, cokelat, kering, atau terlalu pahit.</p></div>
+     </div>
+     <p>Hal penting yang perlu diingat: tingkat sangrai tidak bekerja sendirian. Bahan baku dan profil waktu–suhu berinteraksi satu sama lain. Dua kopi yang sama-sama disebut Medium Roast belum tentu memiliki rasa yang sama, dan dua batch dari biji yang sama pun dapat berbeda jika profil sangrainya berubah.</p>
+    </section>
+
+    <section class="journal-article-section" id="roast-your-preference">
+     <div class="journal-section-heading"><span>05</span><div><span class="eyebrow">FIND YOUR PREFERENCE</span><h3>Finding Your Perfect Roast</h3></div></div>
+     <p>Tidak ada satu roast level yang paling baik untuk semua orang. Pilihan terbaik adalah kopi yang sesuai dengan rasa yang kamu sukai, cara kamu menyeduhnya, dan pengalaman yang ingin kamu dapatkan.</p>
+     <div class="journal-roast-preference-grid">
+      <div><b>Mulai dari Light Roast jika…</b><ul><li>Kamu menyukai kesan fruity, floral, atau citrus.</li><li>Kamu ingin mengeksplorasi karakter origin.</li><li>Kamu menikmati kopi filter dengan rasa yang detail.</li></ul></div>
+      <div><b>Coba Medium Roast jika…</b><ul><li>Kamu mencari rasa yang relatif seimbang.</li><li>Kamu menyukai perpaduan manis, cokelat, dan nutty.</li><li>Kamu ingin mencoba beberapa metode seduh.</li></ul></div>
+      <div><b>Jelajahi Dark Roast jika…</b><ul><li>Kamu menyukai rasa roasted yang kuat.</li><li>Kamu mencari kesan dark chocolate dan bittersweet.</li><li>Kamu menikmati kopi yang intens atau dipadukan dengan susu.</li></ul></div>
+     </div>
+     <figure class="journal-inline-figure journal-roast-brew-image"><img src="assets/photos/journal/roast-brewing-cup.webp" alt="Secangkir kopi hasil seduhan dengan biji kopi sangrai di meja kayu" loading="lazy" onerror="this.onerror=null;this.src='assets/photos/journal/v52-brew-guide.jpg'"><figcaption>Bandingkan kopi dengan metode seduh yang sama untuk mengenali perbedaan profil secara lebih adil.</figcaption></figure>
+     <h4>Try a simple side-by-side tasting</h4>
+     <ol class="journal-number-list">
+      <li>Pilih kopi dari origin dan varietas yang sama, jika tersedia, dengan tiga tingkat sangrai berbeda.</li>
+      <li>Gunakan dosis, rasio air, suhu, gilingan, dan alat seduh yang dibuat sedekat mungkin.</li>
+      <li>Cicipi ketika kopi masih hangat, lalu ulangi saat suhunya turun. Catat aroma, acidity, sweetness, body, dan aftertaste.</li>
+      <li>Pilih profil yang paling kamu nikmati. Tidak perlu mencari jawaban yang paling benar — tujuannya mengenali seleramu sendiri.</li>
+     </ol>
+    </section>
+
+    <section class="journal-article-section" id="roast-freshness">
+     <div class="journal-section-heading"><span>06</span><div><span class="eyebrow">AFTER THE ROAST</span><h3>Preserving Coffee Freshness</h3></div></div>
+     <p>Setelah keluar dari mesin, biji kopi masih melepaskan gas, terutama karbon dioksida. Proses ini dikenal sebagai <em>degassing</em>. Karena itu, kopi yang baru disangrai terkadang membutuhkan waktu istirahat sebelum menghasilkan seduhan yang terasa lebih stabil. Durasi yang sesuai dapat berbeda menurut roast level, jenis biji, kemasan, dan metode penyeduhan.</p>
+     <div class="journal-roast-storage-list">
+      <div><span>01</span><p><strong>Simpan rapat.</strong> Gunakan kemasan kedap udara atau wadah khusus kopi yang bersih dan tertutup baik.</p></div>
+      <div><span>02</span><p><strong>Jauhkan dari panas dan cahaya.</strong> Letakkan kopi di tempat sejuk, kering, dan tidak terkena sinar matahari langsung.</p></div>
+      <div><span>03</span><p><strong>Pilih whole beans.</strong> Biji utuh umumnya lebih lambat kehilangan aroma dibandingkan kopi yang sudah digiling. Giling mendekati waktu seduh.</p></div>
+      <div><span>04</span><p><strong>Perhatikan tanggal roasting.</strong> Gunakan tanggal sangrai untuk memahami usia kopi dan merencanakan waktu terbaik untuk menikmatinya.</p></div>
+      <div><span>05</span><p><strong>Beli sesuai kebutuhan.</strong> Pilih ukuran kemasan yang realistis untuk kebiasaan minummu agar kopi tidak tersimpan terlalu lama setelah dibuka.</p></div>
+     </div>
+    </section>
+
+    <section class="journal-conclusion journal-roast-conclusion">
+     <span class="eyebrow">THE KENANGAN NOTE</span>
+     <h3>Every Roast Has Its Own Character.</h3>
+     <p>Light, Medium, dan Dark Roast bukanlah perlombaan untuk menentukan mana yang paling unggul. Ketiganya adalah pendekatan berbeda untuk mengembangkan potensi biji kopi. Dengan mengenali karakter masing-masing, kamu dapat memilih kopi yang terasa paling dekat dengan seleramu.</p>
+     <p>Di KENANGAN KOPI NUSANTARA, kami percaya setiap biji memiliki cerita — dari kebun tempat ia tumbuh, proses yang dilalui, hingga keputusan sang roaster. Temukan profil yang kamu sukai, seduh dengan cara yang tepat, dan nikmati perjalanan rasa di setiap cangkir.</p>
+     <a class="journal-roast-cta" href="#shop" onclick="closeJournal()">EXPLORE OUR ROASTED BEANS →</a>
+    </section>
+
+    <div class="journal-sources"><span class="eyebrow">RESEARCH & FURTHER READING</span>
+     <a href="https://www.eeca.govt.nz/assets/EECA-Resources/Co-funding/Sector-Decarb-Files/Technology-Scan-Coffee.pdf" target="_blank" rel="noopener">New Zealand Specialty Coffee Association & EECA · Technology Scan: Coffee Roasting Process (2024) ↗</a>
+     <a href="https://pure-oai.bham.ac.uk/ws/portalfiles/portal/134813977/Paper_Coffee_Bean_PEPT_May_21.pdf" target="_blank" rel="noopener">University of Birmingham · Coffee Bean Particle Motion in a Spouted Bed (2021) ↗</a>
+     <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11002029/" target="_blank" rel="noopener">The Effect of Roast Profiles on the Dynamics of Titratable Acidity During Coffee Roasting (2024) ↗</a>
+    </div>
+
+    <div class="journal-related">
+     <div class="journal-related-heading"><span class="eyebrow">KEEP EXPLORING</span><h3>More from the Journal.</h3></div>
+     <button type="button" class="journal-related-card" onclick="openJournal('natural-washed')"><img src="assets/photos/journal/article-natural-washed/coffee-cherries-hero.webp" alt="Buah kopi merah di antara daun hijau" loading="lazy"><span><small>COFFEE 101</small><b>Natural vs Washed: What’s the Difference?</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('five-origins')"><img src="assets/photos/journal/indonesian-coffee-origins-hero.webp" alt="Lanskap perkebunan kopi Indonesia" loading="lazy"><span><small>ORIGIN STORIES</small><b>Five Indonesian Coffee Origins You Should Try</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('brew-guide')"><img src="assets/photos/journal/brew-guide-hero.webp" alt="Kopi diseduh dengan dripper" loading="lazy"><span><small>BREWING GUIDE</small><b>Finding the Right Brew for Your Bean</b><em>READ STORY →</em></span></button>
     </div>
    </div>
   </article>`;
@@ -1038,8 +1177,9 @@ function openJournal(key){
  if(j.type==='long')content.innerHTML=naturalWashedArticleMarkup();
  else if(j.type==='origins')content.innerHTML=fiveOriginsArticleMarkup();
  else if(j.type==='brew')content.innerHTML=brewGuideArticleMarkup();
+ else if(j.type==='roast')content.innerHTML=roastArticleMarkup();
  else content.innerHTML=`<div class="journal-short-article"><h2 class="journal-article-headline">${esc(j.title)}</h2><p>${esc(j.body||'')}</p><p>Setiap biji kopi membawa cerita dari kebun, proses pascapanen, roasting, hingga cara kita menyeduhnya. Teruslah bereksplorasi, catat rasa yang kamu temukan, dan pilih metode yang paling sesuai dengan karakter kopi pilihanmu.</p></div>`;
- document.body.classList.toggle('journal-long-open',j.type==='long'||j.type==='origins'||j.type==='brew');
+ document.body.classList.toggle('journal-long-open',j.type==='long'||j.type==='origins'||j.type==='brew'||j.type==='roast');
  attachJournalEngagement(key);
  modal.classList.add('open');
  modal.setAttribute('aria-hidden','false');

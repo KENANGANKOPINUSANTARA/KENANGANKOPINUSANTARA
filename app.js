@@ -582,7 +582,8 @@ const JOURNAL_CONTENT={
  'five-origins':{eyebrow:'ORIGIN STORIES',title:'Five Indonesian Coffee Origins You Should Try',readtime:'11 MIN READ',type:'origins'},
  'brew-guide':{eyebrow:'BREWING GUIDE',title:'Finding the Right Brew for Your Bean',readtime:'6 MIN READ',type:'brew'},
  'coffee-roasting':{eyebrow:'COFFEE KNOWLEDGE',title:'The Art of Roasting: How Roast Level Shapes Your Coffee’s Flavor',readtime:'10 MIN READ',type:'roast'},
- 'coffee-tasting':{eyebrow:'COFFEE EDUCATION',title:'Understanding Coffee Tasting Notes: How to Taste and Describe Coffee',readtime:'12 MIN READ',type:'tasting'}
+ 'coffee-tasting':{eyebrow:'COFFEE EDUCATION',title:'Understanding Coffee Tasting Notes: How to Taste and Describe Coffee',readtime:'12 MIN READ',type:'tasting'},
+ 'farm-to-cup':{eyebrow:'BEHIND THE BEANS',title:'The People Behind Every Cup: From Farm to Cup',readtime:'12 MIN READ',type:'farm'}
 };
 
 function naturalWashedArticleMarkup(){
@@ -1275,6 +1276,120 @@ function readJournalStore(name,fallback){
 function writeJournalStore(name,value){try{localStorage.setItem(name,JSON.stringify(value));}catch(error){console.warn('Journal interaction could not be saved locally.',error);}}
 function getJournalLikes(){return readJournalStore('kn_journal_likes',[]);}
 function getJournalSaves(){return readJournalStore('kn_journal_saves',[]);}
+
+function farmToCupArticleMarkup(){
+ return `
+  <article class="journal-article journal-farm-article">
+   <figure class="journal-cover journal-farm-cover">
+    <img src="assets/photos/journal/article06-farm-to-cup-hero.webp" alt="Coffee farmer in a misty Indonesian highland plantation, inspecting coffee plants at sunrise" fetchpriority="high">
+    <figcaption>Behind every bean is a landscape, a livelihood, and the work of people who care for the crop.</figcaption>
+   </figure>
+   <h2 class="journal-article-headline">The People Behind Every Cup: From Farm to Cup</h2>
+   <div class="journal-byline"><span class="journal-author-mark">K</span><strong>Kenangan Coffee Editorial</strong><span class="journal-byline-divider">·</span><time datetime="2026-11-27">27 November 2026</time><span class="journal-byline-divider">·</span><span>12 min read</span></div>
+   <p class="journal-standfirst">Every cup tells a story. Discover the people, knowledge, and craftsmanship behind Indonesian coffee — from the first days in the farm to the final pour.</p>
+
+   <div class="journal-article-copy">
+    <div class="journal-farm-opening">
+     <div><span class="eyebrow">EVERY CUP HAS A STORY</span><p>Pernahkah kamu membayangkan berapa banyak tangan yang terlibat sebelum secangkir kopi sampai ke meja kamu? Di balik aroma dan rasa yang kita nikmati, terdapat perjalanan panjang yang melibatkan petani, pekerja panen, pengolah, quality controller, roaster, hingga barista. Setiap tahap memiliki peran penting yang saling terhubung.</p></div>
+     <blockquote class="journal-farm-quote"><span>“</span><p>Behind every bean, there are people. Behind every cup, there is a story worth remembering.</p></blockquote>
+    </div>
+
+    <div class="journal-farm-timeline" aria-label="Coffee journey from farm to cup">
+     <div class="journal-farm-timeline-intro"><span class="eyebrow">THE COFFEE JOURNEY</span><h3>From Farm to Cup</h3><p>Perjalanan kopi dari perkebunan hingga tersaji dalam cangkir.</p></div>
+     <div class="journal-farm-timeline-step"><span>♧</span><b>Farm</b><small>Merawat tanaman kopi</small></div>
+     <div class="journal-farm-timeline-step"><span>◉</span><b>Harvest</b><small>Memanen buah matang</small></div>
+     <div class="journal-farm-timeline-step"><span>◌</span><b>Processing</b><small>Mengolah dan mengeringkan</small></div>
+     <div class="journal-farm-timeline-step"><span>⌕</span><b>Quality</b><small>Menjaga mutu dan konsistensi</small></div>
+     <div class="journal-farm-timeline-step"><span>◆</span><b>Roasting</b><small>Mengembangkan karakter rasa</small></div>
+     <div class="journal-farm-timeline-step"><span>☕</span><b>Brewing</b><small>Menyajikan kopi untuk dinikmati</small></div>
+    </div>
+
+    <section class="journal-article-section" id="farm-cup-story">
+     <div class="journal-section-heading"><span>01</span><div><span class="eyebrow">THE BIGGER PICTURE</span><h3>Every Cup Has a Story</h3></div></div>
+     <p>Kopi yang kita nikmati tidak langsung berasal dari mesin espresso atau alat seduh di kedai. Sebelum menjadi roasted coffee beans, kopi melewati rangkaian kegiatan mulai dari budidaya, panen, pengolahan, pengumpulan, pemeriksaan kualitas, distribusi, hingga roasting dan penyeduhan.</p>
+     <p>Jalur setiap kopi dapat berbeda. Ada petani yang menjual hasil panen melalui pengumpul, kelompok tani, atau koperasi. Ada pula produsen yang bekerja sama dengan unit pengolahan, eksportir, roaster, atau pembeli secara langsung. Tidak ada satu jalur yang mewakili seluruh industri; susunannya bergantung pada wilayah, skala usaha, fasilitas, dan hubungan dagang.</p>
+     <div class="journal-farm-fact"><b>One product, many contributions</b><p>Petani, pekerja pascapanen, penguji mutu, roaster, distributor, dan barista tidak selalu berada dalam satu perusahaan. Namun, keputusan dan pekerjaan mereka bersama-sama memengaruhi perjalanan kopi hingga tiba di cangkir.</p></div>
+    </section>
+
+    <section class="journal-article-section" id="farm-cup-farmers">
+     <div class="journal-section-heading"><span>02</span><div><span class="eyebrow">WHERE IT BEGINS</span><h3>The Farmers Behind the Beans</h3></div></div>
+     <div class="journal-farm-feature">
+      <div class="journal-farm-feature-copy"><p>Perjalanan kopi dimulai dari petani. Mereka merawat tanaman, memperhatikan kesehatan pohon, mengelola lahan, dan menunggu buah berkembang hingga siap dipanen. Pekerjaan ini membutuhkan pengetahuan tentang tanaman sekaligus pemahaman terhadap kondisi kebun.</p><p>Cuaca, ketersediaan air, kesuburan tanah, gangguan hama, akses jalan, dan biaya produksi dapat memengaruhi kegiatan pertanian. Perubahan kondisi lingkungan juga dapat membuat hasil panen berbeda dari satu musim ke musim berikutnya.</p><p>Pengetahuan petani sering terbentuk dari pengalaman panjang, pembelajaran keluarga, pelatihan, dan pertukaran informasi dengan sesama produsen. Karena itu, petani bukan sekadar pemasok bahan baku, melainkan pengelola pengetahuan penting di awal rantai kopi.</p></div>
+      <figure class="journal-farm-photo"><img src="assets/photos/journal/article06-farmers.webp" alt="Coffee farmer tending coffee plants in a highland plantation" loading="lazy"><figcaption>Perawatan tanaman dan pengamatan kebun menjadi bagian dari pekerjaan petani sepanjang musim.</figcaption></figure>
+     </div>
+     <div class="journal-farm-note"><strong>What supports farmers?</strong><p>Akses terhadap informasi budidaya, pembiayaan yang sesuai, fasilitas pascapanen, infrastruktur, kerja sama kelompok, serta hubungan pasar yang transparan dapat membantu memperkuat usaha petani.</p></div>
+    </section>
+
+    <section class="journal-article-section" id="farm-cup-harvest">
+     <div class="journal-section-heading"><span>03</span><div><span class="eyebrow">THE MOMENT OF HARVEST</span><h3>The Art of Harvesting</h3></div></div>
+     <div class="journal-farm-feature journal-farm-feature-reverse">
+      <figure class="journal-farm-photo"><img src="assets/photos/journal/article06-harvest.webp" alt="Hands carefully selecting ripe red coffee cherries from a branch" loading="lazy"><figcaption>Pemetikan selektif membantu memisahkan buah yang telah matang dari buah yang masih berkembang.</figcaption></figure>
+      <div class="journal-farm-feature-copy"><p>Ketika buah kopi mencapai tingkat kematangan yang sesuai, proses panen dapat dimulai. Pada pemetikan selektif, pekerja memilih buah matang dan membiarkan buah yang belum siap untuk dipetik pada kesempatan berikutnya.</p><p>Ketelitian pada tahap ini membantu menghasilkan bahan baku yang lebih seragam. Jika buah dengan tingkat kematangan sangat berbeda tercampur tanpa pemilahan, pengolah dapat menghadapi tantangan dalam mengatur proses pascapanen dan menjaga konsistensi hasil.</p><p>Metode panen tidak selalu sama. Kondisi lahan, kemiringan kebun, jumlah tenaga kerja, varietas, dan kebutuhan produksi dapat memengaruhi apakah panen dilakukan secara selektif atau menggunakan pendekatan lain.</p></div>
+     </div>
+    </section>
+
+    <section class="journal-article-section" id="farm-cup-processing">
+     <div class="journal-section-heading"><span>04</span><div><span class="eyebrow">AFTER THE PICKING</span><h3>From Harvest to Processing</h3></div></div>
+     <div class="journal-farm-feature">
+      <div class="journal-farm-feature-copy"><p>Setelah dipanen, buah kopi perlu diproses agar bijinya dapat dipisahkan, dikeringkan, dan dipersiapkan menjadi green coffee beans. Pekerja pascapanen menjaga kebersihan bahan, memantau kondisi pengeringan, melakukan pembalikan bila diperlukan, serta memastikan kopi terlindung dari kontaminasi.</p><p>Metode Natural mengeringkan buah kopi dalam kondisi utuh sebelum kulit keringnya dilepaskan. Metode Washed memisahkan kulit dan daging buah lebih awal, kemudian mengelola sisa mucilage sebelum pengeringan. Honey Processing mempertahankan sebagian mucilage selama biji dikeringkan. Detail proses dapat bervariasi di setiap daerah dan fasilitas.</p></div>
+      <figure class="journal-farm-photo"><img src="assets/photos/journal/article06-processing.webp" alt="Coffee processing worker turning coffee on raised drying beds" loading="lazy"><figcaption>Pengeringan yang terkontrol membantu menyiapkan biji untuk tahap penyimpanan dan pengolahan berikutnya.</figcaption></figure>
+     </div>
+     <div class="journal-farm-method-grid">
+      <div><span>01</span><b>Natural</b><p>Buah dikeringkan utuh sebelum biji dipisahkan dari lapisan buah yang telah mengering.</p></div>
+      <div><span>02</span><b>Washed</b><p>Bagian buah dihilangkan lebih awal dan proses pencucian dilakukan sebelum pengeringan.</p></div>
+      <div><span>03</span><b>Honey</b><p>Sebagian mucilage dipertahankan pada biji selama proses pengeringan.</p></div>
+     </div>
+     <p class="journal-table-note">Metode pascapanen memerlukan pengendalian proses yang berbeda. Tidak ada metode yang otomatis menghasilkan kualitas terbaik tanpa memperhatikan bahan baku dan pelaksanaannya.</p>
+    </section>
+
+    <section class="journal-article-section" id="farm-cup-quality">
+     <div class="journal-section-heading"><span>05</span><div><span class="eyebrow">CONSISTENCY & CARE</span><h3>The Journey of Quality</h3></div></div>
+     <div class="journal-farm-feature journal-farm-feature-reverse">
+      <figure class="journal-farm-photo"><img src="assets/photos/journal/article06-quality-cupping.webp" alt="Coffee quality professional evaluating several cupping samples" loading="lazy"><figcaption>Cupping membantu tim mengevaluasi karakter aroma dan rasa dari sampel kopi.</figcaption></figure>
+      <div class="journal-farm-feature-copy"><p>Setelah pengeringan dan pengolahan, green coffee beans dapat melalui proses sortasi, grading, dan pemeriksaan kualitas. Pemeriksaan fisik dapat mencakup kadar air, kebersihan, ukuran, keseragaman, serta keberadaan cacat sesuai spesifikasi yang digunakan.</p><p>Untuk memahami karakter sensorik, sampel kopi dapat disiapkan dalam sesi cupping. Peserta mengevaluasi fragrance, aroma, flavor, aftertaste, acidity, sweetness, dan mouthfeel. Hasilnya membantu pembeli, roaster, serta tim mutu memahami lot sebelum mengambil keputusan berikutnya.</p><p>Traceability juga menjadi bagian penting. Informasi mengenai wilayah, produsen atau kelompok tani, lot, metode proses, dan riwayat penanganan dapat membantu pihak dalam rantai pasok menelusuri asal kopi secara lebih transparan.</p></div>
+     </div>
+     <div class="journal-farm-quality-strip"><div><b>Physical checks</b><span>Kondisi biji, kadar air, kebersihan, dan cacat.</span></div><div><b>Sensory evaluation</b><span>Fragrance, aroma, flavor, acidity, sweetness, dan mouthfeel.</span></div><div><b>Traceability</b><span>Informasi asal, lot, proses, dan riwayat penanganan.</span></div></div>
+    </section>
+
+    <section class="journal-article-section" id="farm-cup-roaster">
+     <div class="journal-section-heading"><span>06</span><div><span class="eyebrow">THE ROASTER'S CRAFT</span><h3>Turning Green Beans into Character</h3></div></div>
+     <div class="journal-farm-feature">
+      <div class="journal-farm-feature-copy"><p>Roaster menerima green coffee beans dan berusaha menemukan profil sangrai yang sesuai dengan karakter bahan baku serta tujuan rasa. Mereka mempertimbangkan origin, varietas, metode pascapanen, ukuran dan kepadatan biji, serta gaya seduh yang ingin didukung.</p><p>Selama roasting, roaster mengamati perubahan suhu, waktu, warna, aroma, suara first crack, dan perkembangan biji. Setelah batch selesai, hasilnya dapat dievaluasi melalui cupping atau penyeduhan. Jika belum sesuai tujuan, profil dapat disesuaikan pada batch berikutnya.</p><p>Keterampilan roaster bukan hanya menjalankan mesin. Mereka membaca bahan baku, membuat keputusan berdasarkan pengamatan, dan menjaga konsistensi agar potensi kopi dapat ditampilkan dengan baik.</p></div>
+      <figure class="journal-farm-photo"><img src="assets/photos/journal/article06-roaster.webp" alt="Coffee roaster inspecting roasted beans beside a drum roaster" loading="lazy"><figcaption>Roaster menghubungkan karakter green coffee dengan profil rasa yang ingin dikembangkan.</figcaption></figure>
+     </div>
+    </section>
+
+    <section class="journal-article-section" id="farm-cup-barista">
+     <div class="journal-section-heading"><span>07</span><div><span class="eyebrow">THE FINAL PREPARATION</span><h3>From Barista to Your Cup</h3></div></div>
+     <div class="journal-farm-feature journal-farm-feature-reverse">
+      <figure class="journal-farm-photo"><img src="assets/photos/journal/article06-barista.webp" alt="Barista carefully pouring hot water over ground coffee in a pour-over brewer" loading="lazy"><figcaption>Barista menerjemahkan karakter biji kopi menjadi pengalaman seduh yang dinikmati pelanggan.</figcaption></figure>
+      <div class="journal-farm-feature-copy"><p>Barista menjadi salah satu penghubung terakhir antara kopi dan pelanggan. Mereka perlu memahami biji yang digunakan, tingkat sangrai, metode seduh, serta preferensi orang yang akan menikmati minuman tersebut.</p><p>Ukuran gilingan, rasio kopi dan air, suhu air, waktu ekstraksi, dan teknik penyeduhan dapat memengaruhi hasil akhir. Barista mengatur variabel ini sesuai alat, jenis kopi, dan karakter rasa yang ingin ditonjolkan.</p><p>Selain keterampilan teknis, barista juga membantu pelanggan memahami origin, processing, tasting notes, serta cara menikmati kopi. Dengan komunikasi yang baik, pengalaman minum kopi dapat menjadi kesempatan untuk belajar dan menjelajah rasa.</p></div>
+     </div>
+    </section>
+
+    <section class="journal-article-section" id="farm-cup-community">
+     <div class="journal-section-heading"><span>08</span><div><span class="eyebrow">A SHARED RESPONSIBILITY</span><h3>More Than a Cup of Coffee</h3></div></div>
+     <figure class="journal-farm-final-photo"><img src="assets/photos/journal/article06-final-cup.webp" alt="A freshly brewed cup of coffee served on a ceramic saucer beside roasted coffee beans" loading="lazy"><figcaption>Secangkir kopi adalah hasil perjalanan panjang, pengetahuan, dan kerja banyak orang.</figcaption></figure>
+     <p>Setelah mengikuti perjalanan dari perkebunan hingga cangkir, kita dapat melihat bahwa setiap tahap saling berhubungan. Petani merawat tanaman, pekerja memilih buah, pengolah mengendalikan pascapanen, tim mutu mengevaluasi bahan, roaster mengembangkan karakter, dan barista menyajikan kopi kepada pelanggan.</p>
+     <p>Sebagai penikmat kopi, kita dapat menghargai perjalanan ini dengan mencari informasi asal kopi, memahami prosesnya, memilih usaha yang menyampaikan informasi secara jujur, mengurangi pemborosan, serta tetap ingin belajar. Dukungan terhadap ekosistem kopi juga dapat berarti menghargai kerja produsen dan pelaku usaha di sepanjang rantai pasok.</p>
+     <div class="journal-conclusion journal-farm-conclusion"><span class="eyebrow">THE KENANGAN NOTE</span><h3>Behind Every Bean, There Are People.</h3><p>Kopi bukan hanya tentang rasa, tetapi juga tentang manusia, proses, dan perjalanan yang menghubungkan kita dengan para pelakunya. Ketika kita memahami cerita di balik setiap cangkir, kita dapat menikmati kopi dengan rasa hormat dan apresiasi yang lebih dalam.</p><p><strong>Behind every bean, there are people. Behind every cup, there is a story worth remembering.</strong></p></div>
+    </section>
+
+    <div class="journal-sources"><span class="eyebrow">FURTHER READING & INDUSTRY REFERENCES</span>
+     <a href="https://www.fao.org/family-farming/detail/en/c/1759948/" target="_blank" rel="noopener">FAO · Coffee farmer training and quality improvement in East Java ↗</a>
+     <a href="https://www.intracen.org/resources/publications/the-coffee-guide-fourth-edition" target="_blank" rel="noopener">International Trade Centre · The Coffee Guide, Fourth Edition ↗</a>
+     <a href="https://sca.coffee/value-assessment/" target="_blank" rel="noopener">Specialty Coffee Association · Coffee Value Assessment ↗</a>
+    </div>
+    <div class="journal-related">
+     <div class="journal-related-heading"><span class="eyebrow">KEEP EXPLORING</span><h3>More from the Journal.</h3></div>
+     <button type="button" class="journal-related-card" onclick="openJournal('five-origins')"><img src="assets/photos/journal/indonesian-coffee-origins-hero.webp" alt="Indonesian coffee highland landscape" loading="lazy"><span><small>ORIGIN STORIES</small><b>Five Indonesian Coffee Origins You Should Try</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('coffee-roasting')"><img src="assets/photos/journal/roasting-hero.webp" alt="Coffee roasting beans in a roastery" loading="lazy"><span><small>COFFEE KNOWLEDGE</small><b>The Art of Roasting: How Roast Level Shapes Your Coffee’s Flavor</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('coffee-tasting')"><img src="assets/photos/journal/coffee-tasting-hero.webp" alt="Coffee tasting cupping bowls" loading="lazy"><span><small>COFFEE EDUCATION</small><b>Understanding Coffee Tasting Notes</b><em>READ STORY →</em></span></button>
+    </div>
+   </div>
+  </article>`;
+}
+
 function getJournalComments(){return readJournalStore('kn_journal_comments',{});}
 function journalEngagementMarkup(key){
  const likes=getJournalLikes();const saves=getJournalSaves();const comments=getJournalComments();
@@ -1357,8 +1472,9 @@ function openJournal(key){
  else if(j.type==='brew')content.innerHTML=brewGuideArticleMarkup();
  else if(j.type==='roast')content.innerHTML=roastArticleMarkup();
  else if(j.type==='tasting')content.innerHTML=coffeeTastingArticleMarkup();
+ else if(j.type==='farm')content.innerHTML=farmToCupArticleMarkup();
  else content.innerHTML=`<div class="journal-short-article"><h2 class="journal-article-headline">${esc(j.title)}</h2><p>${esc(j.body||'')}</p><p>Setiap biji kopi membawa cerita dari kebun, proses pascapanen, roasting, hingga cara kita menyeduhnya. Teruslah bereksplorasi, catat rasa yang kamu temukan, dan pilih metode yang paling sesuai dengan karakter kopi pilihanmu.</p></div>`;
- document.body.classList.toggle('journal-long-open',j.type==='long'||j.type==='origins'||j.type==='brew'||j.type==='roast'||j.type==='tasting');
+ document.body.classList.toggle('journal-long-open',j.type==='long'||j.type==='origins'||j.type==='brew'||j.type==='roast'||j.type==='tasting'||j.type==='farm');
  attachJournalEngagement(key);
  modal.classList.add('open');
  modal.setAttribute('aria-hidden','false');

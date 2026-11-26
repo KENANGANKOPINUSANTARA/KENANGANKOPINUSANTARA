@@ -583,7 +583,9 @@ const JOURNAL_CONTENT={
  'brew-guide':{eyebrow:'BREWING GUIDE',title:'Finding the Right Brew for Your Bean',readtime:'6 MIN READ',type:'brew'},
  'coffee-roasting':{eyebrow:'COFFEE KNOWLEDGE',title:'The Art of Roasting: How Roast Level Shapes Your Coffee’s Flavor',readtime:'10 MIN READ',type:'roast'},
  'coffee-tasting':{eyebrow:'COFFEE EDUCATION',title:'Understanding Coffee Tasting Notes: How to Taste and Describe Coffee',readtime:'12 MIN READ',type:'tasting'},
- 'farm-to-cup':{eyebrow:'BEHIND THE BEANS',title:'The People Behind Every Cup: From Farm to Cup',readtime:'12 MIN READ',type:'farm'}
+ 'farm-to-cup':{eyebrow:'BEHIND THE BEANS',title:'The People Behind Every Cup: From Farm to Cup',readtime:'12 MIN READ',type:'farm'},
+ 'coffee-sustainability':{eyebrow:'SUSTAINABILITY',title:'Coffee and Sustainability: Building a Better Future, One Cup at a Time',readtime:'11 MIN READ',type:'sustainability'},
+ 'arabica-robusta':{eyebrow:'COFFEE KNOWLEDGE',title:'Arabica vs Robusta: What’s the Difference?',readtime:'12 MIN READ',type:'species'}
 };
 
 function naturalWashedArticleMarkup(){
@@ -1457,6 +1459,171 @@ function postJournalComment(form){
 }
 
 let journalReturnFocus=null;
+
+function sustainabilityArticleMarkup(){
+ return `
+  <article class="journal-article journal-sustainability-article">
+   <figure class="journal-cover journal-sustainability-cover">
+    <img src="assets/photos/journal/article07-sustainability-hero.webp" alt="Coffee farmer working among coffee trees in a green Indonesian highland landscape" fetchpriority="high">
+    <figcaption>Sustainability in coffee is a shared journey, from the health of the land to the people and communities behind every harvest.</figcaption>
+   </figure>
+   <h2 class="journal-article-headline">Coffee and Sustainability: Building a Better Future, One Cup at a Time</h2>
+   <div class="journal-byline"><span class="journal-author-mark">K</span><strong>Kenangan Coffee Editorial</strong><span class="journal-byline-divider">·</span><time datetime="2026-11-27">27 November 2026</time><span class="journal-byline-divider">·</span><span>11 min read</span></div>
+   <p class="journal-standfirst">Understanding how coffee farming, responsible production, and conscious consumption can create a better future for people and the planet.</p>
+   <div class="journal-article-copy">
+    <div class="journal-sustainability-opening">
+     <blockquote><span>“</span><p>Kopi yang baik bukan hanya tentang rasa, tetapi juga tentang bagaimana ia ditanam, diolah, dan dijaga agar tetap lestari.</p></blockquote>
+     <p>Di balik setiap cangkir kopi, terdapat hubungan erat antara manusia, alam, dan masa depan. Tanaman kopi membutuhkan tanah yang sehat, air yang cukup, serta lingkungan yang mendukung. Pada saat yang sama, jutaan orang bekerja di sepanjang rantai nilai kopi — mulai dari petani hingga pelaku usaha yang menyiapkannya untuk dinikmati. Keberlanjutan berarti menjaga hubungan tersebut agar kegiatan hari ini tidak mengurangi kesempatan generasi berikutnya.</p>
+    </div>
+    <section class="journal-sustainability-pillars">
+     <span class="eyebrow">FOUR PILLARS OF SUSTAINABLE COFFEE</span><h3>Empat Pilar Kopi Berkelanjutan</h3>
+     <div class="journal-sustainability-pillar-grid">
+      <div><span>♧</span><b>Lingkungan</b><small>Environmental</small><p>Menjaga kesuburan tanah, konservasi air, dan keanekaragaman hayati di sekitar perkebunan.</p></div>
+      <div><span>♙</span><b>Kesejahteraan Petani</b><small>Farmer Livelihoods</small><p>Mendukung pendapatan yang layak, akses pengetahuan, pelatihan, dan kapasitas produsen.</p></div>
+      <div><span>⚙</span><b>Produksi Bertanggung Jawab</b><small>Responsible Production</small><p>Menggunakan sumber daya secara efisien, menjaga kualitas, dan mengelola limbah dengan tepat.</p></div>
+      <div><span>♧</span><b>Komunitas Tangguh</b><small>Resilient Communities</small><p>Membangun kerja sama lokal yang inklusif dan lebih siap menghadapi perubahan.</p></div>
+     </div>
+    </section>
+    <section class="journal-article-section">
+     <div class="journal-section-heading"><span>01</span><div><span class="eyebrow">WHY IT MATTERS</span><h3>Why Sustainability Matters in Coffee</h3></div></div>
+     <p>Keberlanjutan bukan sekadar tren pemasaran. Dalam industri kopi, konsep ini mencakup dimensi lingkungan, sosial, dan ekonomi yang saling berkaitan. Praktik pertanian yang menjaga tanah akan sulit bertahan jika petani tidak memiliki pendapatan yang memadai. Sebaliknya, bisnis yang hanya mengejar hasil jangka pendek dapat menghadapi risiko ketika sumber daya alam dan hubungan pemasok tidak dikelola dengan baik.</p>
+     <p>Karena itu, keberlanjutan perlu dipahami sebagai pendekatan jangka panjang: menjaga sumber daya, memperkuat pelaku di rantai pasok, dan membangun kegiatan usaha yang tetap layak secara ekonomi.</p>
+    </section>
+    <section class="journal-article-section journal-sustainability-feature">
+     <figure class="journal-farm-photo"><img src="assets/photos/journal/article07-agroforestry.webp" alt="Lanskap perkebunan kopi dengan pepohonan penaung dan vegetasi hijau" loading="lazy"><figcaption>Vegetasi dan pohon penaung dapat menjadi bagian dari sistem kebun kopi yang lebih beragam.</figcaption></figure>
+     <div><div class="journal-section-heading"><span>02</span><div><span class="eyebrow">COFFEE FARMING</span><h3>Coffee Farming and Environmental Protection</h3></div></div>
+      <p>Perkebunan kopi bergantung pada kondisi tanah, air, iklim, dan ekosistem di sekitarnya. Salah satu pendekatan yang dapat diterapkan sesuai kondisi lokal adalah agroforestry, yaitu mengintegrasikan tanaman kopi dengan pohon atau vegetasi lain. Sistem ini dapat membantu menciptakan naungan, menjaga struktur lahan, dan mendukung habitat bagi organisme.</p>
+      <p>Pengelolaan tanah juga penting. Tanaman penutup tanah, pengendalian erosi, pemanfaatan bahan organik yang matang, dan pemupukan sesuai kebutuhan dapat membantu menjaga kesuburan. Tidak ada satu pola kebun yang cocok untuk semua wilayah; jenis pohon penaung, kerapatan tanaman, dan kebutuhan air perlu disesuaikan dengan kondisi setempat.</p>
+     </div>
+    </section>
+    <section class="journal-article-section journal-sustainability-feature journal-sustainability-feature-reverse">
+     <figure class="journal-farm-photo"><img src="assets/photos/journal/article07-community.webp" alt="Petani kopi di perkebunan hijau" loading="lazy"><figcaption>Pengetahuan lokal dan kerja sama menjadi bagian dari kekuatan komunitas produsen.</figcaption></figure>
+     <div><div class="journal-section-heading"><span>03</span><div><span class="eyebrow">PEOPLE & COMMUNITIES</span><h3>Supporting Coffee Farmers and Communities</h3></div></div>
+      <p>Keberlanjutan harus memperhatikan orang-orang yang bekerja di balik kopi. Petani menghadapi ketidakpastian hasil panen, perubahan harga, biaya produksi, dan akses pasar yang tidak selalu mudah. Hubungan perdagangan yang transparan, informasi harga dan kualitas yang jelas, serta kesepakatan pembelian yang dapat dipahami membantu membangun kepercayaan antara produsen dan pembeli.</p>
+      <p>Kelompok tani dan koperasi juga dapat memperluas akses terhadap pelatihan, fasilitas pengolahan bersama, pengetahuan pascapanen, dan jaringan pasar. Dukungan tersebut tidak otomatis menyelesaikan semua tantangan, tetapi dapat memperkuat kemampuan petani untuk mengambil keputusan dan mengembangkan usaha.</p>
+     </div>
+    </section>
+    <section class="journal-article-section journal-sustainability-feature">
+     <figure class="journal-farm-photo"><img src="assets/photos/journal/article07-processing.webp" alt="Fasilitas pengolahan kopi dengan air yang mengalir pada saluran pencucian" loading="lazy"><figcaption>Penggunaan air dalam pengolahan perlu diukur dan dikelola agar tidak membebani sumber air sekitar.</figcaption></figure>
+     <div><div class="journal-section-heading"><span>04</span><div><span class="eyebrow">RESPONSIBLE PROCESSING</span><h3>Responsible Coffee Processing</h3></div></div>
+      <p>Pengolahan pascapanen melibatkan air, energi, tenaga kerja, dan peralatan. Kebutuhan sumber daya berbeda antar metode dan fasilitas. Pada proses washed, misalnya, air dapat digunakan untuk pemisahan kulit, pencucian, atau pengelolaan mucilage. Oleh sebab itu, fasilitas pengolahan perlu mengukur penggunaan air dan menangani air buangan dengan benar sebelum dilepas ke lingkungan.</p>
+      <p>Efisiensi juga dapat ditingkatkan melalui perawatan mesin, perencanaan alur kerja, dan pengeringan yang sesuai dengan cuaca serta karakter lot. Tujuannya bukan hanya mengurangi penggunaan sumber daya, tetapi menjaga kualitas produk selama proses berlangsung.</p>
+     </div>
+    </section>
+    <section class="journal-article-section journal-sustainability-feature journal-sustainability-feature-reverse">
+     <figure class="journal-farm-photo"><img src="assets/photos/journal/article07-compost.webp" alt="Kompos dari hasil samping pengolahan kopi untuk pemanfaatan bahan organik" loading="lazy"><figcaption>Hasil samping kopi dapat menjadi sumber daya apabila diolah dan digunakan secara tepat.</figcaption></figure>
+     <div><div class="journal-section-heading"><span>05</span><div><span class="eyebrow">CIRCULAR COFFEE</span><h3>Water, Energy, and Waste Management</h3></div></div>
+      <p>Kegiatan perkebunan dan pascapanen menghasilkan bahan sisa seperti kulit buah, pulp, husk, mucilage, serta ampas kopi dari proses penyeduhan. Sebagian bahan organik dapat diolah menjadi kompos atau dimanfaatkan dalam aplikasi lain setelah proses yang sesuai. Ampas kopi pun dapat menjadi bahan organik untuk pengomposan, tetapi perlu memperhatikan kadar air, pencampuran, dan kematangan kompos.</p>
+      <p>Konsep circular economy mendorong pelaku usaha mengurangi limbah, menggunakan kembali sumber daya, dan mencari cara pemanfaatan hasil samping. Setiap pilihan perlu mempertimbangkan keamanan, biaya, skala fasilitas, dan manfaat lingkungannya; tidak semua limbah dapat langsung digunakan kembali tanpa pengolahan.</p>
+     </div>
+    </section>
+    <section class="journal-article-section">
+     <div class="journal-section-heading"><span>06</span><div><span class="eyebrow">CLIMATE RESILIENCE</span><h3>Climate Change and the Future of Coffee</h3></div></div>
+     <p>Perubahan suhu, pola hujan, ketersediaan air, dan tekanan hama dapat memengaruhi kesesuaian wilayah budidaya serta produktivitas tanaman. Petani dapat menghadapi risiko ketika musim berbunga dan panen menjadi kurang dapat diprediksi. Dampaknya tidak seragam; setiap daerah memiliki kondisi geografis, varietas, dan kemampuan adaptasi yang berbeda.</p>
+     <p>Upaya membangun ketahanan dapat mencakup diversifikasi tanaman, pengelolaan air, pemilihan varietas yang sesuai, pemeliharaan vegetasi, pemantauan hama, serta akses terhadap informasi iklim dan pendampingan teknis. Tidak ada solusi tunggal, sehingga strategi perlu dirancang bersama petani dan disesuaikan dengan kondisi kebun.</p>
+    </section>
+    <section class="journal-article-section">
+     <div class="journal-section-heading"><span>07</span><div><span class="eyebrow">SHARED RESPONSIBILITY</span><h3>The Role of Coffee Businesses and Consumers</h3></div></div>
+     <p>Roaster, kedai kopi, dan merek dapat berkontribusi melalui hubungan pemasok yang transparan, informasi asal yang dapat ditelusuri, pengukuran penggunaan energi dan air, pengelolaan kemasan, serta klaim keberlanjutan yang jujur dan dapat dibuktikan. Konsumen dapat mulai dari tindakan yang sederhana: menyimpan kopi dengan baik agar tidak terbuang, membeli sesuai kebutuhan, dan mencari informasi produk ketika tersedia.</p>
+     <div class="journal-sustainability-actions"><div><b>Untuk pelaku usaha</b><p>Bangun hubungan pemasok yang jelas, ukur penggunaan sumber daya, dan kelola limbah operasional.</p></div><div><b>Untuk konsumen</b><p>Pilih produk dengan informasi yang transparan, seduh secukupnya, dan kurangi sampah sekali pakai.</p></div><div><b>Untuk komunitas</b><p>Berbagi pengetahuan, mendukung inisiatif lokal, dan mengembangkan praktik sesuai kondisi setempat.</p></div></div>
+    </section>
+    <section class="journal-article-section">
+     <div class="journal-section-heading"><span>08</span><div><span class="eyebrow">MEASURING PROGRESS</span><h3>Building a More Sustainable Coffee Future</h3></div></div>
+     <p>Komitmen akan lebih bermakna jika kemajuannya dapat diamati. Produsen dan pelaku usaha dapat menetapkan indikator sesuai prioritas, misalnya volume air yang digunakan per proses, jumlah limbah organik yang dikelola, konsumsi energi, penerapan konservasi tanah, akses pelatihan petani, atau transparansi informasi pemasok.</p>
+     <p>Pengukuran membantu melihat apa yang berhasil, apa yang perlu diperbaiki, dan apakah sebuah program memberi manfaat yang nyata. Langkah kecil yang konsisten dan dievaluasi lebih kuat daripada janji besar yang tidak didukung bukti.</p>
+    </section>
+    <div class="journal-sustainability-timeline"><span class="eyebrow">FROM FARM TO FUTURE</span><h3>Perjalanan Menuju Kopi yang Lebih Berkelanjutan</h3><div><span>♧<b>Kebun lestari</b></span><i>→</i><span>♢<b>Pengolahan efisien</b></span><i>→</i><span>♻<b>Pemanfaatan limbah</b></span><i>→</i><span>♙<b>Petani berdaya</b></span><i>→</i><span>☕<b>Konsumsi sadar</b></span></div></div>
+    <div class="journal-sustainability-conclusion"><strong>Satu cangkir, banyak dampak baik.</strong><p>Keberlanjutan kopi bukan tanggung jawab satu pihak. Ia tumbuh melalui pilihan, kerja sama, dan kepedulian dari kebun hingga cangkir.</p></div>
+    <div class="journal-related"><div class="journal-related-heading"><span class="eyebrow">KEEP EXPLORING</span><h3>More from the Journal.</h3></div>
+     <button type="button" class="journal-related-card" onclick="openJournal('farm-to-cup')"><img src="assets/photos/journal/article06-farm-to-cup-hero.webp" alt="Coffee farmer in an Indonesian highland plantation" loading="lazy"><span><small>BEHIND THE BEANS</small><b>The People Behind Every Cup</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('natural-washed')"><img src="assets/photos/journal/article-natural-washed/coffee-cherries-hero.webp" alt="Coffee cherries" loading="lazy"><span><small>COFFEE 101</small><b>Natural vs Washed</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('coffee-roasting')"><img src="assets/photos/journal/roasting-hero.webp" alt="Roasted coffee beans" loading="lazy"><span><small>COFFEE KNOWLEDGE</small><b>The Art of Roasting</b><em>READ STORY →</em></span></button>
+    </div>
+    <div class="journal-editorial-sources"><b>Further reading</b><a href="https://www.fao.org/family-farming/detail/en/c/1708803/" target="_blank" rel="noopener">FAO — How coffee value chains foster climate-resilient livelihoods ↗</a><a href="https://www.undp.org/vietnam/publications/handbook-circular-economy-models-coffee-production" target="_blank" rel="noopener">UNDP — Handbook on Circular Economy Models in Coffee Production ↗</a><a href="https://www.intracen.org/sites/default/files/uploadedFiles/intracenorg/Content/Publications/ITC_Coffee_4th_Report_20210930_web_pages.pdf" target="_blank" rel="noopener">ITC — The Coffee Guide, Fourth Edition ↗</a></div>
+   </div>
+  </article>`;
+}
+
+function arabicaRobustaArticleMarkup(){
+ return `
+  <article class="journal-article journal-species-article">
+   <figure class="journal-cover journal-species-cover">
+    <img src="assets/photos/journal/article08-arabica-robusta-hero.webp" alt="Two bowls of roasted coffee beans representing Arabica and Robusta" fetchpriority="high">
+    <figcaption>Two commercially important coffee species, each with its own growing needs, chemistry, and cup possibilities.</figcaption>
+   </figure>
+   <h2 class="journal-article-headline">Arabica vs Robusta: What’s the Difference?</h2>
+   <div class="journal-byline"><span class="journal-author-mark">K</span><strong>Kenangan Coffee Editorial</strong><span class="journal-byline-divider">·</span><time datetime="2026-11-27">27 November 2026</time><span class="journal-byline-divider">·</span><span>12 min read</span></div>
+   <p class="journal-standfirst">Two coffee species, two unique characters. Discover the differences in origin, cultivation, flavor, caffeine, and brewing experience — then find the cup that suits your taste.</p>
+   <div class="journal-article-copy">
+    <div class="journal-species-opening"><p>Ketika memilih kopi, kita sering menemukan dua nama yang paling dikenal: Arabika dan Robusta. Keduanya berasal dari spesies tanaman yang berbeda dan memiliki kebutuhan tumbuh, komposisi biji, serta kecenderungan karakter rasa yang tidak sama. Memahami perbedaan ini membantu kita membaca informasi pada kemasan dan memilih kopi dengan lebih sadar.</p><blockquote>“Arabika dan Robusta bukan soal mana yang lebih baik, tetapi tentang karakter yang berbeda dan cara terbaik menikmatinya.”</blockquote></div>
+    <section class="journal-species-glance"><span class="eyebrow">ARABICA VS ROBUSTA AT A GLANCE</span><h3>Perbandingan Singkat Arabika dan Robusta</h3>
+     <div class="journal-species-table-wrap"><table class="journal-species-table"><thead><tr><th>Aspek</th><th>Arabika <em>Coffea arabica</em></th><th>Robusta <em>Coffea canephora</em></th></tr></thead><tbody>
+      <tr><th>Asal</th><td>Ethiopia</td><td>Afrika Barat dan Tengah</td></tr>
+      <tr><th>Ketinggian referensi</th><td>700–2.200 mdpl</td><td>0–900 mdpl; dapat tumbuh lebih tinggi pada kondisi tertentu</td></tr>
+      <tr><th>Suhu ideal referensi</th><td>16–24°C</td><td>21–30°C</td></tr>
+      <tr><th>Bentuk biji</th><td>Umumnya lebih oval, garis tengah melengkung</td><td>Cenderung lebih bulat, garis tengah relatif lurus</td></tr>
+      <tr><th>Kafein pada green bean</th><td>0,8–1,7%</td><td>1,5–2,5%</td></tr>
+      <tr><th>Kecenderungan rasa</th><td>Beragam; sering fruity, floral, dan acidity lebih terasa</td><td>Sering bold, earthy, nutty, dan body kuat</td></tr>
+     </tbody></table></div>
+     <p class="journal-table-note">Rentang ini adalah panduan umum dari ITC, bukan batas mutlak. Karakter aktual dipengaruhi varietas, lingkungan, pengolahan, roasting, dan metode penyeduhan. Kadar kafein di atas merujuk pada biji kopi, bukan takaran langsung dalam satu cangkir.</p>
+    </section>
+    <section class="journal-article-section">
+     <div class="journal-section-heading"><span>01</span><div><span class="eyebrow">TWO SPECIES, ONE COFFEE WORLD</span><h3>Getting to Know Arabica and Robusta</h3></div></div>
+     <p>Arabika adalah spesies <em>Coffea arabica</em>, yang asal-usulnya berkaitan dengan Ethiopia. Robusta merupakan nama dagang yang luas digunakan untuk <em>Coffea canephora</em>, spesies yang berasal dari wilayah Afrika Barat dan Tengah. Keduanya termasuk genus Coffea, tetapi memiliki perbedaan biologis yang memengaruhi pertumbuhan dan komposisi biji.</p>
+     <p>Di Indonesia, Arabika banyak ditemukan di wilayah dataran tinggi seperti Gayo, Kintamani, Toraja, Flores, dan sejumlah kawasan pegunungan di Jawa. Robusta dibudidayakan di berbagai daerah, termasuk Lampung, Sumatera Selatan, Bengkulu, dan beberapa wilayah Jawa. Nama daerah saja tidak cukup untuk memprediksi rasa; varietas, pengelolaan kebun, dan pascapanen tetap berperan besar.</p>
+    </section>
+    <section class="journal-article-section journal-species-feature">
+     <figure class="journal-farm-photo"><img src="assets/photos/journal/article08-arabica-highland.webp" alt="Lanskap perkebunan kopi di dataran tinggi yang berkabut" loading="lazy"><figcaption>Arabika sering dibudidayakan di wilayah yang lebih sejuk dan lebih tinggi.</figcaption></figure>
+     <div><div class="journal-section-heading"><span>02</span><div><span class="eyebrow">ORIGIN & GROWING CONDITIONS</span><h3>Where Do They Grow?</h3></div></div>
+      <p>Arabika umumnya dikaitkan dengan lingkungan lebih sejuk dan dataran yang lebih tinggi. Robusta relatif lebih toleran terhadap suhu yang lebih hangat dan dapat tumbuh pada rentang lingkungan yang lebih luas. Rentang ketinggian dan suhu pada tabel merupakan angka acuan, bukan aturan yang harus dipakai tanpa melihat lintang geografis, varietas, curah hujan, tanah, naungan, dan pengelolaan kebun.</p>
+      <p>Ketahanan relatif Robusta terhadap beberapa tekanan lingkungan tidak berarti tanaman ini kebal terhadap perubahan iklim, kekeringan, hama, atau penyakit. Kedua spesies tetap membutuhkan pengelolaan yang tepat dan pemilihan lokasi yang sesuai.</p>
+     </div>
+    </section>
+    <section class="journal-article-section journal-species-feature journal-species-feature-reverse">
+     <figure class="journal-farm-photo"><img src="assets/photos/journal/article08-robusta-lowland.webp" alt="Perkebunan kopi hijau di wilayah tropis yang lebih hangat" loading="lazy"><figcaption>Robusta relatif lebih adaptif di sejumlah lingkungan yang lebih hangat dan rendah.</figcaption></figure>
+     <div><div class="journal-section-heading"><span>03</span><div><span class="eyebrow">BEAN CHARACTERISTICS</span><h3>Physical Differences Between the Beans</h3></div></div>
+      <p>Biji Arabika umumnya tampak lebih oval dan memanjang, dengan garis tengah yang sering melengkung seperti huruf S. Robusta cenderung lebih bulat dan garis tengahnya relatif lurus. Ciri ini dapat membantu pengamatan awal, tetapi tidak cukup untuk mengidentifikasi spesies secara pasti.</p>
+      <p>Ukuran, warna, dan bentuk green beans juga dipengaruhi varietas, kondisi tumbuh, tingkat kematangan, kadar air, pengolahan, serta sortasi. Pembeli dan roaster biasanya menggabungkan inspeksi fisik dengan dokumentasi lot dan evaluasi kualitas lainnya.</p>
+     </div>
+    </section>
+    <section class="journal-article-section">
+     <div class="journal-section-heading"><span>04</span><div><span class="eyebrow">CAFFEINE CONTENT</span><h3>Why Is Robusta Usually Higher in Caffeine?</h3></div></div>
+     <p>Secara umum, green coffee beans dari <em>Coffea canephora</em> memiliki kandungan kafein lebih tinggi dibandingkan <em>Coffea arabica</em>. ITC mencantumkan rentang referensi 0,8–1,7% untuk Arabika dan 1,5–2,5% untuk Robusta. Rentang tersebut dapat saling berdekatan dan variasi dapat terjadi antar varietas maupun sampel.</p>
+     <div class="journal-caffeine-compare"><div><span>ARABICA</span><strong>0,8–1,7%</strong><small>kafein pada green bean</small></div><div><span>ROBUSTA</span><strong>1,5–2,5%</strong><small>kafein pada green bean</small></div></div>
+     <p>Angka persentase pada biji tidak sama dengan jumlah miligram kafein dalam satu porsi minuman. Kafein yang masuk ke cangkir bergantung pada dosis kopi, rasio air, tingkat ekstraksi, ukuran porsi, dan komposisi blend. Karena itu, jangan menganggap setiap cangkir Robusta pasti lebih tinggi kafeinnya daripada setiap cangkir Arabika.</p>
+    </section>
+    <section class="journal-article-section journal-species-flavor">
+     <div class="journal-section-heading"><span>05</span><div><span class="eyebrow">FLAVOR & AROMA</span><h3>How Do They Taste?</h3></div></div>
+     <p>Arabika sering diasosiasikan dengan rentang aroma dan rasa yang luas, termasuk fruity, floral, citrus, caramel, dan chocolate. Pada beberapa lot, acidity dapat terasa lebih ekspresif. Robusta sering memiliki karakter lebih bold, earthy, woody, nutty, dan body yang terasa penuh. Ini adalah kecenderungan umum, bukan aturan bahwa semua kopi dari spesies yang sama akan memiliki rasa serupa.</p>
+     <figure class="journal-species-cup-photo"><img src="assets/photos/journal/article08-cup-profiles.webp" alt="Secangkir espresso dengan crema di atas meja kayu" loading="lazy"><figcaption>Pengalaman rasa dipengaruhi spesies, varietas, origin, pengolahan, roasting, dan ekstraksi.</figcaption></figure>
+     <div class="journal-species-flavor-grid"><div><b>Arabika</b><ul><li>Profil aroma sering lebih beragam</li><li>Fruity atau floral pada sebagian lot</li><li>Acidity dapat terasa lebih jelas</li></ul></div><div><b>Robusta</b><ul><li>Sering memberi kesan bold dan intens</li><li>Earthy, nutty, atau roasted pada sebagian lot</li><li>Body dapat terasa lebih penuh</li></ul></div></div>
+    </section>
+    <section class="journal-article-section">
+     <div class="journal-section-heading"><span>06</span><div><span class="eyebrow">ROASTING & BREWING</span><h3>How Are They Used?</h3></div></div>
+     <p>Arabika banyak dipakai untuk single-origin dan specialty coffee, baik dalam metode filter maupun espresso. Robusta digunakan dalam berbagai produk komersial, kopi instan, dan espresso blend. Namun, Robusta berkualitas juga dapat dinikmati sebagai single origin; hasil akhirnya bergantung pada pemilihan bahan baku dan penanganan yang baik.</p>
+     <p>Dalam espresso blend, roaster dapat menggabungkan Arabika dan Robusta untuk mengejar profil tertentu. Arabika mungkin memberi kompleksitas aroma, sementara Robusta dapat menambah intensitas, body, dan karakter crema. Tidak ada rasio campuran universal; komposisi perlu diuji melalui roasting dan cupping.</p>
+    </section>
+    <section class="journal-article-section">
+     <div class="journal-section-heading"><span>07</span><div><span class="eyebrow">FIND YOUR PREFERENCE</span><h3>Choosing the Right Coffee for Your Taste</h3></div></div>
+     <p>Jika kamu menyukai eksplorasi rasa yang beragam, cobalah Arabika dari beberapa origin dan proses pascapanen. Jika kamu lebih menyukai karakter yang bold dan body yang penuh, Robusta dapat menjadi pilihan yang menarik. Jika ingin menemukan titik tengah, cobalah blend yang dirancang dengan profil rasa tertentu.</p>
+     <p>Cara terbaik untuk memahami perbedaannya adalah mencicipi kedua spesies secara berdampingan. Gunakan dosis, metode, dan parameter seduh yang sebanding, lalu catat aroma, acidity, sweetness, body, flavor, dan aftertaste. Jangan mencari jawaban yang benar — cari karakter yang paling kamu nikmati.</p>
+    </section>
+    <section class="journal-article-section">
+     <div class="journal-section-heading"><span>08</span><div><span class="eyebrow">APPRECIATING BOTH</span><h3>Two Species, One Rich Coffee Culture</h3></div></div>
+     <p>Arabika dan Robusta memiliki peran berbeda namun sama-sama penting dalam industri kopi. Keduanya menyediakan pilihan bagi petani, roaster, bisnis, dan konsumen dengan kebutuhan yang beragam. Memahami perbedaan bukan berarti harus mengunggulkan satu spesies, melainkan menghargai karakter dan potensi masing-masing.</p>
+     <p>Di Indonesia, keberadaan kedua spesies turut memperkaya keragaman kopi Nusantara. Setiap wilayah, varietas, dan metode pengolahan dapat menghadirkan pengalaman yang berbeda. Semakin kita mengenal karakter bahan baku, semakin mudah kita memilih kopi yang sesuai dengan selera dan cara seduh yang kita sukai.</p>
+    </section>
+    <div class="journal-species-choice"><span class="eyebrow">THE RIGHT COFFEE FOR YOU</span><h3>Temukan Karakter Kopi yang Kamu Suka</h3><p>Tidak ada pemenang mutlak antara Arabika dan Robusta. Pilih berdasarkan preferensi rasa, pengalaman seduh, dan karakter yang ingin kamu nikmati.</p></div>
+    <div class="journal-related"><div class="journal-related-heading"><span class="eyebrow">KEEP EXPLORING</span><h3>More from the Journal.</h3></div>
+     <button type="button" class="journal-related-card" onclick="openJournal('coffee-tasting')"><img src="assets/photos/journal/coffee-tasting-hero.webp" alt="Coffee tasting setup" loading="lazy"><span><small>COFFEE EDUCATION</small><b>Understanding Coffee Tasting Notes</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('coffee-roasting')"><img src="assets/photos/journal/roasting-hero.webp" alt="Coffee roasting" loading="lazy"><span><small>COFFEE KNOWLEDGE</small><b>The Art of Coffee Roasting</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('brew-guide')"><img src="assets/photos/journal/brew-guide-hero.webp" alt="Coffee brewing" loading="lazy"><span><small>BREWING GUIDE</small><b>Finding the Right Brew</b><em>READ STORY →</em></span></button>
+    </div>
+    <div class="journal-editorial-sources"><b>Further reading</b><a href="https://www.intracen.org/sites/default/files/uploadedFiles/intracenorg/Content/Publications/ITC_Coffee_4th_Report_20210930_web_pages.pdf" target="_blank" rel="noopener">ITC — The Coffee Guide, Fourth Edition ↗</a><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7353486/" target="_blank" rel="noopener">Foods (2020) — Discrimination of Green Coffee Bean Species ↗</a><a href="https://doi.org/10.3390/beverages5020037" target="_blank" rel="noopener">Beverages (2019) — Caffeine Consumption through Coffee ↗</a></div>
+   </div>
+  </article>`;
+}
+
 function openJournal(key){
  const j=JOURNAL_CONTENT[key]||JOURNAL_CONTENT['natural-washed'];
  const modal=document.getElementById('journalModal');
@@ -1473,8 +1640,10 @@ function openJournal(key){
  else if(j.type==='roast')content.innerHTML=roastArticleMarkup();
  else if(j.type==='tasting')content.innerHTML=coffeeTastingArticleMarkup();
  else if(j.type==='farm')content.innerHTML=farmToCupArticleMarkup();
+ else if(j.type==='sustainability')content.innerHTML=sustainabilityArticleMarkup();
+ else if(j.type==='species')content.innerHTML=arabicaRobustaArticleMarkup();
  else content.innerHTML=`<div class="journal-short-article"><h2 class="journal-article-headline">${esc(j.title)}</h2><p>${esc(j.body||'')}</p><p>Setiap biji kopi membawa cerita dari kebun, proses pascapanen, roasting, hingga cara kita menyeduhnya. Teruslah bereksplorasi, catat rasa yang kamu temukan, dan pilih metode yang paling sesuai dengan karakter kopi pilihanmu.</p></div>`;
- document.body.classList.toggle('journal-long-open',j.type==='long'||j.type==='origins'||j.type==='brew'||j.type==='roast'||j.type==='tasting'||j.type==='farm');
+ document.body.classList.toggle('journal-long-open',j.type==='long'||j.type==='origins'||j.type==='brew'||j.type==='roast'||j.type==='tasting'||j.type==='farm'||j.type==='sustainability'||j.type==='species');
  attachJournalEngagement(key);
  modal.classList.add('open');
  modal.setAttribute('aria-hidden','false');

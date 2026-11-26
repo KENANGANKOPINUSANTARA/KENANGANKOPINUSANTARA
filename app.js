@@ -581,7 +581,8 @@ const JOURNAL_CONTENT={
  'natural-washed':{eyebrow:'COFFEE 101',title:'Natural vs Washed: What’s the Difference?',readtime:'8 MIN READ',type:'long'},
  'five-origins':{eyebrow:'ORIGIN STORIES',title:'Five Indonesian Coffee Origins You Should Try',readtime:'11 MIN READ',type:'origins'},
  'brew-guide':{eyebrow:'BREWING GUIDE',title:'Finding the Right Brew for Your Bean',readtime:'6 MIN READ',type:'brew'},
- 'coffee-roasting':{eyebrow:'COFFEE KNOWLEDGE',title:'The Art of Roasting: How Roast Level Shapes Your Coffee’s Flavor',readtime:'10 MIN READ',type:'roast'}
+ 'coffee-roasting':{eyebrow:'COFFEE KNOWLEDGE',title:'The Art of Roasting: How Roast Level Shapes Your Coffee’s Flavor',readtime:'10 MIN READ',type:'roast'},
+ 'coffee-tasting':{eyebrow:'COFFEE EDUCATION',title:'Understanding Coffee Tasting Notes: How to Taste and Describe Coffee',readtime:'12 MIN READ',type:'tasting'}
 };
 
 function naturalWashedArticleMarkup(){
@@ -1091,6 +1092,183 @@ function roastArticleMarkup(){
   </article>`;
 }
 
+function coffeeTastingArticleMarkup(){
+ return `
+  <article class="journal-article journal-tasting-article">
+   <figure class="journal-cover journal-tasting-cover">
+    <img src="assets/photos/journal/coffee-tasting-hero.webp" alt="Coffee cupping bowls, roasted beans, tasting notebook, chocolate, nuts, citrus, and flowers arranged on a warm wooden table" fetchpriority="high">
+    <figcaption>Every tasting begins with curiosity: pause, smell, sip, and notice the character that unfolds in the cup.</figcaption>
+   </figure>
+   <h2 class="journal-article-headline">Understanding Coffee Tasting Notes: How to Taste and Describe Coffee</h2>
+   <div class="journal-byline"><span class="journal-author-mark">K</span><strong>Kenangan Coffee Editorial</strong><span class="journal-byline-divider">·</span><time datetime="2026-11-26">26 November 2026</time><span class="journal-byline-divider">·</span><span>12 min read</span></div>
+   <p class="journal-standfirst">Setiap cangkir memiliki cerita sensorik yang berbeda. Kenali aroma, acidity, sweetness, body, flavor, dan aftertaste untuk memahami karakter kopi dengan lebih percaya diri.</p>
+
+   <div class="journal-article-copy">
+    <div class="journal-tasting-opening">
+     <div>
+      <span class="eyebrow">EVERY CUP HAS ITS OWN STORY</span>
+      <p>Pernahkah kamu menikmati secangkir kopi dan menemukan kesan cokelat, buah beri, bunga, kacang, atau citrus di dalamnya? Deskripsi seperti itu disebut <em>tasting notes</em> — bahasa yang digunakan untuk menggambarkan kemiripan aroma dan rasa yang dikenali ketika kopi dicium dan dicicipi.</p>
+      <p>Catatan rasa bukan daftar bahan tambahan. Kopi yang dideskripsikan memiliki karakter cokelat tidak harus mengandung cokelat; istilah itu menjelaskan kesan sensorik yang mengingatkan kita pada aroma atau rasa cokelat.</p>
+     </div>
+     <blockquote class="journal-tasting-quote"><span>“</span><p>Tasting notes adalah bahasa untuk menceritakan pengalaman menikmati kopi — bukan rumus yang harus dirasakan semua orang dengan cara yang sama.</p></blockquote>
+    </div>
+
+    <section class="journal-article-section" id="tasting-notes-basics">
+     <div class="journal-section-heading"><span>01</span><div><span class="eyebrow">START WITH THE BASICS</span><h3>What Are Coffee Tasting Notes?</h3></div></div>
+     <p><strong>Coffee tasting notes</strong> adalah deskripsi tentang aroma, rasa, dan sensasi yang muncul ketika seseorang mengevaluasi kopi. Istilah seperti berry, jasmine, almond, caramel, atau dark chocolate membantu kita menyampaikan pengalaman dengan kata-kata yang lebih mudah dipahami.</p>
+     <p>Dua orang dapat mencicipi kopi yang sama dan memilih deskripsi yang berbeda. Seseorang mungkin menangkap kesan jeruk, sementara orang lain lebih mengenali teh hitam atau gula merah. Pengalaman, ingatan aroma, kondisi pencicipan, dan kepekaan indra ikut membentuk persepsi tersebut.</p>
+     <div class="journal-tasting-note-grid">
+      <div><b>Descriptive, not literal</b><p>“Chocolate notes” menggambarkan kemiripan karakter sensorik, bukan bukti bahwa cokelat ditambahkan ke dalam biji kopi.</p></div>
+      <div><b>A guide, not a guarantee</b><p>Tasting notes pada kemasan merupakan panduan. Hasil di cangkir dapat berubah karena roasting, gilingan, air, dan metode seduh.</p></div>
+     </div>
+     <p>Karena itu, gunakan tasting notes sebagai titik awal untuk mengeksplorasi kopi. Kamu tidak perlu menemukan semua karakter yang tertulis pada kemasan. Mulailah dari hal yang benar-benar kamu rasakan.</p>
+    </section>
+
+    <section class="journal-article-section" id="coffee-aroma">
+     <div class="journal-section-heading"><span>02</span><div><span class="eyebrow">THE FIRST IMPRESSION</span><h3>Understanding Coffee Aroma</h3></div></div>
+     <p>Aroma adalah bagian besar dari pengalaman menikmati kopi. Sebelum menyesap, kita dapat mencium bubuk kering, aroma yang muncul setelah air panas dituangkan, lalu wangi yang terasa ketika kopi berada di dalam mulut. Dalam evaluasi sensorik, dua istilah yang sering digunakan adalah <em>fragrance</em> dan <em>aroma</em>.</p>
+     <div class="journal-tasting-aroma-grid">
+      <div class="journal-tasting-aroma-card"><span class="journal-tasting-symbol">◉</span><div><b>Fragrance</b><p>Aroma bubuk kopi ketika masih kering, sebelum diseduh. Cium perlahan setelah biji digiling.</p></div></div>
+      <div class="journal-tasting-aroma-card"><span class="journal-tasting-symbol">♨</span><div><b>Aroma</b><p>Aroma kopi setelah air panas dituangkan. Perhatikan perubahan wangi saat seduhan mulai terbuka.</p></div></div>
+     </div>
+     <figure class="journal-inline-figure journal-tasting-photo"><img src="assets/photos/journal/coffee-cupping-process.webp" alt="Tangan mengaduk dan mengevaluasi beberapa mangkuk sampel kopi dalam sesi cupping" loading="lazy"><figcaption>Dalam cupping, aroma diamati pada beberapa tahap, termasuk ketika kopi masih kering dan setelah diseduh.</figcaption></figure>
+     <p>Untuk mulai melatih penciuman, bandingkan aroma kopi dengan referensi yang akrab: kulit jeruk, kacang panggang, cokelat, bunga, atau rempah. Tidak perlu langsung menebak nama buah yang sangat spesifik. Mengenali kelompok aroma terlebih dahulu akan membuat proses belajar lebih mudah.</p>
+    </section>
+
+    <section class="journal-article-section" id="five-elements">
+     <div class="journal-section-heading"><span>03</span><div><span class="eyebrow">READ THE CUP</span><h3>The Five Elements of Coffee Flavor</h3></div></div>
+     <p>Untuk mendeskripsikan kopi secara lebih terstruktur, perhatikan lima aspek berikut. Ini adalah panduan praktis untuk pemula; evaluasi profesional dapat menggunakan atribut dan skala yang lebih rinci.</p>
+     <div class="journal-tasting-elements-grid">
+      <div><span class="journal-tasting-element-icon">◒</span><b>Acidity</b><p>Kesan cerah atau segar yang dapat mengingatkan pada citrus, apel, atau buah beri. Bukan sekadar rasa asam yang tajam.</p></div>
+      <div><span class="journal-tasting-element-icon">◇</span><b>Sweetness</b><p>Persepsi manis yang dapat menyerupai madu, karamel, gula merah, atau buah matang tanpa harus ada gula tambahan.</p></div>
+      <div><span class="journal-tasting-element-icon">◍</span><b>Body</b><p>Sensasi tekstur dan berat kopi di mulut: ringan, sedang, atau penuh. Filter dan metode seduh juga memengaruhinya.</p></div>
+      <div><span class="journal-tasting-element-icon">✧</span><b>Flavor</b><p>Gabungan rasa dan aroma yang membentuk kesan keseluruhan, misalnya cokelat, buah, bunga, atau rempah.</p></div>
+      <div><span class="journal-tasting-element-icon">〰</span><b>Aftertaste</b><p>Rasa dan aroma yang tertinggal setelah kopi ditelan. Perhatikan apakah kesannya bersih, manis, kering, atau pahit.</p></div>
+     </div>
+     <p>Cobalah menilai setiap aspek secara terpisah sebelum menyimpulkan karakter keseluruhan. Dengan begitu, catatanmu akan lebih jelas daripada hanya menulis “kopinya enak” atau “kopinya pahit”.</p>
+    </section>
+
+    <section class="journal-article-section" id="flavor-families">
+     <div class="journal-section-heading"><span>04</span><div><span class="eyebrow">BUILD YOUR VOCABULARY</span><h3>Fruity, Floral, Nutty, and Chocolate Notes</h3></div></div>
+     <div class="journal-tasting-flavor-layout">
+      <div>
+       <p>Kelompok aroma membantu kita menemukan kata yang paling mendekati pengalaman mencicipi. Mulailah dari keluarga rasa yang luas, lalu pilih deskripsi yang lebih spesifik jika memang terasa jelas.</p>
+       <ul class="journal-tasting-flavor-list">
+        <li><b>Fruity:</b> berry, apple, cherry, peach, citrus.</li>
+        <li><b>Floral:</b> jasmine, rose, chamomile, lavender.</li>
+        <li><b>Nutty:</b> almond, hazelnut, peanut, walnut.</li>
+        <li><b>Chocolate & cocoa:</b> cocoa, milk chocolate, dark chocolate.</li>
+        <li><b>Sweet:</b> honey, caramel, brown sugar, molasses.</li>
+        <li><b>Spices & roasted:</b> cinnamon, clove, toasted grain, cocoa roast.</li>
+       </ul>
+      </div>
+      <figure class="journal-inline-figure journal-tasting-flavor-image"><img src="assets/photos/journal/coffee-flavor-notes.webp" alt="Dark chocolate, citrus, berries, nuts, white flowers, and roasted coffee beans as aroma references" loading="lazy"><figcaption>Flavor references membantu menghubungkan aroma kopi dengan pengalaman yang sudah dikenal.</figcaption></figure>
+     </div>
+     <p>Gunakan istilah yang terasa paling dekat, bukan yang terdengar paling mewah. Jika kamu hanya mengenali “buah segar”, itu sudah menjadi catatan awal yang berguna. Seiring latihan, deskripsimu dapat berkembang menjadi lebih spesifik.</p>
+    </section>
+
+    <section class="journal-article-section" id="professional-cupping">
+     <div class="journal-section-heading"><span>05</span><div><span class="eyebrow">A SIMPLE TASTING ROUTINE</span><h3>How to Taste Coffee Like a Professional</h3></div></div>
+     <p>Coffee cupping adalah metode mencicipi yang digunakan untuk membandingkan karakter beberapa sampel kopi secara sistematis. Prosedurnya membantu menjaga variabel tetap konsisten agar perbedaan antar-sampel lebih mudah diamati. Kamu dapat mencoba pendekatan sederhana berikut di rumah.</p>
+     <figure class="journal-inline-figure journal-tasting-session-image"><img src="assets/photos/journal/coffee-cupping-session.webp" alt="Dua pencicip kopi mengevaluasi deretan mangkuk sampel dalam sesi coffee cupping" loading="lazy"><figcaption>Sesi cupping memungkinkan beberapa sampel dibandingkan dalam kondisi yang relatif seragam.</figcaption></figure>
+     <ol class="journal-tasting-steps">
+      <li><b>Observe — Perhatikan sampel.</b><p>Catat identitas kopi, origin, proses, dan roast level. Siapkan alat yang bersih serta sampel dengan takaran yang konsisten.</p></li>
+      <li><b>Smell dry — Cium bubuk kering.</b><p>Kenali fragrance sebelum air dituangkan. Catat kesan pertama tanpa buru-buru mencari deskripsi spesifik.</p></li>
+      <li><b>Smell brewed — Kenali aroma seduhan.</b><p>Setelah air dituangkan, cium aroma pada permukaan kopi dan crust. Dalam prosedur cupping SCA, crust dibiarkan sekitar 3–5 menit, lalu dipecah dengan mengaduk kira-kira tiga kali sambil mencium uap yang terlepas; setelah itu permukaannya dibersihkan.</p></li>
+      <li><b>Taste — Cicipi dengan perhatian.</b><p>Setelah suhu turun, seruput sedikit agar kopi menyebar di mulut. Dalam cupping terstruktur, penilaian rasa dilakukan berulang saat kopi mendingin; amati flavor, acidity, sweetness, mouthfeel/body, dan aftertaste.</p></li>
+      <li><b>Let it cool — Cicipi kembali saat mendingin.</b><p>Perubahan suhu dapat membuat beberapa karakter lebih mudah dikenali. Bandingkan catatanmu dari kondisi panas hingga hangat.</p></li>
+      <li><b>Write — Tuliskan pengamatan.</b><p>Gunakan kata yang sederhana dan jujur. Catat hal yang paling menonjol, bukan semua deskriptor yang kamu ketahui.</p></li>
+     </ol>
+     <figure class="journal-inline-figure journal-tasting-process-image"><img src="assets/photos/journal/coffee-tasting-journal.webp" alt="Buku catatan tasting dan sendok cupping di samping deretan mangkuk kopi" loading="lazy"><figcaption>Catatan sederhana membantu membandingkan pengalaman antar-sesi tasting.</figcaption></figure>
+    </section>
+
+    <section class="journal-article-section" id="coffee-flavor-wheel">
+     <div class="journal-section-heading"><span>06</span><div><span class="eyebrow">A MAP FOR YOUR SENSES</span><h3>Understanding the Coffee Flavor Wheel</h3></div></div>
+     <p><em>Coffee Taster’s Flavor Wheel</em> adalah alat bantu visual untuk mengelompokkan dan menelusuri deskripsi aroma serta rasa kopi. Cara yang mudah adalah bergerak dari kategori umum menuju istilah yang lebih spesifik, bukan langsung menebak satu rasa tertentu.</p>
+     <div class="journal-flavor-wheel-guide">
+      <div><b>01 · Start broad</b><p>Mulai dari kelompok besar seperti fruity, floral, sweet, nutty, roasted, spices, atau sour/fermented.</p></div>
+      <div><b>02 · Narrow it down</b><p>Jika menemukan kesan fruity, tanyakan apakah lebih dekat ke berry, dried fruit, atau citrus.</p></div>
+      <div><b>03 · Choose a descriptor</b><p>Pilih kata paling spesifik yang benar-benar mendekati pengalamanmu. Tidak semua kategori harus digunakan.</p></div>
+     </div>
+     <figure class="journal-flavor-wheel-figure">
+      <img src="assets/photos/journal/coffee-flavor-wheel.png" alt="SCA Coffee Taster's Flavor Wheel diagram with nested categories of aroma and flavor descriptors" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+      <div class="journal-flavor-family-map" hidden aria-label="Original coffee flavor families guide">
+       <div><b>FRUITY</b><span>Berry · Citrus · Dried fruit</span></div>
+       <div><b>FLORAL</b><span>Jasmine · Rose · Chamomile</span></div>
+       <div><b>SWEET</b><span>Honey · Caramel · Brown sugar</span></div>
+       <div><b>NUTTY / COCOA</b><span>Almond · Hazelnut · Chocolate</span></div>
+       <div><b>SPICES</b><span>Cinnamon · Clove · Pepper</span></div>
+       <div><b>ROASTED</b><span>Toasted grain · Cocoa roast · Smoky</span></div>
+       <div><b>GREEN / VEGETATIVE</b><span>Herbal · Fresh · Peapod</span></div>
+       <div><b>SOUR / FERMENTED</b><span>Citrus acid · Winey · Fermented</span></div>
+       <div><b>OTHER</b><span>Earthy · Papery · Chemical</span></div>
+      </div>
+      <figcaption>Flavor-family guide for practice. The official SCA Coffee Taster’s Flavor Wheel is an optional asset; if installed, it must remain unchanged, be credited to Specialty Coffee Association, World Coffee Research, and UC Davis Coffee Center, and receive SCA approval before public publication.</figcaption>
+     </figure>
+     <p>Contohnya, ketika kopi terasa seperti buah, mulai dari kategori <strong>fruity</strong>. Lalu perhatikan apakah kesannya menyerupai berry atau citrus. Jika tidak yakin apakah itu blueberry atau raspberry, tidak masalah untuk berhenti pada deskripsi “berry-like”. Tujuannya adalah komunikasi yang jelas, bukan menebak sebanyak mungkin istilah.</p>
+    </section>
+
+    <section class="journal-article-section" id="why-coffee-tastes-different">
+     <div class="journal-section-heading"><span>07</span><div><span class="eyebrow">THE VARIABLES IN YOUR CUP</span><h3>Why Does the Same Coffee Taste Different?</h3></div></div>
+     <p>Kopi yang sama dapat terasa berbeda ketika diseduh oleh orang atau alat yang berbeda. Beberapa variabel berikut dapat mengubah proses ekstraksi dan persepsi rasa.</p>
+     <div class="journal-table-wrap" role="region" aria-label="Faktor yang memengaruhi rasa kopi" tabindex="0">
+      <table class="journal-comparison-table journal-tasting-table">
+       <thead><tr><th>Faktor</th><th>Peran dalam seduhan</th><th>Hal yang dapat diamati</th></tr></thead>
+       <tbody>
+        <tr><th>Brewing ratio</th><td>Perbandingan dosis kopi dan air memengaruhi kekuatan seduhan.</td><td>Body, konsentrasi, dan keseimbangan rasa.</td></tr>
+        <tr><th>Grind size</th><td>Ukuran gilingan memengaruhi luas permukaan dan laju ekstraksi.</td><td>Seduhan dapat terasa tipis, seimbang, atau terlalu intens.</td></tr>
+        <tr><th>Water temperature</th><td>Suhu memengaruhi seberapa cepat komponen larut terekstraksi.</td><td>Kejelasan aroma dan keseimbangan rasa.</td></tr>
+        <tr><th>Contact time</th><td>Waktu kontak air dan kopi memengaruhi tingkat ekstraksi.</td><td>Intensitas, bitterness, dan kesan keseluruhan.</td></tr>
+        <tr><th>Water quality</th><td>Mineral dan karakter air dapat memengaruhi ekstraksi serta persepsi rasa.</td><td>Kejelasan dan keseimbangan cangkir.</td></tr>
+        <tr><th>Personal perception</th><td>Ingatan aroma dan kepekaan sensorik berbeda pada setiap orang.</td><td>Deskriptor yang dipilih oleh pencicip.</td></tr>
+       </tbody>
+      </table>
+     </div>
+     <p class="journal-table-note">Ubah satu variabel dalam satu waktu saat bereksperimen. Dengan begitu, kamu lebih mudah memahami faktor apa yang menyebabkan perbedaan rasa.</p>
+    </section>
+
+    <section class="journal-article-section" id="develop-coffee-palate">
+     <div class="journal-section-heading"><span>08</span><div><span class="eyebrow">KEEP EXPLORING</span><h3>Developing Your Own Coffee Palate</h3></div></div>
+     <p>Kemampuan mengenali tasting notes dapat berkembang melalui latihan. Kamu tidak perlu memulai dengan peralatan mahal atau kosakata yang rumit. Konsistensi dalam mencoba, membandingkan, dan mencatat justru lebih penting.</p>
+     <div class="journal-tasting-practice-grid">
+      <div><span>01</span><b>Explore origins</b><p>Bandingkan kopi dari daerah berbeda, lalu catat karakter yang paling terasa.</p></div>
+      <div><span>02</span><b>Compare processing</b><p>Coba Natural, Washed, atau Honey dari lot yang informasinya jelas.</p></div>
+      <div><span>03</span><b>Try roast levels</b><p>Perhatikan bagaimana profil sangrai mengubah aroma, acidity, body, dan aftertaste.</p></div>
+      <div><span>04</span><b>Taste with friends</b><p>Bandingkan deskripsi tanpa memaksakan semua orang merasakan hal yang sama.</p></div>
+     </div>
+     <div class="journal-tasting-note-template">
+      <span class="eyebrow">YOUR PERSONAL TASTING JOURNAL</span>
+      <h4>Record what you discover.</h4>
+      <div class="journal-tasting-note-fields"><span>Origin / Coffee</span><span>Processing & roast</span><span>Brewing method</span><span>Fragrance & aroma</span><span>Acidity / sweetness / body</span><span>Flavor & aftertaste</span></div>
+      <p>Catat kesanmu dengan kata-kata sendiri. Setelah beberapa sesi, kamu akan mulai melihat pola yang menunjukkan karakter kopi yang paling kamu sukai. Untuk cupping formal, ikuti prosedur persiapan dan keselamatan yang ditetapkan penyelenggara atau standar yang berlaku.</p>
+     </div>
+    </section>
+
+    <section class="journal-conclusion journal-tasting-conclusion">
+     <span class="eyebrow">THE KENANGAN NOTE</span>
+     <h3>Every Cup Has a Character Worth Discovering.</h3>
+     <p>Tasting notes membantu kita bercerita tentang aroma, rasa, dan tekstur kopi dengan lebih jelas. Flavor Wheel memberi kosakata, sedangkan cupping melatih kita untuk mengamati secara terstruktur. Namun, pengalaman paling berharga tetap datang dari rasa ingin tahu dan kesediaan untuk mencoba.</p>
+     <p>Di KENANGAN KOPI NUSANTARA, kami percaya setiap origin menyimpan karakter dan cerita yang layak dijelajahi. Cicipi dengan rasa ingin tahu, catat apa yang kamu temukan, dan nikmati perjalanan rasa di setiap tegukan.</p>
+     <p class="journal-tasting-signoff">Taste with curiosity. Explore with intention. Discover the character behind every cup.</p>
+    </section>
+
+    <div class="journal-sources"><span class="eyebrow">RESEARCH & FURTHER READING</span>
+     <a href="https://worldcoffeeresearch.org/resources/sensory-lexicon" target="_blank" rel="noopener">World Coffee Research · Sensory Lexicon ↗</a>
+     <a href="https://sca.coffee/research/protocols-best-practices" target="_blank" rel="noopener">Specialty Coffee Association · Research, protocols, and best practices ↗</a>
+     <a href="https://sca.coffee/research/coffee-value-assessment" target="_blank" rel="noopener">Specialty Coffee Association · Coffee Value Assessment ↗</a>
+     <a href="https://specialtycoffee.my.site.com/s/article/Flavor-Wheel-Guidelines" target="_blank" rel="noopener">Specialty Coffee Association · Flavor Wheel usage guidelines and publication approval ↗</a>
+    </div>
+
+    <div class="journal-related">
+     <div class="journal-related-heading"><span class="eyebrow">KEEP EXPLORING</span><h3>More from the Journal.</h3></div>
+     <button type="button" class="journal-related-card" onclick="openJournal('coffee-roasting')"><img src="assets/photos/journal/roasting-hero.webp" alt="Biji kopi sedang diproses dalam mesin roasting" loading="lazy"><span><small>COFFEE KNOWLEDGE</small><b>The Art of Roasting: How Roast Level Shapes Your Coffee’s Flavor</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('brew-guide')"><img src="assets/photos/journal/brew-guide-hero.webp" alt="Metode pour over untuk menyeduh kopi" loading="lazy"><span><small>BREWING GUIDE</small><b>Finding the Right Brew for Your Bean</b><em>READ STORY →</em></span></button>
+     <button type="button" class="journal-related-card" onclick="openJournal('five-origins')"><img src="assets/photos/journal/indonesian-coffee-origins-hero.webp" alt="Lanskap perkebunan kopi Indonesia" loading="lazy"><span><small>ORIGIN STORIES</small><b>Five Indonesian Coffee Origins You Should Try</b><em>READ STORY →</em></span></button>
+    </div>
+   </div>
+  </article>`;
+}
+
 function readJournalStore(name,fallback){
  try{const value=JSON.parse(localStorage.getItem(name)||'null');return value===null?fallback:value;}catch{return fallback;}
 }
@@ -1178,8 +1356,9 @@ function openJournal(key){
  else if(j.type==='origins')content.innerHTML=fiveOriginsArticleMarkup();
  else if(j.type==='brew')content.innerHTML=brewGuideArticleMarkup();
  else if(j.type==='roast')content.innerHTML=roastArticleMarkup();
+ else if(j.type==='tasting')content.innerHTML=coffeeTastingArticleMarkup();
  else content.innerHTML=`<div class="journal-short-article"><h2 class="journal-article-headline">${esc(j.title)}</h2><p>${esc(j.body||'')}</p><p>Setiap biji kopi membawa cerita dari kebun, proses pascapanen, roasting, hingga cara kita menyeduhnya. Teruslah bereksplorasi, catat rasa yang kamu temukan, dan pilih metode yang paling sesuai dengan karakter kopi pilihanmu.</p></div>`;
- document.body.classList.toggle('journal-long-open',j.type==='long'||j.type==='origins'||j.type==='brew'||j.type==='roast');
+ document.body.classList.toggle('journal-long-open',j.type==='long'||j.type==='origins'||j.type==='brew'||j.type==='roast'||j.type==='tasting');
  attachJournalEngagement(key);
  modal.classList.add('open');
  modal.setAttribute('aria-hidden','false');

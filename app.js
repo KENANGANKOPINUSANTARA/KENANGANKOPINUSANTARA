@@ -316,7 +316,52 @@ function renderSeasonal(){
    <div class="seasonal-item-copy"><span class="eyebrow">${esc(p.region).toUpperCase()} · ${esc(p.process).toUpperCase()}</span><h3>${esc(p.name)}</h3><p>${esc(p.notes)}</p><div class="exclusive-line"><b>CAFÉ EXCLUSIVE</b><small>NOT AVAILABLE ONLINE</small></div><button type="button" class="seasonal-discover-btn" data-action="open-product" data-product="${esc(p.name)}">DISCOVER THIS COFFEE →</button></div>
  </article>`).join("");
 }
+const PRODUCT_PHOTO_BY_NAME = {
+  "Aceh Gayo Bourbon": "assets/photos/products/arabica/aceh-gayo-bourbon.jpg",
+  "Aceh Gayo Natural": "assets/photos/products/arabica/aceh-gayo-natural.jpg",
+  "Aceh Gayo Wine": "assets/photos/products/arabica/aceh-gayo-wine.jpg",
+  "Mandheling": "assets/photos/products/arabica/mandheling.jpg",
+  "Lintong": "assets/photos/products/arabica/lintong.jpg",
+  "Kerinci": "assets/photos/products/arabica/kerinci.jpg",
+  "Pangalengan": "assets/photos/products/arabica/pangalengan.jpg",
+  "Halu Honey": "assets/photos/products/arabica/halu-honey.jpg",
+  "Papandayan": "assets/photos/products/arabica/papandayan.jpg",
+  "Rancabali Anaerob": "assets/photos/products/arabica/rancabali-anaerob.jpg",
+  "Patuha": "assets/photos/products/arabica/patuha.jpg",
+  "Manglayang": "assets/photos/products/arabica/manglayang.jpg",
+  "Kamojang Wine": "assets/photos/products/arabica/kamojang-wine.jpg",
+  "Puntang": "assets/photos/products/arabica/puntang.jpg",
+  "Ciwidey": "assets/photos/products/arabica/ciwidey.jpg",
+  "Garut": "assets/photos/products/arabica/garut.jpg",
+  "Temanggung": "assets/photos/products/arabica/temanggung.jpg",
+  "Dieng": "assets/photos/products/arabica/dieng.jpg",
+  "Damar Kandang": "assets/photos/products/arabica/damar-kandang.jpg",
+  "Posong Honey": "assets/photos/products/arabica/posong-honey.jpg",
+  "Bismo": "assets/photos/products/arabica/bismo.jpg",
+  "Merapi Selo": "assets/photos/products/arabica/merapi-selo.jpg",
+  "Ijen": "assets/photos/products/arabica/ijen.jpg",
+  "Argupuro": "assets/photos/products/arabica/argopuro.jpg",
+  "Lawu": "assets/photos/products/arabica/lawu.jpg",
+  "Kawi Bhutak": "assets/photos/products/arabica/kawi-bhutak.jpg",
+  "Bondowoso": "assets/photos/products/arabica/bondowoso.jpg",
+  "Ijen Raung": "assets/photos/products/arabica/ijen-raung.jpg",
+  "Kintamani": "assets/photos/products/arabica/kintamani.jpg",
+  "Bajawa": "assets/photos/products/arabica/bajawa.jpg",
+  "Manggarai": "assets/photos/products/arabica/manggarai.jpg",
+  "Bajawa Honey": "assets/photos/products/arabica/bajawa-honey.jpg",
+  "Kalimutu": "assets/photos/products/arabica/kalimutu.jpg",
+  "Toraja Sapan": "assets/photos/products/arabica/toraja-sapan.jpg",
+  "Toraja Pulu-Pulu": "assets/photos/products/arabica/toraja-pulu-pulu.jpg",
+  "Enrekang": "assets/photos/products/arabica/enrekang.jpg",
+  "Jayawijaya": "assets/photos/products/arabica/jayawijaya.jpg",
+  "Papua Wamena Honey": "assets/photos/products/arabica/papua-wamena-honey.jpg",
+  "Papua Baliem": "assets/photos/products/arabica/papua-baliem.jpg",
+  "Halmahera": "assets/photos/products/arabica/halmahera.jpg"
+};
+
 function productArt(p){
+ const productPhoto=PRODUCT_PHOTO_BY_NAME[p?.name];
+ if(productPhoto)return productPhoto;
  const palettes={"Sumatera":["#24342b","#b08a4a"],"Jawa Barat":["#4a3325","#c89a58"],"Jawa Tengah":["#171512","#b08a4a"],"Jawa Timur":["#5a3b28","#d0a66a"],"Indonesia Timur":["#24342b","#d1aa70"]};
  const [ink,gold]=palettes[p.region]||["#171512","#b08a4a"];
  const title=p.name.toUpperCase();
